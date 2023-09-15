@@ -1,0 +1,41 @@
+<section class="form flex flex-column align-items-center justify-content-center w-full">
+  <h2>Registrarme</h2>
+  <form [formGroup]="signUpForm" class="w-full max-w-30rem" (ngSubmit)="register()">
+    <div>
+      <mat-form-field class="w-full mb-1">
+        <mat-label>Ingresa tu email</mat-label>
+        <input matInput placeholder="pat@example.com" name="email" id="email" formControlName="email" required>
+        <mat-error *ngIf="Email?.hasError('required')">Es necesario el email</mat-error>
+        <mat-error *ngIf="Email?.hasError('email')">El formato no es correcto</mat-error>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field class="w-full mb-1">
+        <mat-label>Ingresa tus apellidos</mat-label>
+        <input matInput name="surname" id="surname" formControlName="surname" required>
+        <mat-error *ngIf="Surname?.hasError('required')">Es necesario el apellido</mat-error>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field class="w-full mb-1">
+        <mat-label>Ingresa tus nombres</mat-label>
+        <input matInput name="name" id="name" formControlName="name" required>
+        <mat-error *ngIf="Name?.hasError('required')">Es necesario el nombre</mat-error>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field class="w-full mb-1">
+        <mat-label>Ingresa tu contraseña</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+        <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="Password?.hasError('required')">Es necesaria la contraseña</mat-error>
+      </mat-form-field>
+    </div>
+    <button type="submit" mat-flat-button color="primary" class="w-full mt-2">
+      <mat-icon>save</mat-icon>
+      Crear mi cuenta
+    </button>
+  </form>
+</section>

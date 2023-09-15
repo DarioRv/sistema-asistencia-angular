@@ -9,7 +9,7 @@
       {{ course.description }}
     </p>
     <mat-chip-listbox>
-      <mat-chip>
+      <mat-chip color="primary">
         {{ course.students }} estudiantes
       </mat-chip>
     </mat-chip-listbox>
@@ -18,7 +18,7 @@
   <mat-divider></mat-divider>
 
   <mat-card-actions>
-    <button mat-button mat-raised color="primary" [routerLink]="[]">
+    <button mat-button mat-raised color="primary" [routerLink]="['/dashboard/course/', course.id]">
       <mat-icon>visibility</mat-icon>
       Ver curso
     </button>

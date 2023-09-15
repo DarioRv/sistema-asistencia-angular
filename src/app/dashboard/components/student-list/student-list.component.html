@@ -1,0 +1,14 @@
+<table style="width: 100%;">
+  <thead class="font-bold text-primary">
+    <td>LU</td>
+    <td>Apellido</td>
+    <td>Nombres</td>
+  </thead>
+  <tbody>
+    <tr *ngFor="let student of students">
+      <td> {{student.lu}} </td>
+      <td> {{student.apellido}} </td>
+      <td> {{student.nombre}} </td>
+    </tr>
+  </tbody>
+</table>

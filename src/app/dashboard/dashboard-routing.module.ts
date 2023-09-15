@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LayoutPageComponent } from './pages/layout-page/layout-page.component';
 import { CoursesPageComponent } from './pages/courses-page/courses-page.component';
 import { AccountPageComponent } from './pages/account-page/account-page.component';
+import { CourseDetailsPageComponent } from './pages/course-details-page/course-details-page.component';
 
 const routes: Routes = [
   {
@@ -11,7 +12,11 @@ const routes: Routes = [
     children: [
       {
         path: 'courses',
-        component: CoursesPageComponent
+        component: CoursesPageComponent,
+      },
+      {
+        path: 'course/:id',
+        component: CourseDetailsPageComponent
       },
       {
         path: 'account',

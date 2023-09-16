@@ -14,16 +14,18 @@ export class MenubarComponent implements OnInit {
       this.items = [
         {
           label: 'Home',
-          routerLink: '/'
+          routerLink: '/app',
         },
         {
           label: 'Acerca de',
           items: [
             {
-              label: 'Manual'
+              label: 'Manual',
+              routerLink: '/app/manual'
             },
             {
-              label: 'Docs'
+              label: 'Change log',
+              routerLink: '/app/change-log'
             }
           ]
         },

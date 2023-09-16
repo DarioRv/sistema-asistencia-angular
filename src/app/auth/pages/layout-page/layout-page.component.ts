@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 
 @Component({
-  selector: 'app-layout-page',
+  selector: 'auth-layout-page',
   templateUrl: './layout-page.component.html',
   styles: [
   ]

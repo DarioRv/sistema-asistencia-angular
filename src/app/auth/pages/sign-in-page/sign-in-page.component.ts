@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-sign-in',
+  selector: 'auth-sign-in',
   templateUrl: './sign-in-page.component.html',
   styles: [
   ]

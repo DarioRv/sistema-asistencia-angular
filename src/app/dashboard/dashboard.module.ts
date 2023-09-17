@@ -11,6 +11,7 @@ import { AccountPageComponent } from './pages/account-page/account-page.componen
 import { CourseDetailsPageComponent } from './pages/course-details-page/course-details-page.component';
 import { StudentListComponent } from './components/student-list/student-list.component';
 import { CourseSettingsComponent } from './components/course-settings/course-settings.component';
+import { PrimeNgModule } from '../prime-ng/prime-ng.module';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { CourseSettingsComponent } from './components/course-settings/course-set
   imports: [
     CommonModule,
     DashboardRoutingModule,
-    MaterialModule
+    MaterialModule,
+    PrimeNgModule
   ]
 })
 export class DashboardModule { }

@@ -12,6 +12,7 @@ import { CourseDetailsPageComponent } from './pages/course-details-page/course-d
 import { StudentListComponent } from './components/student-list/student-list.component';
 import { CourseSettingsComponent } from './components/course-settings/course-settings.component';
 import { PrimeNgModule } from '../prime-ng/prime-ng.module';
+import { CourseAssistanceViewComponent } from './components/course-assistance-view/course-assistance-view.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { PrimeNgModule } from '../prime-ng/prime-ng.module';
     AccountPageComponent,
     CourseDetailsPageComponent,
     StudentListComponent,
-    CourseSettingsComponent
+    CourseSettingsComponent,
+    CourseAssistanceViewComponent
   ],
   imports: [
     CommonModule,

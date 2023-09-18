@@ -1,0 +1,30 @@
+<article>
+  <h3 class="font-bold">Horario</h3>
+  <form [formGroup]="form" class="flex flex-column gap-2">
+    <div class="flex flex-column">
+      <label class="text-primary">Horario entrada</label>
+      <div class="flex-row">
+        <p-inputNumber inputId="hour1" formControlName="hour1" [size]="1"> </p-inputNumber>
+        <span>:</span>
+        <p-inputNumber inputId="minute1" formControlName="minute1" [size]="1"> </p-inputNumber>
+      </div>
+    </div>
+    <div class="flex flex-column">
+      <label class="text-primary">Horario salida</label>
+      <div class="flex-row">
+        <p-inputNumber inputId="hour2" formControlName="hour2" [size]="1"> </p-inputNumber>
+        <span>:</span>
+        <p-inputNumber inputId="minute2" formControlName="minute2" [size]="1"> </p-inputNumber>
+      </div>
+    </div>
+    <mat-error *ngIf="hasErrors()">Horario no valido</mat-error>
+  </form>
+  <button mat-flat-button class="mt-3" color="primary" [disabled]="!formEditState">
+    <mat-icon>save</mat-icon>
+    Guardar
+  </button>
+  <button mat-button class="mt-3" color="primary" (click)="toggleEdit()">
+    <mat-icon>{{ !formEditState ? 'edit' : 'delete'}}</mat-icon>
+    {{ !formEditState ? 'Editar' : 'Cancelar' }}
+  </button>
+</article>

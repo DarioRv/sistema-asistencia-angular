@@ -13,6 +13,9 @@ import { StudentListComponent } from './components/student-list/student-list.com
 import { CourseSettingsComponent } from './components/course-settings/course-settings.component';
 import { PrimeNgModule } from '../prime-ng/prime-ng.module';
 import { CourseAssistanceViewComponent } from './components/course-assistance-view/course-assistance-view.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ScheduleFormComponent } from './components/schedule-form/schedule-form.component';
+import { DangerZoneOptionsComponent } from './components/danger-zone-options/danger-zone-options.component';
 
 
 @NgModule({
@@ -25,13 +28,16 @@ import { CourseAssistanceViewComponent } from './components/course-assistance-vi
     CourseDetailsPageComponent,
     StudentListComponent,
     CourseSettingsComponent,
-    CourseAssistanceViewComponent
+    CourseAssistanceViewComponent,
+    ScheduleFormComponent,
+    DangerZoneOptionsComponent
   ],
   imports: [
     CommonModule,
     DashboardRoutingModule,
     MaterialModule,
-    PrimeNgModule
+    PrimeNgModule,
+    ReactiveFormsModule
   ]
 })
 export class DashboardModule { }

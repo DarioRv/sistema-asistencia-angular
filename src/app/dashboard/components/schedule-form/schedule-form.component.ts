@@ -29,6 +29,7 @@ export class ScheduleFormComponent {
     this.form.get('hour2')?.setValue('12');
     this.form.get('minute2')?.setValue('30');
   }
+
   toggleEdit(): void {
     this.formEditState = !this.formEditState;
     if (this.formEditState) {

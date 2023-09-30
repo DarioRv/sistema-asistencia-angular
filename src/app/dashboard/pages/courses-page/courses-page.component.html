@@ -1,4 +1,6 @@
 <h2>Courses</h2>
-<div class="flex gap-3">
-  <dashboard-course-card *ngFor="let course of courses" [course]="course"></dashboard-course-card>
+<div class="grid align-items-stretch gap-3">
+  <div class="sm:col-12 lg:col-4 xl:col-3 flex-grow-1 align-self-stretch" *ngFor="let course of courses">
+    <dashboard-course-card [course]="course"></dashboard-course-card>
+  </div>
 </div>

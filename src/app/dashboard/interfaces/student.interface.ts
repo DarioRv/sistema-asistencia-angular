@@ -1,5 +1,5 @@
 export interface Student {
-  lu: string,
-  nombre: string,
-  apellido: string
+  lu:      string;
+  name:    string;
+  surname: string;
 }

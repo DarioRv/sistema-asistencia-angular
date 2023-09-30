@@ -1,23 +1,25 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title> {{course.title}} </mat-card-title>
-    <mat-card-subtitle> {{course.universityProgram}} </mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content class="mt-2">
-    <p>
-      <strong>Descripción: </strong>
-      {{ course.description }}
-    </p>
-    <mat-chip-listbox>
-      <mat-chip color="primary">
-        {{ course.students }} estudiantes
-      </mat-chip>
-    </mat-chip-listbox>
-  </mat-card-content>
+<mat-card class="flex flex-column justify-content-between h-full">
+  <div>
+    <mat-card-header>
+      <mat-card-title> {{course.title}} </mat-card-title>
+      <mat-card-subtitle> {{course.universityProgram}} </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content class="mt-2">
+      <p class="max-h-4rem overflow-auto">
+        <strong>Descripción: </strong>
+        {{ course.description }}
+      </p>
+      <mat-chip-listbox>
+        <mat-chip color="primary">
+          {{ course.students.length }} estudiantes
+        </mat-chip>
+      </mat-chip-listbox>
+    </mat-card-content>
+  </div>
 
-  <mat-divider></mat-divider>
+  <!-- <mat-divider></mat-divider> -->
 
-  <mat-card-actions>
+  <mat-card-actions class="border border-top-1 surface-border">
     <button mat-button mat-raised color="primary" [routerLink]="['/dashboard/course/', course.id]">
       <mat-icon>visibility</mat-icon>
       Ver curso

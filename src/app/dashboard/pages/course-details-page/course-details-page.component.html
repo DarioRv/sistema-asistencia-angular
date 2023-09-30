@@ -1,7 +1,7 @@
 <h2> {{course?.title}} </h2>
 <mat-tab-group style="max-width: 600px; height: auto;">
   <mat-tab label="Alumnos">
-    <course-student-list></course-student-list>
+    <course-student-list [students]="course?.students"></course-student-list>
   </mat-tab>
   <mat-tab label="Asistencia del día">
     <course-assistance-view></course-assistance-view>

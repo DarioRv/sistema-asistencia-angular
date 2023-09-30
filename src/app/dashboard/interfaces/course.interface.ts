@@ -1,7 +1,10 @@
+import { Student } from "./student.interface";
+
 export interface Course {
-  id: number
-  title: string,
-  universityProgram: string,
-  description: string,
-  students: number
+  description:       string;
+  id:                number;
+  students:          Student[];
+  title:             string;
+  universityProgram: string;
 }
+

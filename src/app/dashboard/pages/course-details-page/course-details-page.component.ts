@@ -17,7 +17,7 @@ export class CourseDetailsPageComponent implements OnInit {
 
   ngOnInit() {
     this.activedRouter.params.subscribe( ({id}) => {
-      this.course = this.coursesDataService.findCourseById(id);
+      this.coursesDataService.getCourses().subscribe((courses) => this.course = courses.find((course) => course.id == id));
     });
   }
 }

@@ -10,5 +10,6 @@ import { Course } from '../../interfaces/course.interface';
 export class CourseCardComponent {
 
   @Input()
+  // TODO change to optional and create an alert if it's undefined
   public course!: Course;
 }

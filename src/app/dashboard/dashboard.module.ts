@@ -37,7 +37,7 @@ import { DangerZoneOptionsComponent } from './components/danger-zone-options/dan
     DashboardRoutingModule,
     MaterialModule,
     PrimeNgModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ]
 })
 export class DashboardModule { }

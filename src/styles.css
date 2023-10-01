@@ -2,3 +2,10 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.container-limited {
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 15px;
+}

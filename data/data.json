@@ -1475,5 +1475,12 @@
       "title": "Gestión de Proyectos de Software",
       "universityProgram": "Tecnicatura en Videojuegos"
     }
-  ]
+  ],
+  "user": {
+    "email": "alice.smith@example.com",
+    "id": "e3e2cdc9-3c7d-40c5-9f3b-cc1c8ebd5f8d",
+    "lastname": "Smith",
+    "name": "Alice",
+    "password": "Password123!"
+  }
 }

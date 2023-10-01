@@ -8,6 +8,7 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { MaterialModule } from '../material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
+import { CookieService } from 'ngx-cookie-service';
 
 
 
@@ -23,7 +24,8 @@ import { SharedModule } from '../shared/shared.module';
     AuthRoutingModule,
     MaterialModule,
     ReactiveFormsModule,
-    SharedModule
-  ]
+    SharedModule,
+  ],
+  providers: [CookieService]
 })
 export class AuthModule { }

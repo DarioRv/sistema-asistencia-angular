@@ -1,1 +1,40 @@
-<p>account-page works!</p>
+<section class="acoount flex flex-column">
+  <article class="info-not-available mb-5" *ngIf="!user">
+    <h2>Información no disponible</h2>
+    <mat-card class="border-2 border-primary-200 bg-blue-100">
+      <mat-card-content>
+        <p class="text-center text-primary text-lg">La información de tu cuenta no está disponible.</p>
+        <p class="text-center text-primary text-lg">Por favor, intenta más tarde.</p>
+      </mat-card-content>
+    </mat-card>
+  </article>
+  <article class="about-me mb-5" *ngIf="user">
+    <h2>Mi cuenta</h2>
+    <div>
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Datos personales</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <p class="flex align-items-center"><mat-icon class="text-500 text-xl">person</mat-icon> {{user.lastname}}, {{ user.name }}</p>
+            <p class="flex align-items-center"><mat-icon class="text-500 text-xl">mail</mat-icon> {{ user.email }}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </article>
+  <article class="danger-zone mb-5" *ngIf="user">
+    <h2 class="text-red-500">Zona de peligro</h2>
+    <div class="border-1 border-red-500 border-round">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Eliminar cuenta</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Si eliminas tu cuenta, no podrás recuperarla.</p>
+          <button mat-raised-button color="warn">Eliminar cuenta</button>
+          <p class="flex align-items-center mt-2"><mat-icon class="text-xl text-primary">info</mat-icon>Tu cuenta es gratis. No tiene costo de mantenimiento.</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </article>
+</section>

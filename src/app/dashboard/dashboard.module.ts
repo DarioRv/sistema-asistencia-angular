@@ -16,6 +16,7 @@ import { CourseAssistanceViewComponent } from './components/course-assistance-vi
 import { ReactiveFormsModule } from '@angular/forms';
 import { ScheduleFormComponent } from './components/schedule-form/schedule-form.component';
 import { DangerZoneOptionsComponent } from './components/danger-zone-options/danger-zone-options.component';
+import { CookieService } from 'ngx-cookie-service';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { DangerZoneOptionsComponent } from './components/danger-zone-options/dan
     MaterialModule,
     PrimeNgModule,
     ReactiveFormsModule,
-  ]
+  ],
+  providers: [CookieService]
 })
 export class DashboardModule { }

@@ -18,13 +18,16 @@
   </mat-sidenav>
 
   <mat-toolbar color="primary">
-    <button mat-icon-button (click)="sidenav.toggle()">
-      <mat-icon>menu</mat-icon>
-    </button>
+    <div class="flex justify-content-between w-full align-items-center">
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <button mat-button (click)="logout()">
+        <mat-icon>power_settings_new</mat-icon>
+        Logout
+      </button>
 
-    <span class="spacer"></span>
-
-    <button mat-button routerLink="/app">Logout</button>
+    </div>
   </mat-toolbar>
 
   <div class="container-limited p-6">

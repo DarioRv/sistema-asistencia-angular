@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'dashboard-layout-page',
@@ -11,4 +13,11 @@ export class LayoutPageComponent {
     {label: 'Materias', icon: 'grid_view', url: 'courses'},
     {label: 'Mi perfil', icon: 'person', url: 'account'},
   ]
+
+  constructor(private cookieService: CookieService, private router: Router) { }
+
+  logout(): void {
+    this.cookieService.delete('user');
+    this.router.navigate(['/']);
+  }
 }

@@ -8,6 +8,9 @@ import { Observable } from 'rxjs';
 })
 export class CoursesDataService {
 
+  // TODO: refactor this to use a real API
+  // INFO: this is a fake API using json-server
+
   private baseUrl: string = 'http://localhost:3000';
 
   constructor(private http: HttpClient) { }
@@ -18,5 +21,9 @@ export class CoursesDataService {
 
   findCourseById(id: number): Course {
     throw new Error('Not implemented yet');
+  }
+
+  getSuggestions(searchTerm: string): Observable<Course[]> {
+    return this.http.get<Course[]>(`${this.baseUrl}/courses?q=${searchTerm}`);
   }
 }

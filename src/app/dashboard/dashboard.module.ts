@@ -17,6 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ScheduleFormComponent } from './components/schedule-form/schedule-form.component';
 import { DangerZoneOptionsComponent } from './components/danger-zone-options/danger-zone-options.component';
 import { CookieService } from 'ngx-cookie-service';
+import { SearchBoxComponent } from './components/search-box/search-box.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { CookieService } from 'ngx-cookie-service';
     CourseSettingsComponent,
     CourseAssistanceViewComponent,
     ScheduleFormComponent,
-    DangerZoneOptionsComponent
+    DangerZoneOptionsComponent,
+    SearchBoxComponent
   ],
   imports: [
     CommonModule,

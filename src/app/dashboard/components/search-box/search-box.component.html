@@ -1,0 +1,14 @@
+<mat-form-field class="w-full">
+  <mat-label>Buscar curso</mat-label>
+  <input type="text" matInput [formControl]="searchInput" [matAutocomplete]="auto" (input)="searchCourse()">
+  <mat-autocomplete autoActiveFirstOption
+  #auto="matAutocomplete"
+  (optionSelected)="onSelectedOption($event)">
+    <mat-option *ngFor="let course of suggestedCourses" [value]="course">
+      {{ course.title }}
+    </mat-option>
+    <mat-option value="" *ngIf="suggestedCourses.length == 0 && searchInput.value && searchInput.value.length > 0">
+      No se encontró nada con el termine {{ searchInput.value }}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

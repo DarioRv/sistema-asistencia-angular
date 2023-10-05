@@ -9,9 +9,16 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class LayoutPageComponent {
   public sidebarItems = [
-    {label: 'Guía rapida', icon: 'book_2', url: 'start'},
-    {label: 'Materias', icon: 'grid_view', url: 'courses'},
-    {label: 'Mi perfil', icon: 'person', url: 'account'},
+    [
+      {label: 'Guía rapida', icon: 'book_2', url: 'start'},
+      {label: 'Materias', icon: 'grid_view', url: 'courses'},
+      {label: 'Mi perfil', icon: 'person', url: 'account'}
+
+    ],
+    [
+      {label: 'Soporte', icon: 'support_agent', url: ''},
+      {label: 'Opinar', icon: 'feedback', url: ''},
+    ]
   ]
 
   constructor(private cookieService: CookieService, private router: Router) { }

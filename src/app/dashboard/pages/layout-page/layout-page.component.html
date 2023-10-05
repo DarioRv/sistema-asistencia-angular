@@ -8,11 +8,12 @@
       </button> -->
     </mat-toolbar>
 
-    <mat-nav-list>
-      <mat-list-item *ngFor="let item of sidebarItems" [routerLink]="item.url">
+    <mat-nav-list *ngFor="let itemGroup of sidebarItems">
+      <mat-list-item *ngFor="let item of itemGroup"  [routerLink]="item.url">
         <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
         {{ item.label }}
       </mat-list-item>
+      <mat-divider></mat-divider>
     </mat-nav-list>
 
   </mat-sidenav>

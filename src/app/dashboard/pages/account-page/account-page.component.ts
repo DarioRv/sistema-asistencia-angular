@@ -14,6 +14,10 @@ export class AccountPageComponent implements OnInit {
   constructor(private cookieService: CookieService) { }
 
   ngOnInit(): void {
+    this.setSession();
+  }
+
+  setSession(): void {
     this.user = JSON.parse(this.cookieService.get('user'));
   }
 }

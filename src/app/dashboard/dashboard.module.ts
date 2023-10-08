@@ -18,6 +18,10 @@ import { ScheduleFormComponent } from './components/schedule-form/schedule-form.
 import { DangerZoneOptionsComponent } from './components/danger-zone-options/danger-zone-options.component';
 import { CookieService } from 'ngx-cookie-service';
 import { SearchBoxComponent } from './components/search-box/search-box.component';
+import { CardPlaceholderComponent } from './components/card-placeholder/card-placeholder.component';
+import { TablePlaceholderComponent } from './components/table-placeholder/table-placeholder.component';
+import { TabGroupPlaceholderComponent } from './components/tab-group-placeholder/tab-group-placeholder.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -33,7 +37,10 @@ import { SearchBoxComponent } from './components/search-box/search-box.component
     CourseAssistanceViewComponent,
     ScheduleFormComponent,
     DangerZoneOptionsComponent,
-    SearchBoxComponent
+    SearchBoxComponent,
+    CardPlaceholderComponent,
+    TablePlaceholderComponent,
+    TabGroupPlaceholderComponent,
   ],
   imports: [
     CommonModule,
@@ -41,6 +48,7 @@ import { SearchBoxComponent } from './components/search-box/search-box.component
     MaterialModule,
     PrimeNgModule,
     ReactiveFormsModule,
+    SharedModule
   ],
   providers: [CookieService]
 })

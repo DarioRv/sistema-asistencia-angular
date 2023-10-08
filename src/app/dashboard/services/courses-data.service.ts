@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Course } from '../interfaces/course.interface';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, catchError, map, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,14 +15,64 @@ export class CoursesDataService {
 
   constructor(private http: HttpClient) { }
 
+  /**
+   * HTTP get request to get all courses
+   * @returns Observable of courses array
+   */
   getCourses():Observable<Course[]> {
     return this.http.get<Course[]>(`${this.baseUrl}/courses`);
   }
 
-  findCourseById(id: number): Course {
-    throw new Error('Not implemented yet');
+  /**
+   * HTTP post request to add a new course
+   * @param course course to add
+   * @returns Observable of course or undefined
+   */
+  addCourse(course: Course): Observable<Course | undefined> {
+    return this.http.post<Course>(`${this.baseUrl}/courses`, course).pipe(
+      catchError( err => of(undefined) )
+    );
   }
 
+  /**
+   * HTTP patch request to update a course
+   * @param course course to update
+   * @returns Observable of course or undefined
+   */
+  updateCourse(course: Course): Observable<Course | undefined> {
+    return this.http.patch<Course>(`${this.baseUrl}/courses/${course.id}`, course).pipe(
+      catchError( err => of(undefined) )
+    );
+  }
+
+  /**
+   * HTTP delete request to delete a course
+   * @param id id of the course to delete
+   * @returns Observable of true if the course was deleted, false otherwise
+   */
+  deleteCourseById(id: number): Observable<boolean> {
+    return this.http.delete(`${this.baseUrl}/courses/${id}`).pipe(
+      map( resp => true ),
+      catchError( err => of(false) )
+    );
+  }
+
+  /**
+   * HTTP get request to find a course by id
+   * @param id id of the course to find
+   * @returns Observable of course or undefined
+   */
+  findCourseById(id: number): Observable<Course | undefined> {
+    return this.http.get<Course>(`${this.baseUrl}/courses/${id}`).pipe(
+      catchError( err => of(undefined))
+    );
+  }
+
+  /**
+   * HTTP get request to get courses suggestions for a search term
+   * @param searchTerm search term to use
+   * @returns Observable of courses array
+   */
   getSuggestions(searchTerm: string): Observable<Course[]> {
     return this.http.get<Course[]>(`${this.baseUrl}/courses?q=${searchTerm}`);
   }

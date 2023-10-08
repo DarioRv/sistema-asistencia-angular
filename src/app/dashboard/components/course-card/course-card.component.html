@@ -9,7 +9,7 @@
         <strong>Descripción: </strong>
         {{ course.description }}
       </p>
-      <mat-chip-listbox>
+      <mat-chip-listbox *ngIf="course.students">
         <mat-chip color="primary">
           {{ course.students.length }} estudiantes
         </mat-chip>

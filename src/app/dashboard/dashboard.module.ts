@@ -22,6 +22,7 @@ import { CardPlaceholderComponent } from './components/card-placeholder/card-pla
 import { TablePlaceholderComponent } from './components/table-placeholder/table-placeholder.component';
 import { TabGroupPlaceholderComponent } from './components/tab-group-placeholder/tab-group-placeholder.component';
 import { SharedModule } from '../shared/shared.module';
+import { CourseFormComponent } from './components/course-form/course-form.component';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import { SharedModule } from '../shared/shared.module';
     CardPlaceholderComponent,
     TablePlaceholderComponent,
     TabGroupPlaceholderComponent,
+    CourseFormComponent,
   ],
   imports: [
     CommonModule,

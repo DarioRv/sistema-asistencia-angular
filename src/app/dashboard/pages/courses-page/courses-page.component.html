@@ -7,6 +7,12 @@
 <ng-template #coursesList>
   <div class="courses">
     <course-search-box></course-search-box>
+    <div class="actions mb-3">
+      <button mat-flat-button color="primary" routerLink="">
+        <mat-icon>add</mat-icon>
+        <span>Añadir curso</span>
+      </button>
+    </div>
     <div class="grid align-items-stretch gap-3">
       <div class="sm:col-12 lg:col-4 xl:col-3 flex-grow-1 align-self-stretch" *ngFor="let course of courses">
         <dashboard-course-card [course]="course"></dashboard-course-card>

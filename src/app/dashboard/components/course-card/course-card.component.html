@@ -25,9 +25,17 @@
       Ver curso
     </button>
     <span class="spacer"></span>
-    <button mat-button mat-raised [routerLink]="[]">
-      <mat-icon>more_horiz</mat-icon>
-      Más
-    </button>
+    <div class="more-options">
+      <button mat-button mat-raised [matMenuTriggerFor]="menu">
+        <mat-icon>more_horiz</mat-icon>
+        Más
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item *ngFor="let option of courseOptions" [routerLink]="option.url">
+          <mat-icon class="text-500 text-xl">{{ option.icon }}</mat-icon>
+          <span>{{ option.label }}</span>
+        </button>
+      </mat-menu>
+    </div>
   </mat-card-actions>
 </mat-card>

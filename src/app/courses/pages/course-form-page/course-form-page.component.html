@@ -30,9 +30,8 @@
       <mat-icon>send</mat-icon>
       <span>Enviar</span>
     </button>
-    <button mat-button>
+    <button mat-button (click)="onCancel()">
       <span>Cancelar</span>
     </button>
   </div>
-  <pre>{{ currentCourse | json }}</pre>
 </form>

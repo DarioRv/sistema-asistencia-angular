@@ -17,11 +17,18 @@ export class SearchBoxComponent {
 
   constructor(private coursesDataService: CoursesDataService, private router: Router) {}
 
+  /**
+   * Method to get the course suggestions for the search term
+   */
   searchCourse(): void {
-    const value: string = this.searchInput.value || '';
-    this.coursesDataService.getSuggestions(value).subscribe(courses => this.suggestedCourses = courses);
+    const searchTerm: string = this.searchInput.value || '';
+    this.coursesDataService.getSuggestions(searchTerm).subscribe(courses => this.suggestedCourses = courses);
   }
 
+  /**
+   * Method to navigate to the selected course
+   * @param event The event that contains the selected option
+   */
   onSelectedOption(event: MatAutocompleteSelectedEvent): void {
     if (!event.option.value) {
       return;

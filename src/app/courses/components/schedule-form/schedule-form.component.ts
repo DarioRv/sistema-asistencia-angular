@@ -30,6 +30,9 @@ export class ScheduleFormComponent {
     this.form.get('minute2')?.setValue('30');
   }
 
+  /**
+   * Method to toggle the edit state of the form
+   */
   toggleEdit(): void {
     this.formEditState = !this.formEditState;
     if (this.formEditState) {
@@ -40,20 +43,24 @@ export class ScheduleFormComponent {
     }
   }
 
+  /**
+   * Method to enable the form inputs
+   */
   eneableInputs(): void {
-    this.form.get('hour1')?.enable();
-    this.form.get('minute1')?.enable();
-    this.form.get('hour2')?.enable();
-    this.form.get('minute2')?.enable();
+    this.form.enable();
   }
 
+  /**
+   * Method to disable the form inputs
+   */
   disableInputs(): void {
-    this.form.get('hour1')?.disable();
-    this.form.get('minute1')?.disable();
-    this.form.get('hour2')?.disable();
-    this.form.get('minute2')?.disable();
+    this.form.disable();
   }
 
+  /**
+   * Method to check if the form has errors
+   * @returns true if the form has errors, false otherwise
+   */
   hasErrors(): boolean {
     return this.form.invalid ? true : false;
   }

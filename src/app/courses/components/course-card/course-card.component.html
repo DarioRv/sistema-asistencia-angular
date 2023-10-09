@@ -9,18 +9,18 @@
         <strong>Descripción: </strong>
         {{ course.description }}
       </p>
-      <mat-chip-listbox *ngIf="course.students">
-        <mat-chip color="primary">
-          {{ course.students.length }} estudiantes
+      <mat-chip-listbox>
+        <mat-chip color="primary" *ngIf="!course.students">
+          Sin estudiantes
+        </mat-chip>
+        <mat-chip color="primary" *ngIf="course.students">
+          {{ course.students.length | i18nPlural:studentsMap }}
         </mat-chip>
       </mat-chip-listbox>
     </mat-card-content>
   </div>
-
-  <!-- <mat-divider></mat-divider> -->
-
   <mat-card-actions class="border border-top-1 surface-border">
-    <button mat-button mat-raised color="primary" [routerLink]="['/dashboard/course/', course.id]">
+    <button mat-button mat-raised color="primary" [routerLink]="['../view',course.id]">
       <mat-icon>visibility</mat-icon>
       Ver curso
     </button>
@@ -31,9 +31,13 @@
         Más
       </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item *ngFor="let option of courseOptions" [routerLink]="option.url">
-          <mat-icon class="text-500 text-xl">{{ option.icon }}</mat-icon>
-          <span>{{ option.label }}</span>
+        <button mat-menu-item [routerLink]="['../edit/', course.id]">
+          <mat-icon class="text-500 text-xl">edit</mat-icon>
+          <span>Editar</span>
+        </button>
+        <button mat-menu-item (click)="onDeleteCourse(course.id)">
+          <mat-icon class="text-500 text-xl">delete</mat-icon>
+          <span>Eliminar</span>
         </button>
       </mat-menu>
     </div>

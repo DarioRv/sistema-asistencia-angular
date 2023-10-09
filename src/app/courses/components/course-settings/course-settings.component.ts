@@ -19,6 +19,10 @@ export class CourseSettingsComponent {
     return true;
   }
 
+  /**
+   * Method to handle the file upload event
+   * @param event FileUploadEvent
+   */
   onUpload(event: FileUploadEvent) {
     this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded with Basic Mode' });
   }

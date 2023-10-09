@@ -4,6 +4,8 @@ import { CoursesDataService } from '../../services/courses-data.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
+import { filter, switchMap } from 'rxjs';
 
 @Component({
   selector: 'dashboard-course-card',
@@ -23,18 +25,40 @@ export class CourseCardComponent {
 
   constructor(private courseService: CoursesDataService, private snackbar: MatSnackBar, private router: Router, private dialog: MatDialog) {}
 
-  // TODO show a confirm dialog
-
+  /**
+   * Delete the selected course before a confirmation dialog
+   * @param id course id to delete
+   */
   onDeleteCourse(id: number): void {
-    this.courseService.deleteCourseById(id).subscribe((resp) => {
-      resp ? this.showSnackBar('Curso eliminado') : this.showSnackBar('Error');
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {data: {title: '¿Esta seguro?', description: 'Esta a punto de eliminar el curso'}});
 
+    dialogRef.afterClosed()
+    .pipe(
+      filter(result => result),
+      switchMap( () => this.courseService.deleteCourseById(id)),
+      filter(wasDeleted => wasDeleted)
+    )
+    .subscribe(() => {
+      this.showSnackBar('Curso eliminado')
+      this.redirectTo('dashboard/courses/list')
     });
   }
 
+  /**
+   * Show a snackbar with the given message
+   */
   showSnackBar(message: string): void {
     this.snackbar.open(message, 'Ok!', {
       duration: 2500
     });
   }
+
+  /**
+   * Redirect to the given uri
+   * @param uri uri to redirect
+   */
+  redirectTo(uri: string) {
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+    this.router.navigate([uri]));
+ }
 }

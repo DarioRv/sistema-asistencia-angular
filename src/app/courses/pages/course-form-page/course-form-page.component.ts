@@ -1,18 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Course } from '../../interfaces/course.interface';
 import { CoursesDataService } from '../../services/courses-data.service';
-import { switchMap } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router, ActivatedRoute } from '@angular/router';
+import { switchMap } from 'rxjs';
+import { Course } from '../../interfaces/course.interface';
 
 @Component({
-  selector: 'app-course-form',
-  templateUrl: './course-form.component.html',
+  selector: 'app-course-form-page',
+  templateUrl: './course-form-page.component.html',
   styles: [
   ]
 })
-export class CourseFormComponent implements OnInit {
+export class CourseFormPageComponent {
   courseForm: FormGroup = new FormGroup({
     id: new FormControl(),
     title: new FormControl('', [Validators.required, Validators.maxLength(50)]),
@@ -38,7 +38,6 @@ export class CourseFormComponent implements OnInit {
         return this.router.navigateByUrl('/dashboard');
       }
       this.courseForm.reset(course);
-      console.log(course)
       return;
     });
   }
@@ -65,13 +64,19 @@ export class CourseFormComponent implements OnInit {
     if (this.currentCourse.id) {
       this.courseService.updateCourse(this.currentCourse).subscribe( () => {
         this.showSnackBar('Course updated successfully!');
+        this.router.navigateByUrl('dashboard/courses/list');
       });
       return;
     }
 
     this.courseService.addCourse(this.currentCourse).subscribe( () => {
       this.showSnackBar('Course added successfully!');
+      this.router.navigateByUrl('dashboard/courses/list');
     });
+  }
+
+  onCancel(): void {
+    this.router.navigateByUrl('/dashboard/courses/list');
   }
 
   showSnackBar(message: string): void {

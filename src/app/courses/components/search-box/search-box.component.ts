@@ -36,6 +36,6 @@ export class SearchBoxComponent {
 
     const course: Course = event.option.value;
     this.searchInput.setValue(course.title);
-    this.router.navigate(['/dashboard/course', course.id]);
+    this.router.navigate(['/dashboard/courses/view', course.id]);
   }
 }

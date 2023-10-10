@@ -19,9 +19,9 @@
         <mat-error *ngIf="Password?.hasError('required')">Es necesaria la contraseña</mat-error>
       </mat-form-field>
     </div>
-    <button type="submit" mat-flat-button color="primary" class="w-full mt-2">
-      <mat-icon>login</mat-icon>
-      Iniciar sesión
+    <button type="submit" mat-flat-button color="primary" class="w-full mt-2" [disabled]="isSubmitting">
+      <mat-icon *ngIf="!isSubmitting">login</mat-icon>
+      {{ isSubmitting ? 'Autenticando...' : 'Iniciar sesión' }}
     </button>
   </form>
 </section>

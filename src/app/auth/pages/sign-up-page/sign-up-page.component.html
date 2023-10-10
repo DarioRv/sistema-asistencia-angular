@@ -33,9 +33,9 @@
         <mat-error *ngIf="Password?.hasError('required')">Es necesaria la contraseña</mat-error>
       </mat-form-field>
     </div>
-    <button type="submit" mat-flat-button color="primary" class="w-full mt-2">
-      <mat-icon>save</mat-icon>
-      Crear mi cuenta
+    <button type="submit" mat-flat-button color="primary" class="w-full mt-2" [disabled]="isSubmitting">
+      <mat-icon *ngIf="!isSubmitting">save</mat-icon>
+      {{ isSubmitting ? 'Enviando formulario...' : 'Crear mi cuenta' }}
     </button>
   </form>
 </section>

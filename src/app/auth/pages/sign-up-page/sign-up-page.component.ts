@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthenticationService } from '../../services/auth.service';
+import { User } from 'src/app/shared/interfaces/user.interface';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'auth-sign-up',
@@ -11,8 +14,9 @@ import { Router } from '@angular/router';
 export class SignUpPageComponent {
   signUpForm: FormGroup;
   hide = true;
+  isSubmitting: boolean = false;
 
-  constructor(private formBuilder: FormBuilder, private router: Router) {
+  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthenticationService, private snackbar: MatSnackBar) {
     this.signUpForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
@@ -37,16 +41,43 @@ export class SignUpPageComponent {
     return this.signUpForm.get('name');
   }
 
+  get formData(): User {
+    const user = this.signUpForm.value as User;
+    return user;
+  }
+
+  /**
+   * Method to register the user and redirect to the dashboard if the user is registered successfully
+   */
   register():void {
-    // TODO verificar datos de registro
     if (this.signUpForm.valid) {
-      console.log('Form valido', this.signUpForm.value);
+      this.isSubmitting = true;
+      this.authService.registerUser(this.formData).subscribe((user) => {
+        if (user) {
+          this.showSnackBar('Usuario registrado correctamente');
+          this.authService.saveSession(user);
+          this.router.navigate(['/dashboard']);
+        }
+        else {
+          this.showSnackBar('Error al registrar el usuario, asegúrese de que esta conectado a internet');
+        }
+        this.isSubmitting = false;
+      });
       // TODO Llamar al método para registrar al usuario
     }
     else {
-      console.log('Formulario inválido. Revisa los campos.');
+      this.showSnackBar('Por favor, rellene los campos');
       this.signUpForm.markAllAsTouched();
     }
   }
 
+  /**
+   * Method to show a snackbar
+   * @param message The message to show in the snackbar
+   */
+  showSnackBar(message: string): void {
+    this.snackbar.open(message, 'Ok!', {
+      duration: 5000
+    });
+  }
 }

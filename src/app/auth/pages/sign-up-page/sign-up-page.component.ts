@@ -20,24 +20,24 @@ export class SignUpPageComponent {
     this.signUpForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
-      surname: ['', [Validators.required]],
+      lastname: ['', [Validators.required]],
       name: ['', [Validators.required]]
     });
   }
 
-  get Email() {
+  get email() {
     return this.signUpForm.get('email');
   }
 
-  get Password() {
+  get password() {
     return this.signUpForm.get('password');
   }
 
-  get Surname() {
-    return this.signUpForm.get('surname');
+  get lastname() {
+    return this.signUpForm.get('lastname');
   }
 
-  get Name() {
+  get name() {
     return this.signUpForm.get('name');
   }
 

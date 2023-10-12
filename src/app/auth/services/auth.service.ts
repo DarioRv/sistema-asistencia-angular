@@ -106,8 +106,15 @@ export class AuthenticationService {
    * Method to check if there is a session of the authenticated user
    * @returns True if there is a session of the authenticated user, false otherwise
    */
-  checkAuthentication(): boolean {
-    return this.cookieService.check('user');
+  checkAuthentication(): Observable<boolean> {
+    if (!this.cookieService.check('user')) return of(false);
+    const user: User = JSON.parse(this.cookieService.get('user'));
+    return this.http.get<User | undefined>(`${this.baseUrl}/users/${user.id}`).pipe(
+      tap( user => console.log(user)),
+      tap( user => {if (user) this.login(user)} ),
+      map( user => !!user ),
+      catchError( err => of(false) )
+    );
   }
 
   /**

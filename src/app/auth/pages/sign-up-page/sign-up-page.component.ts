@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../../services/auth.service';
-import { User } from 'src/app/shared/interfaces/user.interface';
+import { User } from 'src/app/auth/interfaces/user.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -55,7 +55,7 @@ export class SignUpPageComponent {
       this.authService.registerUser(this.formData).subscribe((user) => {
         if (user) {
           this.showSnackBar('Usuario registrado correctamente');
-          this.authService.saveSession(user);
+          this.authService.login(user);
           this.router.navigate(['/dashboard']);
         }
         else {
@@ -63,7 +63,6 @@ export class SignUpPageComponent {
         }
         this.isSubmitting = false;
       });
-      // TODO Llamar al método para registrar al usuario
     }
     else {
       this.showSnackBar('Por favor, rellene los campos');

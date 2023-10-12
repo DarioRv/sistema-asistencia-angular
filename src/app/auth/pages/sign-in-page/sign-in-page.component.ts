@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService } from '../../services/auth.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
+import { AuthenticationService } from '../../services/auth.service';
 
 @Component({
   selector: 'auth-sign-in',
@@ -39,9 +40,9 @@ export class SignInPageComponent {
       this.isSubmitting = true;
       this.authService.authenticateUser(this.signInForm.value).subscribe((user) => {
         if (user) {
-          this.router.navigate(['/dashboard']);
-          this.authService.saveSession(user);
+          this.authService.login(user);
           this.showSnackBar('Inicio de sesión correcto');
+          this.router.navigate(['/dashboard']);
         }
         else {
           this.showSnackBar('Error al iniciar sesión');

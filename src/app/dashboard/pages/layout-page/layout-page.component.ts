@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
+
+import { AuthenticationService } from 'src/app/auth/services/auth.service';
 
 @Component({
   selector: 'dashboard-layout-page',
   templateUrl: './layout-page.component.html',
   styleUrls: ['./layout-page.component.css']
 })
-export class LayoutPageComponent {
+export class LayoutPageComponent implements OnDestroy {
   public sidebarItems = [
     [
       {label: 'Guía rapida', icon: 'book_2', url: 'start'},
@@ -21,10 +22,17 @@ export class LayoutPageComponent {
     ]
   ]
 
-  constructor(private cookieService: CookieService, private router: Router) { }
+  constructor(private authService: AuthenticationService, private router: Router) { }
 
+  ngOnDestroy(): void {
+    this.authService.logout();
+  }
+
+  /**
+   * Method to logout and redirect to the home page
+   */
   logout(): void {
-    this.cookieService.delete('user');
+    this.authService.logout();
     this.router.navigate(['/']);
   }
 }

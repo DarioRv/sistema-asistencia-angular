@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { User } from "../interfaces/user.interface";
-import { Observable, catchError, map, of } from "rxjs";
+import { Observable, catchError, map, of, tap } from "rxjs";
 import { AuthUser } from "../interfaces/auth-user.interface";
 import { CookieService } from "ngx-cookie-service";
 
@@ -24,6 +24,7 @@ export class AuthenticationService {
   authenticateUser(user: AuthUser): Observable<User | undefined> {
     return this.http.get<User[]>(`${this.baseUrl}/users/?email=${user.email}&password=${user.password}`).pipe(
       map( (users: User[]) => users[0] ),
+      tap( user => this.login(user) ),
       catchError( (err) => of(undefined) )
     );
   }
@@ -66,15 +67,47 @@ export class AuthenticationService {
    * Method to save the session of the authenticated user
    * @param user The user to save in the session
    */
-  saveSession(user: User): void {
+  private saveSession(user: User): void {
     this.cookieService.set('user', JSON.stringify(user));
+  }
+
+  /**
+   * Method to delete the session of the authenticated user from the cookies
+   */
+  private deleteSession(): void {
+    this.cookieService.delete('user');
   }
 
   /**
    * Method to set the session of the authenticated user
    */
-  setSession(): void {
-    this.activeSession = JSON.parse(this.cookieService.get('user'));
+  private setSession(user: User): void {
+    this.activeSession = user;
+  }
+
+  /**
+   * Method to login the authenticated user
+   * @param user The user to login
+   */
+  login(user: User): void {
+    this.saveSession(user);
+    this.setSession(user);
+  }
+
+  /**
+   * Method to logout the authenticated user
+   */
+  logout(): void {
+    this.deleteSession();
+    this.activeSession = undefined;
+  }
+
+  /**
+   * Method to check if there is a session of the authenticated user
+   * @returns True if there is a session of the authenticated user, false otherwise
+   */
+  checkAuthentication(): boolean {
+    return this.cookieService.check('user');
   }
 
   /**

@@ -12,8 +12,8 @@
           <mat-card-title>Datos personales</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <p class="flex align-items-center"><mat-icon class="text-500 text-xl">person</mat-icon> {{user!.lastname}}, {{ user!.name }}</p>
-            <p class="flex align-items-center"><mat-icon class="text-500 text-xl">mail</mat-icon> {{ user!.email }}</p>
+            <p class="flex align-items-center"><mat-icon class="text-500 text-xl">person</mat-icon> {{user?.lastname}}, {{ user?.name }}</p>
+            <p class="flex align-items-center"><mat-icon class="text-500 text-xl">mail</mat-icon> {{ user?.email }}</p>
         </mat-card-content>
       </mat-card>
     </article>
@@ -26,7 +26,7 @@
           </mat-card-header>
           <mat-card-content>
             <p>Si eliminas tu cuenta, no podrás recuperarla.</p>
-            <button mat-raised-button color="warn">Eliminar cuenta</button>
+            <button mat-raised-button color="warn" (click)="deleteAccount()">Eliminar cuenta</button>
             <p class="flex align-items-center mt-2"><mat-icon class="text-xl text-primary">info</mat-icon>Tu cuenta es gratis. No tiene costo de mantenimiento.</p>
           </mat-card-content>
         </mat-card>

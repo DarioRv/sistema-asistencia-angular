@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { User } from "../../shared/interfaces/user.interface";
+import { User } from "../interfaces/user.interface";
 import { Observable, catchError, map, of } from "rxjs";
 import { AuthUser } from "../interfaces/auth-user.interface";
 import { CookieService } from "ngx-cookie-service";
@@ -12,6 +12,7 @@ export class AuthenticationService {
   // TODO: refactor this to use a real API
 
   private baseUrl: string = 'http://localhost:3000';
+  private activeSession?: User;
 
   constructor(private http: HttpClient, private cookieService: CookieService) {}
 
@@ -54,14 +55,34 @@ export class AuthenticationService {
    * @param id The id of the user to delete
    * @returns Observable of true if the user was deleted, false otherwise
    */
-  deleteUserById(id: number): Observable<boolean> {
+  deleteUserById(id: string): Observable<boolean> {
     return this.http.delete(`${this.baseUrl}/users/${id}`).pipe(
       map( resp => true ),
       catchError( (err) => of(false) )
     );
   }
 
+  /**
+   * Method to save the session of the authenticated user
+   * @param user The user to save in the session
+   */
   saveSession(user: User): void {
     this.cookieService.set('user', JSON.stringify(user));
+  }
+
+  /**
+   * Method to set the session of the authenticated user
+   */
+  setSession(): void {
+    this.activeSession = JSON.parse(this.cookieService.get('user'));
+  }
+
+  /**
+   * Method to get the current session of the authenticated user
+   * @returns The current session of the authenticated user or undefined if there is no session
+   */
+  get currentSession(): User | undefined {
+    if (!this.activeSession) return undefined;
+    return structuredClone(this.activeSession);
   }
 }

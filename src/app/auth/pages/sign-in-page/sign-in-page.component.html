@@ -1,4 +1,4 @@
-<section class="form flex flex-column align-items-center justify-content-center w-full">
+<section class="form flex flex-column align-items-center justify-content-center h-full">
   <h2>Iniciar sesión</h2>
   <form [formGroup]="signInForm" class="w-full max-w-30rem" (ngSubmit)="login()">
     <div>
@@ -24,4 +24,7 @@
       {{ isSubmitting ? 'Autenticando...' : 'Iniciar sesión' }}
     </button>
   </form>
+  <div class="w-full flex justify-content-center mt-5">
+    <a routerLink="/auth/sign-up">¿No tienes cuenta?</a>
+  </div>
 </section>

@@ -30,8 +30,16 @@ export class CourseCardComponent {
    * @param id course id to delete
    */
   onDeleteCourse(id: number): void {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {data: {title: '¿Esta seguro?', description: 'Esta a punto de eliminar el curso'}});
-
+    const dialogRef = this.dialog.open(
+      ConfirmDialogComponent,
+      {
+        data: {
+          title: '¿Esta seguro?',
+          description: `Esta a punto de eliminar el curso ${this.course.title}`,
+          confirmButtonText: 'Eliminar',
+          cancelButtonText: 'Cancelar'
+        }
+      });
     dialogRef.afterClosed()
     .pipe(
       filter(result => result),

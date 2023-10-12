@@ -1,4 +1,4 @@
-<section class="form flex flex-column align-items-center justify-content-center w-full">
+<section class="form flex flex-column align-items-center justify-content-center h-full">
   <h2>Iniciar sesión</h2>
   <form [formGroup]="signInForm" class="w-full max-w-30rem" (ngSubmit)="login()">
     <div>
@@ -19,9 +19,12 @@
         <mat-error *ngIf="Password?.hasError('required')">Es necesaria la contraseña</mat-error>
       </mat-form-field>
     </div>
-    <button type="submit" mat-flat-button color="primary" class="w-full mt-2">
-      <mat-icon>login</mat-icon>
-      Iniciar sesión
+    <button type="submit" mat-flat-button color="primary" class="w-full mt-2" [disabled]="isSubmitting">
+      <mat-icon *ngIf="!isSubmitting">login</mat-icon>
+      {{ isSubmitting ? 'Autenticando...' : 'Iniciar sesión' }}
     </button>
   </form>
+  <div class="w-full flex justify-content-center mt-5">
+    <a routerLink="/auth/sign-up">¿No tienes cuenta?</a>
+  </div>
 </section>

@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from '../../services/auth.service';
-import { User } from '../../../shared/interfaces/user.interface';
-import { CookieService } from 'ngx-cookie-service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+import { AuthenticationService } from '../../services/auth.service';
 
 @Component({
   selector: 'auth-sign-in',
@@ -14,8 +14,9 @@ import { CookieService } from 'ngx-cookie-service';
 export class SignInPageComponent {
   signInForm: FormGroup;
   hide = true;
+  isSubmitting: boolean = false;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private userService: UserService, private cookieService: CookieService) {
+  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthenticationService, private snackbar: MatSnackBar) {
     this.signInForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
@@ -30,28 +31,38 @@ export class SignInPageComponent {
     return this.signInForm.get('password');
   }
 
-
+  /**
+   * Method to login and redirect to the dashboard if the user is authenticated successfully
+   * or show a snackbar if the user could not be authenticated
+   */
   login(): void {
-    // TODO verificar datos de acceso
     if (this.signInForm.valid) {
-      console.log('Form valido', this.signInForm.value);
-      this.authUser() || console.log('Usuario no encontrado');
+      this.isSubmitting = true;
+      this.authService.authenticateUser(this.signInForm.value).subscribe((user) => {
+        if (user) {
+          this.authService.login(user);
+          this.showSnackBar('Inicio de sesión correcto');
+          this.router.navigate(['/dashboard']);
+        }
+        else {
+          this.showSnackBar('Error al iniciar sesión');
+        }
+        this.isSubmitting = false;
+      });
     }
     else {
-      console.log('Formulario inválido. Revisa los campos.');
+      this.showSnackBar('Por favor, rellene los campos')
       this.signInForm.markAllAsTouched();
     }
   }
 
-  authUser(): boolean {
-    let success: boolean = false;
-    this.userService.authUser(this.signInForm.value).subscribe((user: User) => {
-      if (user) {
-        this.router.navigate(['/dashboard']);
-        this.cookieService.set('user', JSON.stringify(user));
-        success = true;
-      }
+  /**
+   * Method to show a snackbar
+   * @param message The message to show in the snackbar
+   */
+  showSnackBar(message: string): void {
+    this.snackbar.open(message, 'Ok!', {
+      duration: 5000
     });
-    return success;
   }
 }

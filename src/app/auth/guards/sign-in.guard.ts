@@ -21,7 +21,6 @@ const checkAuthStatus = (): Observable<boolean> => {
   const authService = inject(AuthenticationService);
   const router = inject(Router);
   return authService.checkAuthentication().pipe(
-    tap( isAuthenticated => console.log(!isAuthenticated) ),
     tap( isAuthenticated => {
       if (isAuthenticated)
       router.navigate(['/dashboard']);

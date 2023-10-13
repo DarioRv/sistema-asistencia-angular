@@ -1,9 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { User } from "../interfaces/user.interface";
 import { Observable, catchError, map, of, tap } from "rxjs";
-import { AuthUser } from "../interfaces/auth-user.interface";
 import { CookieService } from "ngx-cookie-service";
+import { User } from "../interfaces/user.interface";
+import { AuthUser } from "../interfaces/auth-user.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -112,7 +112,7 @@ export class AuthenticationService {
     if (!this.cookieService.check('user') || this.cookieService.get('user') == 'undefined') return of(false);
     const user: User = JSON.parse(this.cookieService.get('user'));
     return this.http.get<User | undefined>(`${this.baseUrl}/users/${user.id}`).pipe(
-      tap( user => {if (user) this.login(user)} ),
+      tap( user => {if (user) this.setSession(user)} ),
       map( user => !!user ),
       catchError( err => of(false) )
     );

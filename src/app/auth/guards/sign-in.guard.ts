@@ -14,7 +14,7 @@ export const isAlreadyAuthenticated: CanActivateFn = (route: ActivatedRouteSnaps
 }
 
 /**
- * Method to check the authentication status of the user and redirect to the auth page if the user is not authenticated
+ * Method to check the authentication status of the user and redirect to the dashboard page if the user is authenticated
  * @returns Observable of true if the user is authenticated, false otherwise
  */
 const checkAuthStatus = (): Observable<boolean> => {

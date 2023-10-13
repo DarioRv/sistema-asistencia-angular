@@ -24,7 +24,9 @@ export class AuthenticationService {
   authenticateUser(user: AuthUser): Observable<User | undefined> {
     return this.http.get<User[]>(`${this.baseUrl}/users/?email=${user.email}&password=${user.password}`).pipe(
       map( (users: User[]) => users[0] ),
-      tap( user => this.login(user) ),
+      tap( user => {
+        if (user) this.login(user);
+      }),
       catchError( (err) => of(undefined) )
     );
   }
@@ -107,10 +109,9 @@ export class AuthenticationService {
    * @returns True if there is a session of the authenticated user, false otherwise
    */
   checkAuthentication(): Observable<boolean> {
-    if (!this.cookieService.check('user')) return of(false);
+    if (!this.cookieService.check('user') || this.cookieService.get('user') == 'undefined') return of(false);
     const user: User = JSON.parse(this.cookieService.get('user'));
     return this.http.get<User | undefined>(`${this.baseUrl}/users/${user.id}`).pipe(
-      tap( user => console.log(user)),
       tap( user => {if (user) this.login(user)} ),
       map( user => !!user ),
       catchError( err => of(false) )

@@ -92,6 +92,7 @@ export class AuthenticationService {
    * @param user The user to login
    */
   login(user: User): void {
+    if (this.currentSession || this.cookieService.check('user')) this.logout();
     this.saveSession(user);
     this.setSession(user);
   }
@@ -109,10 +110,15 @@ export class AuthenticationService {
    * @returns True if there is a session of the authenticated user, false otherwise
    */
   checkAuthentication(): Observable<boolean> {
-    if (!this.cookieService.check('user') || this.cookieService.get('user') == 'undefined') return of(false);
-    const user: User = JSON.parse(this.cookieService.get('user'));
+    if (!this.cookieService.check('user') || !this.cookieService.get('user')) return of(false);
+    let user: User;
+    try {
+      user = JSON.parse(this.cookieService.get('user'));
+    }
+    catch(err) {
+      return of(false);
+    }
     return this.http.get<User | undefined>(`${this.baseUrl}/users/${user.id}`).pipe(
-      tap( user => {if (user) this.setSession(user)} ),
       map( user => !!user ),
       catchError( err => of(false) )
     );

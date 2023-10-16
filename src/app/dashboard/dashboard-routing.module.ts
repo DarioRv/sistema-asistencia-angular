@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LayoutPageComponent } from './pages/layout-page/layout-page.component';
 import { AccountPageComponent } from './pages/account-page/account-page.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
+import { checkAuthentication } from '../auth/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -26,7 +27,9 @@ const routes: Routes = [
         pathMatch: 'full',
         redirectTo: 'start'
       }
-    ]
+    ],
+    canActivate: [checkAuthentication],
+    canActivateChild: [checkAuthentication]
   }
 ];
 

@@ -40,7 +40,6 @@ export class SignInPageComponent {
       this.isSubmitting = true;
       this.authService.authenticateUser(this.signInForm.value).subscribe((user) => {
         if (user) {
-          this.authService.login(user);
           this.showSnackBar('Inicio de sesión correcto');
           this.router.navigate(['/dashboard']);
         }

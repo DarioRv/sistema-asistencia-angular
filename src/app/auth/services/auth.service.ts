@@ -1,9 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { User } from "../interfaces/user.interface";
 import { Observable, catchError, map, of, tap } from "rxjs";
-import { AuthUser } from "../interfaces/auth-user.interface";
 import { CookieService } from "ngx-cookie-service";
+import { User } from "../interfaces/user.interface";
+import { AuthUser } from "../interfaces/auth-user.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +24,9 @@ export class AuthenticationService {
   authenticateUser(user: AuthUser): Observable<User | undefined> {
     return this.http.get<User[]>(`${this.baseUrl}/users/?email=${user.email}&password=${user.password}`).pipe(
       map( (users: User[]) => users[0] ),
-      tap( user => this.login(user) ),
+      tap( user => {
+        if (user) this.login(user);
+      }),
       catchError( (err) => of(undefined) )
     );
   }
@@ -90,6 +92,7 @@ export class AuthenticationService {
    * @param user The user to login
    */
   login(user: User): void {
+    if (this.currentSession || this.cookieService.check('user')) this.logout();
     this.saveSession(user);
     this.setSession(user);
   }
@@ -106,8 +109,19 @@ export class AuthenticationService {
    * Method to check if there is a session of the authenticated user
    * @returns True if there is a session of the authenticated user, false otherwise
    */
-  checkAuthentication(): boolean {
-    return this.cookieService.check('user');
+  checkAuthentication(): Observable<boolean> {
+    if (!this.cookieService.check('user') || !this.cookieService.get('user')) return of(false);
+    let user: User;
+    try {
+      user = JSON.parse(this.cookieService.get('user'));
+    }
+    catch(err) {
+      return of(false);
+    }
+    return this.http.get<User | undefined>(`${this.baseUrl}/users/${user.id}`).pipe(
+      map( user => !!user ),
+      catchError( err => of(false) )
+    );
   }
 
   /**

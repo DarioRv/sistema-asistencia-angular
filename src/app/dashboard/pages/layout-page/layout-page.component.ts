@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthenticationService } from 'src/app/auth/services/auth.service';
@@ -8,7 +8,7 @@ import { AuthenticationService } from 'src/app/auth/services/auth.service';
   templateUrl: './layout-page.component.html',
   styleUrls: ['./layout-page.component.css']
 })
-export class LayoutPageComponent implements OnDestroy {
+export class LayoutPageComponent {
   public sidebarItems = [
     [
       {label: 'Guía rapida', icon: 'book_2', url: 'start'},
@@ -23,10 +23,6 @@ export class LayoutPageComponent implements OnDestroy {
   ]
 
   constructor(private authService: AuthenticationService, private router: Router) { }
-
-  ngOnDestroy(): void {
-    this.authService.logout();
-  }
 
   /**
    * Method to logout and redirect to the home page

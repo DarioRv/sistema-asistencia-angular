@@ -3,6 +3,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { LayoutPageComponent } from "./pages/layout-page/layout-page.component";
 import { SignInPageComponent } from "./pages/sign-in-page/sign-in-page.component";
 import { SignUpPageComponent } from "./pages/sign-up-page/sign-up-page.component";
+import { isAlreadyAuthenticated } from "./guards/sign-in.guard";
 
 const routes: Routes = [
   {
@@ -11,7 +12,8 @@ const routes: Routes = [
     children: [
       {
         path: 'sign-in',
-        component: SignInPageComponent
+        component: SignInPageComponent,
+        canActivate: [isAlreadyAuthenticated]
       },
       {
         path: 'sign-up',

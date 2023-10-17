@@ -1,0 +1,12 @@
+@use '@angular/material' as mat;
+
+$custom-typography: mat.define-typography-config(
+  $font-family:'"Montserrat",sans-serif'
+);
+
+$custom-theme: mat.define-light-theme((
+  typography: $custom-typography
+));
+
+@include mat.typography-hierarchy($custom-typography);
+@include mat.all-component-themes($custom-theme);

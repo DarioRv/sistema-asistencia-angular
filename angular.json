@@ -50,7 +50,8 @@
               "primeflex/themes/primeone-light.css",
               "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
               "node_modules/primeng/resources/primeng.min.css",
-              "src/styles.css"
+              "src/styles.css",
+              "src/typography.config.scss"
             ],
             "tsConfig": "tsconfig.app.json"
           }

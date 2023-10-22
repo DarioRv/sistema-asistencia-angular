@@ -1,1 +1,59 @@
-<p>home-page works!</p>
+<section class="home">
+  <main class="banner spacer min-h-screen">
+    <h1 class="text-8xl">ASIST.IO</h1>
+    <p>Es la aplicación perfecta para profesores que quieren <br> llevar un control de la asistencia de sus alumnos de <br> una manera sencilla, rapida y eficiente.</p>
+    <a routerLink="/auth/sign-up"><button>Empeza a usar</button></a>
+  </main>
+  <article class="how-works spacer min-h-screen">
+    <h2 class="text-5xl">¿Cómo funciona?</h2>
+    <div class="fast-guide grid align-items-stretch gap-3 mt-6">
+      <step-card class="sm:col-12 lg:col-4 xl:col-2 flex-grow-1 align-self-stretch mb-6" [step]="step" *ngFor="let step of stepCardItems"></step-card>
+    </div>
+  </article>
+  <article class="benefits spacer min-h-screen">
+    <h2 class="text-5xl">Beneficios de usar ASIST.IO</h2>
+    <ul class="grid gap-3">
+      <li class="sm:col-12 lg:col-3 flex-grow-1 flex align-items-center gap-2" *ngFor="let benefit of benefitsItems">
+        <mat-icon class="text-green-500">{{ benefit.icon }}</mat-icon>
+        <span>{{ benefit.label }}</span>
+      </li>
+    </ul>
+  </article>
+  <article class="get-started spacer min-h-screen">
+    <div class="content">
+      <h2 class="text-5xl">¿Cómo empiezo?</h2>
+      <p class="text-white">De manera rapida podes empezar siguiendo estos pasos:</p>
+      <div class="steper mt-8">
+        <div class="step flex flex-row gap-5">
+          <div class="icon flex flex-column align-items-center">
+            <div class="circle"></div>
+            <div class="line"></div>
+          </div>
+          <div class="description">
+            <h3>Crea tu cuenta</h3>
+            <p><a class="underline text-white" routerLink="/auth/sign-up">Registrate</a> o <a class="underline text-white" routerLink="/auth/sign-in">inicia sesión</a> para abrir el dashboard.</p>
+          </div>
+        </div>
+        <div class="step flex flex-row gap-5">
+          <div class="icon flex flex-column align-items-center">
+            <div class="circle"></div>
+            <div class="line"></div>
+          </div>
+          <div class="description">
+            <h3>Leé las guías</h3>
+            <p>Podrás encontrar diferentes guías para que te familiarices con el sistema.</p>
+          </div>
+        </div>
+        <div class="step flex flex-row gap-5">
+          <div class="icon flex flex-column align-items-center">
+            <div class="circle"></div>
+          </div>
+          <div class="description">
+            <h3>Creá tu primer curso</h3>
+            <p>Y empezá a simplificar tus clases.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+</section>

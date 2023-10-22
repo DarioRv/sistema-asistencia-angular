@@ -7,6 +7,8 @@ import { LayoutPageComponent } from './pages/layout-page/layout-page.component';
 import { SharedModule } from '../shared/shared.module';
 import { ManualPageComponent } from './pages/manual-page/manual-page.component';
 import { ChangeLogPageComponent } from './pages/change-log-page/change-log-page.component';
+import { StepCardComponent } from './components/step-card/step-card.component';
+import { MaterialModule } from '../material/material.module';
 
 
 @NgModule({
@@ -14,12 +16,14 @@ import { ChangeLogPageComponent } from './pages/change-log-page/change-log-page.
     HomePageComponent,
     LayoutPageComponent,
     ManualPageComponent,
-    ChangeLogPageComponent
+    ChangeLogPageComponent,
+    StepCardComponent,
   ],
   imports: [
     CommonModule,
     HomeRoutingModule,
-    SharedModule
+    SharedModule,
+    MaterialModule
   ]
 })
 export class HomeModule { }

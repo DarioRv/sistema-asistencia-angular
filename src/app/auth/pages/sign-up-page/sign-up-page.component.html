@@ -1,44 +1,52 @@
-<section class="form flex flex-column align-items-center justify-content-center w-full">
-  <h2>Registrarme</h2>
-  <form [formGroup]="signUpForm" class="w-full max-w-30rem" (ngSubmit)="register()">
-    <div>
-      <mat-form-field class="w-full mb-1">
-        <mat-label>Ingresa tu email</mat-label>
-        <input matInput placeholder="pat@example.com" name="email" id="email" formControlName="email" required>
-        <mat-error *ngIf="email?.hasError('required')">Es necesario el email</mat-error>
-        <mat-error *ngIf="email?.hasError('email')">El formato no es correcto</mat-error>
-      </mat-form-field>
-    </div>
-    <div>
-      <mat-form-field class="w-full mb-1">
-        <mat-label>Ingresa tus apellidos</mat-label>
-        <input matInput name="lastname" id="lastname" formControlName="lastname" required>
-        <mat-error *ngIf="lastname?.hasError('required')">Es necesario el apellido</mat-error>
-      </mat-form-field>
-    </div>
-    <div>
-      <mat-form-field class="w-full mb-1">
-        <mat-label>Ingresa tus nombres</mat-label>
-        <input matInput name="name" id="name" formControlName="name" required>
-        <mat-error *ngIf="name?.hasError('required')">Es necesario el nombre</mat-error>
-      </mat-form-field>
-    </div>
-    <div>
-      <mat-form-field class="w-full mb-1">
-        <mat-label>Ingresa tu contraseña</mat-label>
-        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
-        <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+<section class="sign-up surface-100 p-5">
+  <div class="grid align-items-stretch h-min surface-200 border-round-3xl">
+    <div class="form flex flex-column align-items-center col-12 lg:col-6 px-6 py-8">
+      <h2 class="text-5xl font-bold mb-6">Registrarme</h2>
+      <form [formGroup]="signUpForm" class="w-full max-w-30rem" (ngSubmit)="register()">
+        <div>
+          <mat-form-field class="w-full mb-1">
+            <mat-label>Ingresa tu email</mat-label>
+            <input matInput placeholder="pat@example.com" name="email" id="email" formControlName="email" required>
+            <mat-error *ngIf="email?.hasError('required')">Es necesario el email</mat-error>
+            <mat-error *ngIf="email?.hasError('email')">El formato no es correcto</mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="w-full mb-1">
+            <mat-label>Ingresa tus apellidos</mat-label>
+            <input matInput name="lastname" id="lastname" formControlName="lastname" required>
+            <mat-error *ngIf="lastname?.hasError('required')">Es necesario el apellido</mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="w-full mb-1">
+            <mat-label>Ingresa tus nombres</mat-label>
+            <input matInput name="name" id="name" formControlName="name" required>
+            <mat-error *ngIf="name?.hasError('required')">Es necesario el nombre</mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="w-full mb-1">
+            <mat-label>Ingresa tu contraseña</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+            <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error *ngIf="password?.hasError('required')">Es necesaria la contraseña</mat-error>
+          </mat-form-field>
+        </div>
+        <button type="submit" mat-flat-button color="primary" class="w-full mt-2 bg-indigo-600" [disabled]="isSubmitting">
+          <mat-icon *ngIf="!isSubmitting">save</mat-icon>
+          {{ isSubmitting ? 'Enviando formulario...' : 'Crear mi cuenta' }}
         </button>
-        <mat-error *ngIf="password?.hasError('required')">Es necesaria la contraseña</mat-error>
-      </mat-form-field>
+      </form>
     </div>
-    <button type="submit" mat-flat-button color="primary" class="w-full mt-2" [disabled]="isSubmitting">
-      <mat-icon *ngIf="!isSubmitting">save</mat-icon>
-      {{ isSubmitting ? 'Enviando formulario...' : 'Crear mi cuenta' }}
-    </button>
-  </form>
-  <div class="w-full flex justify-content-center mt-5">
-    <a routerLink="/auth/sign-in">¿Ya tienes cuenta?</a>
+    <div class="sign-in-redirect col-12 lg:col-6 flex flex-column align-items-center justify-content-center bg-indigo-600 px-6 py-8 text-white">
+      <h2 class="text-5xl font-bold mb-6">¿Ya tienes cuenta?</h2>
+      <p>
+        Inicia sesión ahora y empieza a disfrutar de los beneficios de agilizar tus clases.
+      </p>
+      <button class="text-lg mt-4" routerLink="/auth/sign-in">Iniciar sesión</button>
+    </div>
   </div>
 </section>

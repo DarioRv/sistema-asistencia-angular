@@ -1,6 +1,6 @@
 import { inject } from "@angular/core";
 import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from "@angular/router";
-import { Observable, map, tap } from "rxjs";
+import { Observable, tap } from "rxjs";
 import { AuthenticationService } from "../services/auth.service";
 
 /**
@@ -25,6 +25,5 @@ const checkAuthStatus = (): Observable<boolean> => {
       if (!isAuthenticated)
       router.navigate(['/auth/sign-in']);
     }),
-    map( isAuthenticated => !isAuthenticated )
   );
 }

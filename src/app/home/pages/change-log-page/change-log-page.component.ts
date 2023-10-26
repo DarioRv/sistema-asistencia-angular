@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ChangeLogItem } from '../../interfaces/change-log-item.interface';
 
 @Component({
   selector: 'app-change-log-page',
@@ -7,5 +8,7 @@ import { Component } from '@angular/core';
   ]
 })
 export class ChangeLogPageComponent {
+  changeLogItems: ChangeLogItem[] = [
 
+  ];
 }

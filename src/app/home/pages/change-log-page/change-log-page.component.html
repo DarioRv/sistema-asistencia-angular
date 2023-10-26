@@ -1,1 +1,27 @@
-<p>change-log-page works!</p>
+<section class="change-log min-h-screen p-1 lg:p-8">
+  <div class="flex flex-column justify-center items-center container-limited surface-200 border-round p-5 h-full">
+    <h1 class="text-6xl font-bold mb-8">Actualizaciones y versiones</h1>
+    <ng-template #alert>
+      <h2 class="text-5xl font-bold text-center text-400">No hay registros</h2>
+    </ng-template>
+    <div class="logs" *ngIf="changeLogItems.length != 0; else alert">
+      <mat-card class="shadow-2 mb-4" *ngFor="let log of changeLogItems">
+        <mat-chip-listbox class="px-3 mt-2">
+          <mat-chip [class]="log.type.classColor"><span class="text-white">{{ log.type.type }}</span></mat-chip>
+          <mat-chip [class]="log.type.classColor"><span class="text-white">{{ log.version }}</span></mat-chip>
+        </mat-chip-listbox>
+        <mat-card-header>
+          <mat-card-title>
+            <h2 class="text-5xl font-bold">{{ log.title }}</h2>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p *ngFor="let change of log.changes">{{ change }}</p>
+        </mat-card-content>
+        <mat-card-footer>
+          <p class="px-3 mt-3 text-500">Released on {{ log.date }}</p>
+        </mat-card-footer>
+      </mat-card>
+    </div>
+  </div>
+</section>

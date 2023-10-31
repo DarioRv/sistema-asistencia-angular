@@ -9,6 +9,5 @@ import { ChangeLogItem } from '../../interfaces/change-log-item.interface';
 })
 export class ChangeLogPageComponent {
   changeLogItems: ChangeLogItem[] = [
-
   ];
 }

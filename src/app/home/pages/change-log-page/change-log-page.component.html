@@ -1,27 +1,29 @@
-<section class="change-log min-h-screen p-1 lg:p-8">
-  <div class="flex flex-column justify-center items-center container-limited surface-200 border-round p-5 h-full">
-    <h1 class="text-6xl font-bold mb-8">Actualizaciones y versiones</h1>
+<section class="change-log min-h-screen px-2 py-5 lg:p-8">
+  <div class="flex flex-column justify-center items-center container-limited surface-100 border-round p-5 h-full">
+    <h1 class="text-4xl text-center md:text-6xl text-indigo-600 font-bold mb-8">Actualizaciones y versiones</h1>
     <ng-template #alert>
       <h2 class="text-5xl font-bold text-center text-400">No hay registros</h2>
     </ng-template>
     <div class="logs" *ngIf="changeLogItems.length != 0; else alert">
-      <mat-card class="shadow-2 mb-4" *ngFor="let log of changeLogItems">
-        <mat-chip-listbox class="px-3 mt-2">
-          <mat-chip [class]="log.type.classColor"><span class="text-white">{{ log.type.type }}</span></mat-chip>
-          <mat-chip [class]="log.type.classColor"><span class="text-white">{{ log.version }}</span></mat-chip>
-        </mat-chip-listbox>
-        <mat-card-header>
-          <mat-card-title>
-            <h2 class="text-5xl font-bold">{{ log.title }}</h2>
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p *ngFor="let change of log.changes">{{ change }}</p>
-        </mat-card-content>
-        <mat-card-footer>
-          <p class="px-3 mt-3 text-500">Released on {{ log.date }}</p>
-        </mat-card-footer>
-      </mat-card>
+      <mat-expansion-panel class="border-noround shadow-none border-1 border-100" #panel *ngFor="let log of changeLogItems.reverse()">
+        <mat-expansion-panel-header class="py-5 h-auto">
+            <mat-panel-title class="flex flex-column md:flex-row gap-3">
+              <mat-chip-listbox>
+                <mat-chip style="background-color: #c73798;"><span class="text-white">v{{ log.version }}</span></mat-chip>
+              </mat-chip-listbox>
+              <h3 class="text-xl m-0">{{ log.title }}</h3>
+            </mat-panel-title>
+            <mat-panel-description class="flex justify-content-end">
+              <p class="m-0"><span class="hidden md:inline">Lanzada el</span> {{ log.date }}</p>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+          <div *ngFor="let change of log.changes" class="mb-5">
+            <p class="text-base">[ {{ change.type }} ]</p>
+            <ul class="px-4">
+              <li *ngFor="let description of change.descriptions">{{ description }}</li>
+            </ul>
+          </div>
+      </mat-expansion-panel>
     </div>
   </div>
 </section>

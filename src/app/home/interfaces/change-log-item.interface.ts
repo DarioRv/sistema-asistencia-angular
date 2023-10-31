@@ -2,13 +2,12 @@ export interface ChangeLogItem {
   title: string;
   version: string;
   date: string;
-  changes: string[];
-  type: ChangeLogItemType;
+  changes: ChangeDescription[];
 }
 
-interface ChangeLogItemType {
-  type: logItemType;
-  classColor: string;
+interface ChangeDescription {
+  type: ChangeType;
+  descriptions: string[];
 }
 
-type logItemType = 'feature' | 'added' | 'changed' | 'deprecated' | 'removed' | 'fixed' | 'security';
+type ChangeType = 'feature' | 'added' | 'changed' | 'deprecated' | 'removed' | 'fixed' | 'security';

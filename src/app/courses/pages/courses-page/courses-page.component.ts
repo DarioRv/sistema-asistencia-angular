@@ -6,6 +6,13 @@ import { CoursesDataService } from '../../services/courses-data.service';
   selector: 'app-courses-page',
   templateUrl: './courses-page.component.html',
   styles: [
+    `
+    .courses-list, .loading-layout {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      grid-gap: 1rem;
+    }
+    `
   ]
 })
 export class CoursesPageComponent implements OnInit {

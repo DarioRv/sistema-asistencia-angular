@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Component, OnChanges, OnInit } from '@angular/core';
+import { MatDrawerMode } from '@angular/material/sidenav';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { filter, map } from 'rxjs';
 
 import { AuthenticationService } from 'src/app/auth/services/auth.service';
 
@@ -8,7 +11,7 @@ import { AuthenticationService } from 'src/app/auth/services/auth.service';
   templateUrl: './layout-page.component.html',
   styleUrls: ['./layout-page.component.css']
 })
-export class LayoutPageComponent {
+export class LayoutPageComponent implements OnInit {
   public sidebarItems = [
     [
       {label: 'Guía rapida', icon: 'book_2', url: 'start'},
@@ -22,7 +25,31 @@ export class LayoutPageComponent {
     ]
   ]
 
-  constructor(private authService: AuthenticationService, private router: Router) { }
+  public title: string = 'Dashboard';
+  public mode: MatDrawerMode = 'side';
+
+  constructor(private authService: AuthenticationService, private router: Router, private activatedRoute: ActivatedRoute, private breakpointObserver: BreakpointObserver) {
+    this.breakpointObserver.observe([
+      Breakpoints.Handset
+    ]).subscribe(result => {
+      this.mode = result.matches ? 'over' : 'side';
+    });
+  }
+
+  ngOnInit(): void {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd),
+      map(() => this.activatedRoute),
+      map(route => {
+        while (route.firstChild) route = route.firstChild;
+        return route;
+      }),
+      filter(route => route.outlet === 'primary'),
+      map(route => route.snapshot.data)
+    ).subscribe((event) => {
+      this.title = event['title'];
+    });
+  }
 
   /**
    * Method to logout and redirect to the home page

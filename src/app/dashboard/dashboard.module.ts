@@ -11,6 +11,9 @@ import { PrimeNgModule } from '../prime-ng/prime-ng.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
 import { SharedModule } from '../shared/shared.module';
+import { GettingStartedGuideDialogComponent } from './components/getting-started-guide-dialog/getting-started-guide-dialog.component';
+import { StudentsListGuideDialogComponent } from './components/students-list-guide-dialog/students-list-guide-dialog.component';
+import { AttendanceGuideDialogComponent } from './components/attendance-guide-dialog/attendance-guide-dialog.component';
 
 
 
@@ -19,6 +22,9 @@ import { SharedModule } from '../shared/shared.module';
     LayoutPageComponent,
     HomePageComponent,
     AccountPageComponent,
+    GettingStartedGuideDialogComponent,
+    StudentsListGuideDialogComponent,
+    AttendanceGuideDialogComponent,
 
   ],
   imports: [

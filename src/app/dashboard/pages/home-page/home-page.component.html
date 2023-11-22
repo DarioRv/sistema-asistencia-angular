@@ -1,58 +1,21 @@
-<!-- <button (click)="showDialog()" icon="pi pi-external-link" label="Show"></button> -->
-<p-dialog header="Inicio rapido" [visible]="true" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false" [closeOnEscape]="false" [closable]="false">
-  <mat-stepper [linear]="false" #stepper>
-    <mat-step label="Cursos">
-      <section>
-        <h2 class="text-primary-700">Cursos</h2>
-        <p>En esta sección encontrarás todos los cursos que has creado</p>
-        <div class="flex gap-2">
-          <button mat-button color="primary" matStepperPrevious>Back</button>
-          <button mat-flat-button color="primary" matStepperNext>Next</button>
-        </div>
-      </section>
-    </mat-step>
-    <mat-step label="Listado de alumnos">
-      <section>
-        <h2 class="text-primary-700">Tus alumnos</h2>
-        <p>
-          Al seleccionar un curso encontrarás una pestaña donde podrás llevar el control
-          del listado de tus alumnos. Podrás cargar un listado mediante un archivo csv o agregarlos
-          completando sus datos.
-        </p>
-        <div class="flex gap-2">
-          <button mat-button color="primary" matStepperPrevious>Back</button>
-          <button mat-flat-button color="primary" matStepperNext>Next</button>
-        </div>
-     </section>
-    </mat-step>
-    <mat-step label="Asistencia">
-      <section>
-        <h2 class="text-primary-700">Revisa la asistencia del día</h2>
-        <p>
-          Dentro de cada curso podrás observar una pestaña de asistencia donde se te informará
-          los alumnos que hayan asistido a la clase.
-        </p>
-        <h2 class="text-primary-700">¿Como registran mis alumnos su asistencia?</h2>
-        <p>
-          Dentro de la página del curso podrás generar un link o código QR al que tus alumnos podrán
-          acceder y se les solicitará que proporcionen su libreta universitaria. Al hacerlo automáticamente
-          se registrará su asistencia.
-        </p>
-        <h2 class="text-primary-700">Horario de asistencia</h2>
-        <p>
-          Podrás indicar cual son los días y horarios en que estará disponible la asistencia.
-        </p>
-        <div class="flex gap-2">
-          <button mat-button color="primary" matStepperPrevious>Back</button>
-          <button mat-flat-button color="primary" matStepperNext>Next</button>
-        </div>
-      </section>
-    </mat-step>
-    <mat-step label="Listo">
-      <h2>Todo listo</h2>
-      <p>Empieza a navegar desde el sidebar</p>
-      <p><small class="text-primary">No te preocupes. Cada sección tiene un instructivo.</small></p>
-      <button mat-flat-button color="primary" routerLink="/dashboard/courses">Cerrar instructivo</button>
-    </mat-step>
-  </mat-stepper>
-</p-dialog>
+<section class="guias flex">
+  <article class="guia surface-200 p-3 border-round-xl flex flex-column align-items-center" (click)="introduction = !introduction">
+    <mat-icon class="text-8xl text-500 w-auto h-max">home</mat-icon>
+    <h2 class="text-indigo-600">Introducción</h2>
+    <p>En esta guía encontrarás una rápida introducción al software.</p>
+  </article>
+  <article class="guia surface-200 p-3 border-round-xl flex flex-column align-items-center" (click)="students = !students">
+    <mat-icon class="text-8xl text-500 w-auto h-max">groups</mat-icon>
+    <h2 class="text-indigo-600">Listado de alumnos</h2>
+    <p>En esta guía encontrarás una rápida introducción al software.</p>
+  </article>
+  <article class="guia surface-200 p-3 border-round-xl flex flex-column align-items-center" (click)="attendance = !attendance">
+    <mat-icon class="text-8xl text-500 w-auto h-max">how_to_reg</mat-icon>
+    <h2 class="text-indigo-600">Asistencia</h2>
+    <p>En esta guía encontrarás una rápida introducción al software.</p>
+  </article>
+</section>
+
+<getting-started-guide-dialog [introduction]="introduction"></getting-started-guide-dialog>
+<students-list-guide-dialog [students]="students"></students-list-guide-dialog>
+<attendance-guide-dialog [attendance]="attendance"></attendance-guide-dialog>

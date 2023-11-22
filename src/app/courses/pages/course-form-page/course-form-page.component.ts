@@ -86,14 +86,14 @@ export class CourseFormPageComponent {
     if (this.courseForm.invalid) return;
     if (this.currentCourse.id) {
       this.courseService.updateCourse(this.currentCourse).subscribe( () => {
-        this.showSnackBar('Course updated successfully!');
+        this.showSnackBar('¡El curso ha sido actualizado!');
         this.router.navigateByUrl('dashboard/courses/list');
       });
       return;
     }
 
     this.courseService.addCourse(this.currentCourse).subscribe( () => {
-      this.showSnackBar('Course added successfully!');
+      this.showSnackBar('¡El curso se ha creado!');
       this.router.navigateByUrl('dashboard/courses/list');
     });
   }
@@ -103,6 +103,7 @@ export class CourseFormPageComponent {
    * Navigates to the courses list page
    */
   onCancel(): void {
+    this.showSnackBar('Se ha cancelado la operación');
     this.router.navigateByUrl('/dashboard/courses/list');
   }
 

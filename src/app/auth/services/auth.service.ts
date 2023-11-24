@@ -129,7 +129,15 @@ export class AuthenticationService {
    * @returns The current session of the authenticated user or undefined if there is no session
    */
   get currentSession(): User | undefined {
-    if (!this.activeSession) return undefined;
-    return structuredClone(this.activeSession);
+    if (this.activeSession) return this.activeSession;
+    if (!this.cookieService.check('user') || !this.cookieService.get('user')) return undefined;
+    let user: User;
+    try {
+      user = JSON.parse(this.cookieService.get('user'));
+    }
+    catch(err) {
+      return undefined;
+    }
+    return user;
   }
 }

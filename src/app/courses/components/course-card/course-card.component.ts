@@ -11,6 +11,21 @@ import { filter, switchMap } from 'rxjs';
   selector: 'dashboard-course-card',
   templateUrl: './course-card.component.html',
   styles: [
+    `
+    p::-webkit-scrollbar {
+      width: 12px;
+    }
+
+    p::-webkit-scrollbar-track {
+      background-color: rgba(51, 48, 0, .2);
+      border-radius: 20px;
+    }
+
+    p::-webkit-scrollbar-thumb {
+      background-color: rgba(51, 48, 0, .6);
+      border-radius: 20px;
+    }
+    `
   ]
 })
 export class CourseCardComponent {

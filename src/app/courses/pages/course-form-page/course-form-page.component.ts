@@ -20,6 +20,7 @@ export class CourseFormPageComponent {
     universityProgram: new FormControl('', [Validators.required, Validators.maxLength(50)])
   });
   editMode: boolean = false;
+  isLoading: boolean = false;
 
   constructor(private courseService: CoursesDataService, private router: Router, private activatedRoute: ActivatedRoute, private snackbar: MatSnackBar) { }
 
@@ -28,13 +29,28 @@ export class CourseFormPageComponent {
   }
 
   /**
+   * Method to check if the form is in add mode
+   * @returns true if the form is in add mode, false otherwise
+   */
+  isCreateMode(): boolean {
+    return !this.router.url.includes('edit')
+  }
+
+  /**
    * Method to set the mode of the form
    * If the url contains the word 'edit' then the form is in edit mode
    * If the url doesn't contain the word 'edit' then the form is in add mode
    */
   setMode() {
-    if (!this.router.url.includes('edit')) return;
+    if (this.isCreateMode()) return;
 
+    this.setEditMode();
+  }
+
+  /**
+   * Method to set the form in edit mode
+   */
+  setEditMode() {
     this.editMode = true;
     this.activatedRoute.params.pipe(
       switchMap( ({id}) => this.courseService.findCourseById(id) ),
@@ -83,17 +99,37 @@ export class CourseFormPageComponent {
    * and navigates to the courses list page
    */
   onSubmit(): void {
-    if (this.courseForm.invalid) return;
-    if (this.currentCourse.id) {
-      this.courseService.updateCourse(this.currentCourse).subscribe( () => {
-        this.showSnackBar('¡El curso ha sido actualizado!');
-        this.router.navigateByUrl('dashboard/courses/list');
-      });
+    this.isLoading = true;
+    if (this.courseForm.invalid) {
+      this.isLoading = false;
       return;
     }
 
+    if (this.isCreateMode()) {
+      this.createCourse();
+    } else {
+      this.updateCourse();
+    }
+  }
+
+  /**
+   * Method to update the course
+   */
+  updateCourse(): void {
+    this.courseService.updateCourse(this.currentCourse).subscribe( () => {
+      this.showSnackBar('¡El curso ha sido actualizado!');
+      this.isLoading = false;
+      this.router.navigateByUrl('dashboard/courses/list');
+    });
+  }
+
+  /**
+   * Method to create the course
+   */
+  createCourse() {
     this.courseService.addCourse(this.currentCourse).subscribe( () => {
       this.showSnackBar('¡El curso se ha creado!');
+      this.isLoading = false;
       this.router.navigateByUrl('dashboard/courses/list');
     });
   }

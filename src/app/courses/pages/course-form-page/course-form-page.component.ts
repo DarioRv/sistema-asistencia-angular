@@ -56,6 +56,7 @@ export class CourseFormPageComponent {
       switchMap( ({id}) => this.courseService.findCourseById(id) ),
     ).subscribe( course => {
       if (!course) {
+        this.showSnackBar('El curso no existe');
         return this.router.navigateByUrl('/dashboard');
       }
       this.courseForm.reset(course);

@@ -31,6 +31,10 @@ export class StudentListComponent implements AfterViewInit, OnInit {
     this.dataSource.sort = this.sort;
   }
 
+  /**
+   * Method to filter students by some criteria
+   * @param event event of keyup in the input
+   */
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();

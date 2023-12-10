@@ -19,15 +19,15 @@ export class CourseDetailsPageComponent implements OnInit {
 
   ngOnInit() {
     this.activedRouter.params.subscribe( ({id}) => {
-      this.coursesDataService.findCourseById(id).subscribe( course => {
+      this.coursesDataService.findCourseById(id).subscribe( (course) => {
         if (!course) {
-          this.showSnackbar('El curso que desea ver no existe');
+          this.showSnackbar('El curso no existe.');
           this.redirectToCourseListPage();
           return;
         }
         this.course = course;
+        this.isLoading = false;
       });
-      this.isLoading = false;
     });
   }
 

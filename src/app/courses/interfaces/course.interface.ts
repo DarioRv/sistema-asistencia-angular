@@ -1,3 +1,4 @@
+import { ClassSchedule } from "./class-schedule.interface";
 import { Student } from "./student.interface";
 
 export interface Course {
@@ -6,5 +7,6 @@ export interface Course {
   students?:          Student[];
   title:             string;
   universityProgram: string;
+  schedule?:         ClassSchedule;
 }
 

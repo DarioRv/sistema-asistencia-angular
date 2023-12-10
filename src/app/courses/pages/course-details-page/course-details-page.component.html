@@ -1,9 +1,9 @@
 <section class="course-details flex flex-column">
-  <h2> {{course.title}} </h2>
   <article class="loading-layout" *ngIf="isLoading; else courseDetails">
     <tab-group-placeholder></tab-group-placeholder>
   </article>
   <ng-template #courseDetails>
+    <h2> {{course.title}} </h2>
     <article class="about">
       <div class="bg-white border-round border-500 shadow-2 p-3">
         <mat-tab-group>
@@ -17,7 +17,7 @@
             <course-assistance-view></course-assistance-view>
           </mat-tab>
           <mat-tab label="Opciones">
-            <course-settings></course-settings>
+            <course-settings [courseData]="course"></course-settings>
           </mat-tab>
         </mat-tab-group>
       </div>

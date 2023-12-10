@@ -3,7 +3,6 @@ import { MenubarModule } from 'primeng/menubar';
 import { DialogModule } from 'primeng/dialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { MessagesModule } from 'primeng/messages';
-import { InputNumberModule } from 'primeng/inputnumber';
 import { SkeletonModule } from 'primeng/skeleton';
 
 
@@ -14,7 +13,6 @@ import { SkeletonModule } from 'primeng/skeleton';
     DialogModule,
     FileUploadModule,
     MessagesModule,
-    InputNumberModule,
     SkeletonModule
   ]
 })

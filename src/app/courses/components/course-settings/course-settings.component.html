@@ -1,19 +1,14 @@
 <section class="flex flex-column gap-3 p-2">
   <article class="general-settings">
-    <h3 class="font-bold">Ajustes</h3>
-    <mat-slide-toggle
-        class="example-margin"
-        color="primary">
-      Activar asistencia
-    </mat-slide-toggle>
+    <h3 class="font-bold text-indigo-600">Ajustes de asistencia</h3>
+    <schedule-form [classSchedule]="course.schedule" (onEditClassSchedule)="onEditClassSchedule($event)"></schedule-form>
   </article>
   <mat-divider></mat-divider>
   <article class="student-list">
-    <h3 class="font-bold">Listado</h3>
+    <h3 class="font-bold text-indigo-600">Listado</h3>
       <p-fileUpload mode="basic" chooseLabel="Subir CSV" name="fileUpload" [auto]="true" url="" (onUpload)="onUpload($event)"></p-fileUpload>
   </article>
   <mat-divider></mat-divider>
-  <schedule-form></schedule-form>
   <mat-divider></mat-divider>
   <article class="danger-zone">
     <h3 class="text-red-500 font-bold mb-1">Zona de peligro</h3>

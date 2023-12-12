@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 
 import { MessageService } from 'primeng/api';
-import { FileUploadEvent } from 'primeng/fileupload';
 import { Course } from '../../interfaces/course.interface';
 import { ClassSchedule } from '../../interfaces/class-schedule.interface';
 import { CoursesDataService } from '../../services/courses-data.service';
@@ -18,19 +17,11 @@ export class CourseSettingsComponent {
   @Input({alias: 'courseData', required: true})
   course!: Course;
 
-  constructor(private messageService: MessageService, private coursesDataService: CoursesDataService, private snackbar: MatSnackBar) {}
+  constructor(private coursesDataService: CoursesDataService, private snackbar: MatSnackBar) {}
 
   disableAssistance(): boolean {
     console.log("check")
     return true;
-  }
-
-  /**
-   * Method to handle the file upload event
-   * @param event FileUploadEvent
-   */
-  onUpload(event: FileUploadEvent) {
-    this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded with Basic Mode' });
   }
 
   /**

@@ -4,6 +4,7 @@ import { DialogModule } from 'primeng/dialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { MessagesModule } from 'primeng/messages';
 import { SkeletonModule } from 'primeng/skeleton';
+import { ToastModule } from 'primeng/toast';
 
 
 
@@ -13,7 +14,8 @@ import { SkeletonModule } from 'primeng/skeleton';
     DialogModule,
     FileUploadModule,
     MessagesModule,
-    SkeletonModule
+    SkeletonModule,
+    ToastModule
   ]
 })
 export class PrimeNgModule { }

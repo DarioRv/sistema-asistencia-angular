@@ -23,7 +23,8 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
     <tr class="mat-row" *matNoDataRow>
-      <td class="mat-cell text-center text-base py-2" colspan="4">No se encontró nada relacionado con "{{input.value}}"</td>
+      <td class="mat-cell text-center text-base py-2" colspan="4" *ngIf="students?.length != 0">No se encontró nada relacionado con "{{input.value}}"</td>
+      <td class="mat-cell text-center text-base py-2" colspan="4" *ngIf="!students || students?.length == 0">No hay datos para mostrar</td>
     </tr>
   </table>
 

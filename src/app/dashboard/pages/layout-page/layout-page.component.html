@@ -7,7 +7,7 @@
       </button> -->
     </mat-toolbar>
     <mat-nav-list *ngFor="let itemGroup of sidebarItems" class="border-round-right-3xl">
-      <mat-list-item *ngFor="let item of itemGroup"  [routerLink]="item.url" (click)="sidenav.toggle()">
+      <mat-list-item *ngFor="let item of itemGroup"  [routerLink]="item.url" (click)="mode == 'over' ? sidenav.toggle() : null">
         <mat-icon matListItemIcon class="text-white">{{ item.icon }}</mat-icon>
         <span class="text-white">{{ item.label }}</span>
       </mat-list-item>

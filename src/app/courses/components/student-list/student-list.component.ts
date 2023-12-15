@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { Student } from '../../interfaces/student.interface';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -10,7 +10,7 @@ import { MatPaginator } from '@angular/material/paginator';
   styles: [
   ]
 })
-export class StudentListComponent implements AfterViewInit, OnInit {
+export class StudentListComponent implements AfterViewInit, OnInit, OnChanges {
   @Input()
   public students: Student[] | undefined;
 
@@ -27,6 +27,12 @@ export class StudentListComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  ngOnChanges() {
+    this.dataSource = new MatTableDataSource(this.students);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }

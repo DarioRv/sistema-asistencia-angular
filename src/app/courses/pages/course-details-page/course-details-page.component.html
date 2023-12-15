@@ -17,7 +17,7 @@
             <course-assistance-view></course-assistance-view>
           </mat-tab>
           <mat-tab label="Opciones">
-            <course-settings [courseData]="course"></course-settings>
+            <course-settings [courseData]="course" (onEditCourse)="onEditCourse($event)"></course-settings>
           </mat-tab>
         </mat-tab-group>
       </div>

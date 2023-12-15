@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
-import { MessageService } from 'primeng/api';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FileRemoveEvent, FileSelectEvent } from 'primeng/fileupload';
+import { CsvReaderService } from '../../services/csv-reader.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Student } from '../../interfaces/student.interface';
 
 @Component({
   selector: 'upload-file',
@@ -9,9 +11,12 @@ import { FileRemoveEvent, FileSelectEvent } from 'primeng/fileupload';
   ]
 })
 export class UploadFileComponent {
-  selectedFiles: any[] = [];
+  selectedFile: File | undefined;
 
-  constructor(private messageService: MessageService) {}
+  @Output()
+  onUploadFile: EventEmitter<Student[]> = new EventEmitter();
+
+  constructor(private csvReader: CsvReaderService, private snackbar: MatSnackBar) {}
 
   /**
    * Method to handle the file upload event
@@ -19,18 +24,17 @@ export class UploadFileComponent {
    */
   onSelect(event: FileSelectEvent) {
     for(let file of event.files) {
-      this.selectedFiles.push(file);
+      this.selectedFile = file;
     }
-    console.log(this.selectedFiles.length);
-    this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded with Basic Mode' });
+    this.showSnackbar('Se ha seleccionado el archivo.');
   }
 
   /**
    * Method to handle the clear event, set the selectedFiles array to empty
    */
   onClear() {
-    console.log(this.selectedFiles.length);
-    this.selectedFiles = [];
+    this.selectedFile = undefined;
+    this.showSnackbar('Se ha eliminado el archivo.');
   }
 
   /**
@@ -38,7 +42,40 @@ export class UploadFileComponent {
    * @param $event FileRemoveEvent
    */
   onRemove($event: FileRemoveEvent) {
-    console.log(this.selectedFiles.length);
-    this.selectedFiles.splice(this.selectedFiles.indexOf($event.file), 1);
+    this.selectedFile = undefined;
+    this.showSnackbar('Se ha eliminado el archivo.');
+  }
+
+  /**
+   * Method to handle the upload event, read the csv file and emit the student list
+   */
+  onUpload() {
+    this.showSnackbar('Procesando el archivo csv...');
+    this.csvReader.read(this.selectedFile!)
+      .then( (studentList) => {
+        this.showSnackbar('Subiendo el archivo...');
+        this.emitStudentList(studentList);
+      })
+      .catch( (error) => {
+        this.showSnackbar('Error al procesar el archivo csv.')
+      });
+  }
+
+  /**
+   * Emit the student list to the parent component
+   * @param studentList student list
+   */
+  emitStudentList(studentList: Student[]) {
+    this.onUploadFile.emit(studentList);
+  }
+
+  /**
+   * Show a snackbar with the message
+   * @param message message to show
+   */
+  showSnackbar(message: string) {
+    this.snackbar.open(message, 'Ok', {
+      duration: 3000
+    });
   }
 }

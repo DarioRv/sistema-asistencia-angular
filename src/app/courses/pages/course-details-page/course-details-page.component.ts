@@ -35,10 +35,28 @@ export class CourseDetailsPageComponent implements OnInit {
     this.router.navigate(['/dashboard/courses']);
   }
 
+
+  reloadCurrentPage(uri: string) {
+
+  }
+
   showSnackbar(message: string) {
     this.snackbar.open(message, 'Ok', {
       duration: 3000
     });
   }
 
+  onEditCourse($event: Course): void {
+    this.coursesDataService.updateCourse($event).subscribe( () => {
+      this.showSnackbar('Se ha actualizado el curso.');
+      this.refreshCourseData();
+    });
+  }
+
+  refreshCourseData() {
+    this.coursesDataService.findCourseById(this.course.id).subscribe( (course) => {
+      if (!course) return;
+      this.course = course;
+    });
+  }
 }

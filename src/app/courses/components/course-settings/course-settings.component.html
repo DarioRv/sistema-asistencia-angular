@@ -9,11 +9,10 @@
     <upload-file (onUploadFile)="onEditStudentList($event)"></upload-file>
   </article>
   <mat-divider></mat-divider>
-  <mat-divider></mat-divider>
   <article class="danger-zone">
     <h3 class="text-red-500 font-bold mb-1">Zona de peligro</h3>
     <div class="border-1 border-round-sm border-red-600 p-2">
-      <danger-zone-options></danger-zone-options>
+      <danger-zone-options [courseId]="course.id"></danger-zone-options>
     </div>
   </article>
 </section>

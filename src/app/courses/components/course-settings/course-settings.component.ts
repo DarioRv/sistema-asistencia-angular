@@ -3,7 +3,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Course } from '../../interfaces/course.interface';
 import { ClassSchedule } from '../../interfaces/class-schedule.interface';
-import { CoursesDataService } from '../../services/courses-data.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Student } from '../../interfaces/student.interface';
 

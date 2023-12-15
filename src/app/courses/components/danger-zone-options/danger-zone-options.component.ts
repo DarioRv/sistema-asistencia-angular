@@ -17,6 +17,9 @@ export class DangerZoneOptionsComponent {
 
   constructor(private coursesService: CoursesDataService, private snackbar: MatSnackBar, private router: Router, private dialog: MatDialog) { }
 
+  /**
+   * Method to delete the current course
+   */
   onDeleteCourse() {
     const dialogRef = this.dialog.open(
       ConfirmDialogComponent,
@@ -40,10 +43,17 @@ export class DangerZoneOptionsComponent {
     });
   }
 
+  /**
+   * Method to edit the current course, redirect to the edit page
+   */
   onEditCourse() {
     this.router.navigate(['/dashboard/courses/edit', this.courseId]);
   }
 
+  /**
+   * Method to show a snackbar
+   * @param message Message to show
+   */
   showSnackbar(message: string) {
     this.snackbar.open(message, 'ok', {
       duration: 3000,

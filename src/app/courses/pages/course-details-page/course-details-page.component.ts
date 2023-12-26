@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Course } from '../../interfaces/course.interface';
 import { CoursesDataService } from '../../services/courses-data.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 
 @Component({
   selector: 'app-course-details-page',
@@ -15,13 +15,13 @@ export class CourseDetailsPageComponent implements OnInit {
   public course!: Course;
   public isLoading: boolean = true;
 
-  constructor(private activedRouter: ActivatedRoute, private coursesDataService: CoursesDataService, private router: Router, private snackbar: MatSnackBar) {}
+  constructor(private activedRouter: ActivatedRoute, private coursesDataService: CoursesDataService, private router: Router, private snackbarService: SnackbarService) {}
 
   ngOnInit() {
     this.activedRouter.params.subscribe( ({id}) => {
       this.coursesDataService.findCourseById(id).subscribe( (course) => {
         if (!course) {
-          this.showSnackbar('El curso no existe.');
+          this.snackbarService.showSnackbar('El curso no existe.');
           this.redirectToCourseListPage();
           return;
         }
@@ -40,15 +40,9 @@ export class CourseDetailsPageComponent implements OnInit {
 
   }
 
-  showSnackbar(message: string) {
-    this.snackbar.open(message, 'Ok', {
-      duration: 3000
-    });
-  }
-
   onEditCourse($event: Course): void {
     this.coursesDataService.updateCourse($event).subscribe( () => {
-      this.showSnackbar('Se ha actualizado el curso.');
+      this.snackbarService.showSnackbar('Se ha actualizado el curso.');
       this.refreshCourseData();
     });
   }

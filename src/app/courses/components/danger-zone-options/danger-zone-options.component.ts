@@ -1,10 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { CoursesDataService } from '../../services/courses-data.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { filter, switchMap } from 'rxjs';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
+import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 
 @Component({
   selector: 'danger-zone-options',
@@ -15,7 +15,7 @@ import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog
 export class DangerZoneOptionsComponent {
   @Input({required: true}) courseId!: number;
 
-  constructor(private coursesService: CoursesDataService, private snackbar: MatSnackBar, private router: Router, private dialog: MatDialog) { }
+  constructor(private coursesService: CoursesDataService, private snackbarService: SnackbarService, private router: Router, private dialog: MatDialog) { }
 
   /**
    * Method to delete the current course
@@ -38,7 +38,7 @@ export class DangerZoneOptionsComponent {
       filter(wasDeleted => wasDeleted)
     )
     .subscribe(() => {
-      this.showSnackbar('Curso eliminado')
+      this.snackbarService.showSnackbar('Curso eliminado')
       this.router.navigate(['/dashboard/courses/list']);
     });
   }
@@ -48,15 +48,5 @@ export class DangerZoneOptionsComponent {
    */
   onEditCourse() {
     this.router.navigate(['/dashboard/courses/edit', this.courseId]);
-  }
-
-  /**
-   * Method to show a snackbar
-   * @param message Message to show
-   */
-  showSnackbar(message: string) {
-    this.snackbar.open(message, 'ok', {
-      duration: 3000,
-    });
   }
 }

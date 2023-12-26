@@ -3,7 +3,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Course } from '../../interfaces/course.interface';
 import { ClassSchedule } from '../../interfaces/class-schedule.interface';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Student } from '../../interfaces/student.interface';
 
 @Component({
@@ -19,7 +18,7 @@ export class CourseSettingsComponent {
   @Output()
   onEditCourse: EventEmitter<Course> = new EventEmitter<Course>();
 
-  constructor(private snackbar: MatSnackBar) {}
+  constructor() {}
 
   disableAssistance(): boolean {
     return true;
@@ -73,16 +72,5 @@ export class CourseSettingsComponent {
    */
   onEditCurrentCourse(): void {
     this.onEditCourse.emit(this.course);
-  }
-
-
-  /**
-   * Show a snackbar with the message
-   * @param message message to show
-   */
-  showSnackbar(message: string) {
-    this.snackbar.open(message, 'Ok', {
-      duration: 3000
-    });
   }
 }

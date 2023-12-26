@@ -6,6 +6,7 @@ import { BasicCardPlaceholderComponent } from './components/basic-card-placehold
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { MaterialModule } from '../material/material.module';
 import { LoaderComponent } from './components/loader/loader.component';
+import { SnackbarService } from './services/snackbar.service';
 
 
 
@@ -26,6 +27,9 @@ import { LoaderComponent } from './components/loader/loader.component';
     BasicCardPlaceholderComponent,
     ContentNotAvailableComponent,
     LoaderComponent
+  ],
+  providers: [
+    SnackbarService
   ]
 })
 export class SharedModule { }

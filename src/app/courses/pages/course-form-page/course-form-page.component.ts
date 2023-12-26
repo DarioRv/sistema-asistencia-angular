@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CoursesDataService } from '../../services/courses-data.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { Course } from '../../interfaces/course.interface';
+import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 
 @Component({
   selector: 'app-course-form-page',
@@ -22,7 +22,7 @@ export class CourseFormPageComponent {
   editMode: boolean = false;
   isLoading: boolean = false;
 
-  constructor(private courseService: CoursesDataService, private router: Router, private activatedRoute: ActivatedRoute, private snackbar: MatSnackBar) { }
+  constructor(private courseService: CoursesDataService, private router: Router, private activatedRoute: ActivatedRoute, private snackbarService: SnackbarService) { }
 
   ngOnInit(): void {
     this.setMode();
@@ -56,7 +56,7 @@ export class CourseFormPageComponent {
       switchMap( ({id}) => this.courseService.findCourseById(id) ),
     ).subscribe( course => {
       if (!course) {
-        this.showSnackBar('El curso no existe');
+        this.snackbarService.showSnackbar('El curso no existe');
         return this.router.navigateByUrl('/dashboard');
       }
       this.courseForm.reset(course);
@@ -118,7 +118,7 @@ export class CourseFormPageComponent {
    */
   updateCourse(): void {
     this.courseService.updateCourse(this.currentCourse).subscribe( () => {
-      this.showSnackBar('¡El curso ha sido actualizado!');
+      this.snackbarService.showSnackbar('¡El curso ha sido actualizado!');
       this.isLoading = false;
       this.router.navigateByUrl('dashboard/courses/list');
     });
@@ -129,7 +129,7 @@ export class CourseFormPageComponent {
    */
   createCourse() {
     this.courseService.addCourse(this.currentCourse).subscribe( () => {
-      this.showSnackBar('¡El curso se ha creado!');
+      this.snackbarService.showSnackbar('¡El curso se ha creado!');
       this.isLoading = false;
       this.router.navigateByUrl('dashboard/courses/list');
     });
@@ -140,17 +140,7 @@ export class CourseFormPageComponent {
    * Navigates to the courses list page
    */
   onCancel(): void {
-    this.showSnackBar('Se ha cancelado la operación');
+    this.snackbarService.showSnackbar('Se ha cancelado la operación');
     this.router.navigateByUrl('/dashboard/courses/list');
-  }
-
-  /**
-   * Method to show a snackbar
-   * @param message The message to show in the snackbar
-   */
-  showSnackBar(message: string): void {
-    this.snackbar.open(message, 'Ok!', {
-      duration: 2500
-    });
   }
 }

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../../services/auth.service';
 import { User } from 'src/app/auth/interfaces/user.interface';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 
 @Component({
   selector: 'auth-sign-up',
@@ -47,7 +47,7 @@ export class SignUpPageComponent {
   hide = true;
   isSubmitting: boolean = false;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthenticationService, private snackbar: MatSnackBar) {
+  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthenticationService, private snackbarService: SnackbarService) {
     this.signUpForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
@@ -85,29 +85,19 @@ export class SignUpPageComponent {
       this.isSubmitting = true;
       this.authService.registerUser(this.formData).subscribe((user) => {
         if (user) {
-          this.showSnackBar('Usuario registrado correctamente');
+          this.snackbarService.showSnackbar('Usuario registrado correctamente');
           this.authService.login(user);
           this.router.navigate(['/dashboard']);
         }
         else {
-          this.showSnackBar('Error al registrar el usuario, asegúrese de que esta conectado a internet');
+          this.snackbarService.showSnackbar('Error al registrar el usuario, asegúrese de que esta conectado a internet');
         }
         this.isSubmitting = false;
       });
     }
     else {
-      this.showSnackBar('Por favor, rellene los campos');
+      this.snackbarService.showSnackbar('Por favor, rellene los campos');
       this.signUpForm.markAllAsTouched();
     }
-  }
-
-  /**
-   * Method to show a snackbar
-   * @param message The message to show in the snackbar
-   */
-  showSnackBar(message: string): void {
-    this.snackbar.open(message, 'Ok!', {
-      duration: 5000
-    });
   }
 }

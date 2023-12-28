@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { AuthenticationService } from '../../services/auth.service';
+import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 
 @Component({
   selector: 'auth-sign-in',
@@ -47,7 +47,7 @@ export class SignInPageComponent {
   hide = true;
   isSubmitting: boolean = false;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthenticationService, private snackbar: MatSnackBar) {
+  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthenticationService, private snackbarService: SnackbarService) {
     this.signInForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
@@ -71,28 +71,19 @@ export class SignInPageComponent {
       this.isSubmitting = true;
       this.authService.authenticateUser(this.signInForm.value).subscribe((user) => {
         if (user) {
-          this.showSnackBar('Inicio de sesión correcto');
+          this.snackbarService.showSnackbar('Inicio de sesión correcto');
           this.router.navigate(['/dashboard']);
         }
         else {
-          this.showSnackBar('Error al iniciar sesión');
+          this.snackbarService.showSnackbar('Error al iniciar sesión');
         }
         this.isSubmitting = false;
       });
     }
     else {
-      this.showSnackBar('Por favor, rellene los campos')
+      this.snackbarService.showSnackbar('Por favor, rellene los campos')
       this.signInForm.markAllAsTouched();
     }
   }
 
-  /**
-   * Method to show a snackbar
-   * @param message The message to show in the snackbar
-   */
-  showSnackBar(message: string): void {
-    this.snackbar.open(message, 'Ok!', {
-      duration: 5000
-    });
-  }
 }

@@ -12,15 +12,18 @@ const routes: Routes = [
     children: [
       {
         path: 'start',
-        component: HomePageComponent
+        component: HomePageComponent,
+        data: { title: 'Guía rápida' }
       },
       {
         path: 'courses',
-        loadChildren: () => import('../courses/courses.module').then( (m) => m.CoursesModule )
+        loadChildren: () => import('../courses/courses.module').then( (m) => m.CoursesModule ),
+        data: { title: 'Materias' }
       },
       {
         path: 'account',
-        component: AccountPageComponent
+        component: AccountPageComponent,
+        data: { title: 'Mi perfil' }
       },
       {
         path: '**',

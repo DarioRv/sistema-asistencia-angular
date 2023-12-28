@@ -1,0 +1,26 @@
+<p-fileUpload
+  accept=".csv"
+  [maxFileSize]="1000000"
+  [multiple]="false"
+  chooseLabel="Importar"
+  chooseStyleClass="bg-indigo-600 text-white font-bold p-2 rounded-md border-none"
+  cancelLabel="Cancelar"
+  cancelStyleClass="bg-red-600 text-white font-bold p-2 rounded-md border-none"
+  uploadLabel="Subir"
+  uploadStyleClass="bg-green-600 text-white font-bold p-2 rounded-md border-none"
+  invalidFileTypeMessageSummary="Tipo de archivo inválido"
+  invalidFileTypeMessageDetail="El archivo debe ser de tipo CSV"
+  invalidFileSizeMessageSummary="Tamaño de archivo inválido"
+  invalidFileSizeMessageDetail="El archivo debe pesar menos de 1MB"
+  invalidFileMessageSummary="Archivo inválido"
+  invalidFileMessageDetail="El archivo debe ser de tipo CSV y pesar menos de 1MB"
+  [customUpload]="true"
+  (onSelect)="onSelect($event)"
+  (onClear)="onClear()"
+  (onRemove)="onRemove($event)"
+  (uploadHandler)="onUpload()"
+  >
+    <ng-template pTemplate="content">
+        <p class="text-center" *ngIf="!selectedFile">Drag and drop your files</p>
+    </ng-template>
+</p-fileUpload>

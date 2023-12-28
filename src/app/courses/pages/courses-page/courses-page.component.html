@@ -1,8 +1,7 @@
-<h2 class="text-8x1">Courses</h2>
-<div class="loading-layout grid align-items-stretch gap-3" *ngIf="isLoading; else coursesList">
-  <card-placeholder class="sm:col-12 lg:col-4 xl:col-3 flex-grow-1 align-self-stretch bg-white border-round shadow-1"></card-placeholder>
-  <card-placeholder class="sm:col-12 lg:col-4 xl:col-3 flex-grow-1 align-self-stretch bg-white border-round shadow-1"></card-placeholder>
-  <card-placeholder class="sm:col-12 lg:col-4 xl:col-3 flex-grow-1 align-self-stretch bg-white border-round shadow-1"></card-placeholder>
+<div class="loading-layout" *ngIf="isLoading; else coursesList">
+  <card-placeholder></card-placeholder>
+  <card-placeholder></card-placeholder>
+  <card-placeholder></card-placeholder>
 </div>
 <ng-template #coursesList>
   <div class="courses">
@@ -13,10 +12,8 @@
         <span>Añadir curso</span>
       </button>
     </div>
-    <div class="grid align-items-stretch gap-3">
-      <div class="sm:col-12 lg:col-4 xl:col-3 flex-grow-1 align-self-stretch" *ngFor="let course of courses">
-        <dashboard-course-card [course]="course"></dashboard-course-card>
-      </div>
+    <div class="courses-list">
+      <dashboard-course-card *ngFor="let course of courses" [course]="course"></dashboard-course-card>
     </div>
   </div>
 </ng-template>

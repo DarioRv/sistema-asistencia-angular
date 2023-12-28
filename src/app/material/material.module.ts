@@ -20,6 +20,8 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatExpansionModule} from '@angular/material/expansion';
 
 @NgModule({
@@ -45,6 +47,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatStepperModule,
     MatTooltipModule,
     MatMenuModule,
+    MatTableModule,
+    MatPaginatorModule
     MatExpansionModule
   ]
 })

@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { Course } from '../../interfaces/course.interface';
 import { CoursesDataService } from '../../services/courses-data.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { filter, switchMap } from 'rxjs';
+import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 
 @Component({
   selector: 'dashboard-course-card',
@@ -23,7 +23,7 @@ export class CourseCardComponent {
     'other': '# estudiantes'
   }
 
-  constructor(private courseService: CoursesDataService, private snackbar: MatSnackBar, private router: Router, private dialog: MatDialog) {}
+  constructor(private courseService: CoursesDataService, private snackbarService: SnackbarService, private router: Router, private dialog: MatDialog) {}
 
   /**
    * Delete the selected course before a confirmation dialog
@@ -47,17 +47,8 @@ export class CourseCardComponent {
       filter(wasDeleted => wasDeleted)
     )
     .subscribe(() => {
-      this.showSnackBar('Curso eliminado')
+      this.snackbarService.showSnackbar('Curso eliminado')
       this.redirectTo('dashboard/courses/list')
-    });
-  }
-
-  /**
-   * Show a snackbar with the given message
-   */
-  showSnackBar(message: string): void {
-    this.snackbar.open(message, 'Ok!', {
-      duration: 2500
     });
   }
 

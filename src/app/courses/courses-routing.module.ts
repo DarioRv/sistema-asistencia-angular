@@ -7,19 +7,23 @@ import { CourseFormPageComponent } from './pages/course-form-page/course-form-pa
 const routes: Routes = [
   {
     path: 'list',
-    component: CoursesPageComponent
+    component: CoursesPageComponent,
+    data: { title: 'Materias' }
   },
   {
     path: 'view/:id',
-    component: CourseDetailsPageComponent
+    component: CourseDetailsPageComponent,
+    data: { title: 'Detalles de la materia' }
   },
   {
     path: 'new-course',
     component: CourseFormPageComponent,
+    data: { title: 'Nueva materia' }
   },
   {
     path: 'edit/:id',
-    component: CourseFormPageComponent
+    component: CourseFormPageComponent,
+    data: { title: 'Editar materia' }
   },
   {
     path: '**',

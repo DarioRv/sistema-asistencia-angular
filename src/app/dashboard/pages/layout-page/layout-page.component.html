@@ -1,34 +1,35 @@
 <mat-sidenav-container fullscreen>
-  <mat-sidenav #sidenav mode="side" opened="true" [ngStyle]="{width: '250px', border: 'none'}">
+  <mat-sidenav #sidenav [mode]="mode" opened="true" class="border-round-right-3xl bg-indigo-600" [ngStyle]="{width: '250px', border: 'none'}">
     <mat-toolbar color="primary">
-      <span>Menú</span>
-      <span class="spacer"></span>
+      <span class="text-3xl">Menú</span>
       <!-- <button mat-icon-button (click)="sidenav.toggle()">
         <mat-icon>close</mat-icon>
       </button> -->
     </mat-toolbar>
-
-    <mat-nav-list *ngFor="let itemGroup of sidebarItems">
-      <mat-list-item *ngFor="let item of itemGroup"  [routerLink]="item.url">
-        <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
-        {{ item.label }}
+    <mat-nav-list *ngFor="let itemGroup of sidebarItems" class="border-round-right-3xl">
+      <mat-list-item *ngFor="let item of itemGroup"  [routerLink]="item.url" (click)="mode == 'over' ? sidenav.toggle() : null">
+        <mat-icon matListItemIcon class="text-white">{{ item.icon }}</mat-icon>
+        <span class="text-white">{{ item.label }}</span>
       </mat-list-item>
-      <mat-divider></mat-divider>
+      <mat-divider class="bg-white"></mat-divider>
     </mat-nav-list>
 
   </mat-sidenav>
 
-  <mat-toolbar color="primary">
-    <div class="flex justify-content-between w-full align-items-center">
-      <button mat-icon-button (click)="sidenav.toggle()">
-        <mat-icon>menu</mat-icon>
-      </button>
-      <button mat-button (click)="logout()">
+  <mat-toolbar class="m-3 border-round-xl w-auto">
+    <nav class="flex justify-content-between w-full align-items-center">
+      <div class="flex align-items-center gap-3">
+        <button mat-icon-button color="primary" (click)="sidenav.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <h1 class="text-3xl">{{ title }}</h1>
+      </div>
+      <button mat-flat-button color="primary" (click)="logout()">
         <mat-icon>power_settings_new</mat-icon>
         Logout
       </button>
 
-    </div>
+    </nav>
   </mat-toolbar>
 
   <div class="container-limited p-6">

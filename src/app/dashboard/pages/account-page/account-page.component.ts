@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { filter, switchMap } from 'rxjs';
 
 import { AuthenticationService } from 'src/app/auth/services/auth.service';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { User } from 'src/app/auth/interfaces/user.interface';
+import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 
 @Component({
   selector: 'app-account-page',
@@ -17,7 +17,7 @@ import { User } from 'src/app/auth/interfaces/user.interface';
 export class AccountPageComponent implements OnInit {
   user?: User;
 
-  constructor(private authService: AuthenticationService, private snackbar: MatSnackBar, private dialog: MatDialog, private router: Router) { }
+  constructor(private authService: AuthenticationService, private snackbarService: SnackbarService, private dialog: MatDialog, private router: Router) { }
 
   ngOnInit(): void {
     this.user = this.authService.currentSession;
@@ -39,18 +39,8 @@ export class AccountPageComponent implements OnInit {
       filter(wasDeleted => wasDeleted)
     )
     .subscribe(() => {
-      this.showSnackBar('Tu cuenta ha sido eliminada')
+      this.snackbarService.showSnackbar('Tu cuenta ha sido eliminada')
       this.router.navigate(['/']);
-    });
-  }
-
-  /**
-   * Method to show a snackbar
-   * @param message The message to show in the snackbar
-   */
-  showSnackBar(message: string): void {
-    this.snackbar.open(message, 'Ok!', {
-      duration: 5000
     });
   }
 }

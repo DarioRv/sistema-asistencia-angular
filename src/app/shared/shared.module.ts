@@ -5,6 +5,8 @@ import { ContentNotAvailableComponent } from './components/content-not-available
 import { BasicCardPlaceholderComponent } from './components/basic-card-placeholder/basic-card-placeholder.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { MaterialModule } from '../material/material.module';
+import { LoaderComponent } from './components/loader/loader.component';
+import { SnackbarService } from './services/snackbar.service';
 
 
 
@@ -14,6 +16,7 @@ import { MaterialModule } from '../material/material.module';
     ContentNotAvailableComponent,
     BasicCardPlaceholderComponent,
     ConfirmDialogComponent,
+    LoaderComponent,
   ],
   imports: [
     PrimeNgModule,
@@ -23,6 +26,10 @@ import { MaterialModule } from '../material/material.module';
     MenubarComponent,
     BasicCardPlaceholderComponent,
     ContentNotAvailableComponent,
+    LoaderComponent
+  ],
+  providers: [
+    SnackbarService
   ]
 })
 export class SharedModule { }

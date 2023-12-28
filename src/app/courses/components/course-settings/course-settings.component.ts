@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { MessageService } from 'primeng/api';
-import { FileUploadEvent } from 'primeng/fileupload';
+import { Course } from '../../interfaces/course.interface';
+import { ClassSchedule } from '../../interfaces/class-schedule.interface';
+import { Student } from '../../interfaces/student.interface';
 
 @Component({
   selector: 'course-settings',
@@ -11,19 +13,64 @@ import { FileUploadEvent } from 'primeng/fileupload';
   providers: [[MessageService]]
 })
 export class CourseSettingsComponent {
+  @Input({alias: 'courseData', required: true})
+  course!: Course;
+  @Output()
+  onEditCourse: EventEmitter<Course> = new EventEmitter<Course>();
 
-  constructor(private messageService: MessageService) {}
+  constructor() {}
 
   disableAssistance(): boolean {
-    console.log("check")
     return true;
   }
 
   /**
-   * Method to handle the file upload event
-   * @param event FileUploadEvent
+   * Edit the class schedule of the course and update the course in the database
+   * @param $event class schedule from the child component
    */
-  onUpload(event: FileUploadEvent) {
-    this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded with Basic Mode' });
+  onEditClassSchedule($event: ClassSchedule): void {
+    this.setClassSchedule($event);
+    this.onEditCurrentCourse();
+  }
+
+  /**
+   * Set the class schedule to the course
+   * @param $event class schedule
+   */
+  setClassSchedule($event: ClassSchedule): void {
+    this.course = {
+      ...this.course,
+      schedule: {
+        entryTime: $event.entryTime,
+        departureTime: $event.departureTime,
+      }
+    } as Course;
+  }
+
+  /**
+   * Edit the student list of the course and update the course in the database
+   * @param $event student list from the child component
+   */
+  onEditStudentList($event: Student[]): void {
+    this.setStudentList($event);
+    this.onEditCurrentCourse();
+  }
+
+  /**
+   * Set the student list to the course
+   * @param $event student list
+  */
+ setStudentList($event: Student[]): void {
+    this.course = {
+      ...this.course,
+      students: $event
+    } as Course;
+  }
+
+  /**
+   * Emit the edited course to the parent component
+   */
+  onEditCurrentCourse(): void {
+    this.onEditCourse.emit(this.course);
   }
 }

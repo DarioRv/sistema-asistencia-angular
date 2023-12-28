@@ -1,15 +1,15 @@
 <section class="course-details flex flex-column">
-  <h2> {{course?.title}} </h2>
   <article class="loading-layout" *ngIf="isLoading; else courseDetails">
     <tab-group-placeholder></tab-group-placeholder>
   </article>
   <ng-template #courseDetails>
+    <h2> {{course.title}} </h2>
     <article class="about">
       <div class="bg-white border-round border-500 shadow-2 p-3">
         <mat-tab-group>
           <mat-tab label="Alumnos">
-            <course-student-list *ngIf="course?.students" [students]="course?.students"></course-student-list>
-            <div class="no-students surface-ground border-round p-3" *ngIf="!course?.students">
+            <course-student-list *ngIf="course.students" [students]="course.students"></course-student-list>
+            <div class="no-students surface-ground border-round p-3" *ngIf="!course.students">
               <p class="text-center text-lg text-gray-600 font-bold">No hay alumnos que mostrar</p>
             </div>
           </mat-tab>
@@ -17,7 +17,7 @@
             <course-assistance-view></course-assistance-view>
           </mat-tab>
           <mat-tab label="Opciones">
-            <course-settings></course-settings>
+            <course-settings [courseData]="course" (onEditCourse)="onEditCourse($event)"></course-settings>
           </mat-tab>
         </mat-tab-group>
       </div>

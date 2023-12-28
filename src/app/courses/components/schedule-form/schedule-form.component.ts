@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { MessageService } from 'primeng/api';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ClassSchedule } from '../../interfaces/class-schedule.interface';
 
 @Component({
   selector: 'schedule-form',
@@ -8,60 +8,85 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styles: [
   ]
 })
-export class ScheduleFormComponent {
-  form!: FormGroup;
-  formEditState: boolean = false;
+export class ScheduleFormComponent implements OnInit {
+  scheduleForm: FormGroup = new FormGroup({
+    entryTime: new FormControl('', [Validators.required]),
+    departureTime: new FormControl('', [Validators.required]),
+  });
+  isDisabled: boolean = true;
 
-  constructor(private formBuilder: FormBuilder) {
-    this.form = this.formBuilder.group({
-      hour1: [[], [Validators.min(0), Validators.max(23)]],
-      minute1: [],
-      hour2: [[], []],
-      minute2: [],
-    });
-  }
+  @Input()
+  public classSchedule?: ClassSchedule;
+
+  @Output()
+  public onEditClassSchedule: EventEmitter<ClassSchedule> = new EventEmitter();
+
+  constructor() { }
 
   ngOnInit(): void {
-    this.disableInputs();
-
-    this.form.get('hour1')?.setValue('10');
-    this.form.get('minute1')?.setValue('00');
-    this.form.get('hour2')?.setValue('12');
-    this.form.get('minute2')?.setValue('30');
+    this.setDisabledState();
+    this.setDefaultScheduleClass();
   }
 
   /**
-   * Method to toggle the edit state of the form
+   * Get the entryTime value of the form
    */
-  toggleEdit(): void {
-    this.formEditState = !this.formEditState;
-    if (this.formEditState) {
-      this.eneableInputs();
-    }
-    else {
-      this.disableInputs();
-    }
+  get entryTime() {
+    return this.scheduleForm.get('entryTime');
   }
 
   /**
-   * Method to enable the form inputs
+   * Get the departureTime value of the form
    */
-  eneableInputs(): void {
-    this.form.enable();
+  get departureTime() {
+    return this.scheduleForm.get('departureTime');
   }
 
   /**
-   * Method to disable the form inputs
+   * Set the default values of the form
    */
-  disableInputs(): void {
-    this.form.disable();
+  setDefaultScheduleClass(): void {
+    if (!this.classSchedule) return;
+    this.entryTime?.setValue(this.classSchedule.entryTime);
+    this.departureTime?.setValue(this.classSchedule.departureTime);
   }
 
   /**
-   * Method to check if the form has errors
-   * @returns true if the form has errors, false otherwise
+   * Set the disabled state of the form
    */
-  hasErrors(): boolean {
-    return this.form.invalid ? true : false;
+  setDisabledState(): void {
+    this.scheduleForm.disable();
+    this.isDisabled = true;
+  }
+
+  /**
+   * Toggle the disabled state of the form
+   */
+  toggleMode(): void {
+    this.scheduleForm.enabled ? this.scheduleForm.disable() : this.scheduleForm.enable();
+    this.isDisabled = !this.isDisabled;
+  }
+
+  /**
+   * Toggle the state of the form
+   */
+  onEdit(): void {
+    this.toggleMode();
+  }
+
+  /**
+   * Method to handle the submit event of the form
+   */
+  onSubmit(): void {
+    if (this.scheduleForm.invalid) return;
+    this.emitClassSchedule();
+    this.setDisabledState();
+  }
+
+  /**
+   * Emit the class schedule to the parent component
+   */
+  emitClassSchedule(): void {
+    this.onEditClassSchedule.emit(this.scheduleForm.value);
   }
 }

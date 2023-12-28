@@ -1,1 +1,11 @@
-<p>change-log-page works!</p>
+<section class="change-log min-h-screen px-2 py-5 lg:p-8">
+  <div class="flex flex-column justify-center items-center container-limited border-round p-5 h-full">
+    <h1 class="text-2xl text-center md:text-4xl text-indigo-600">Actualizaciones y versiones</h1>
+    <ng-template #alert>
+      <h2 class="text-3xl font-bold text-center text-400">No hay registros</h2>
+    </ng-template>
+    <div class="logs" *ngIf="changeLogItems.length != 0; else alert">
+      <change-log-item [log]="log" *ngFor="let log of changeLogItems.reverse()"></change-log-item>
+    </div>
+  </div>
+</section>

@@ -9,6 +9,7 @@ import { ManualPageComponent } from './pages/manual-page/manual-page.component';
 import { ChangeLogPageComponent } from './pages/change-log-page/change-log-page.component';
 import { StepCardComponent } from './components/step-card/step-card.component';
 import { MaterialModule } from '../material/material.module';
+import { ChangeLogItemComponent } from './components/change-log-item/change-log-item.component';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { MaterialModule } from '../material/material.module';
     ManualPageComponent,
     ChangeLogPageComponent,
     StepCardComponent,
+    ChangeLogItemComponent,
   ],
   imports: [
     CommonModule,

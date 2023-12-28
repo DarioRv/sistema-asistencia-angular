@@ -48,7 +48,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatTooltipModule,
     MatMenuModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
     MatExpansionModule
   ]
 })

@@ -1,8 +1,8 @@
-<section class="sign-up surface-100 p-5">
-  <div class="grid align-items-stretch h-min surface-200 border-round-3xl">
-    <div class="form flex flex-column align-items-center col-12 lg:col-6 px-6 py-8">
-      <h2 class="text-5xl font-bold mb-6">Registrarme</h2>
-      <form [formGroup]="signUpForm" class="w-full max-w-30rem" (ngSubmit)="register()">
+<section class="sign-up flex items-center justify-center bg-slate-100 p-5 dark:bg-slate-900">
+  <div class="grid grid-cols-1 lg:grid-cols-2 items-stretch h-min bg-slate-200 rounded-xl md:rounded-3xl max-w-7xl dark:bg-slate-700">
+    <div class="form flex flex-col p-4 md:px-16 md:py-8">
+      <h2 class="text-3xl lg:text-5xl text-center font-bold mb-6 dark:text-slate-300">Registrarme</h2>
+      <form [formGroup]="signUpForm" class="w-full" (ngSubmit)="register()">
         <div>
           <mat-form-field class="w-full mb-1">
             <mat-label>Ingresa tu email</mat-label>
@@ -35,18 +35,18 @@
             <mat-error *ngIf="password?.hasError('required')">Es necesaria la contraseña</mat-error>
           </mat-form-field>
         </div>
-        <button type="submit" mat-flat-button color="primary" class="w-full mt-2 bg-indigo-600" [disabled]="isSubmitting">
+        <button type="submit" mat-flat-button color="primary" class="w-full mt-2 bg-core-primary text-white rounded-lg" [disabled]="isSubmitting">
           <mat-icon *ngIf="!isSubmitting">save</mat-icon>
           {{ isSubmitting ? 'Enviando formulario...' : 'Crear mi cuenta' }}
         </button>
       </form>
     </div>
-    <div class="sign-in-redirect col-12 lg:col-6 flex flex-column align-items-center justify-content-center bg-indigo-600 px-6 py-8 text-white">
-      <h2 class="text-5xl font-bold mb-6">¿Ya tienes cuenta?</h2>
-      <p>
+    <div class="sign-in-redirect flex flex-col items-center justify-center bg-core-primary px-6 py-8 text-white rounded-xl rounded-t-2xl md:rounded-3xl lg:rounded-l-[4rem]">
+      <h2 class="text-3xl text-center lg:text-5xl font-bold mb-6">¿Ya tienes cuenta?</h2>
+      <p class="text-center">
         Inicia sesión ahora y empieza a disfrutar de los beneficios de agilizar tus clases.
       </p>
-      <button class="text-lg mt-4" routerLink="/auth/sign-in">Iniciar sesión</button>
+      <button class="text-lg mt-4 border-[1px] border-white text-white p-2 md:px-12 rounded-lg hover:bg-white hover:text-core-primary" routerLink="/auth/sign-in">Iniciar sesión</button>
     </div>
   </div>
 </section>

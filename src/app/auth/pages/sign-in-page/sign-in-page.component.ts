@@ -11,33 +11,7 @@ import { SnackbarService } from 'src/app/shared/services/snackbar.service';
   styles: [
     `
     .sign-in {
-      height: calc(100vh - 64px);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .sign-up-redirect {
-      border-radius: 4rem 1.5rem 1.5rem 4rem;
-    }
-
-    .form button[type="submit"] {
-      color: #fff;
-      border-radius: 0.5rem;
-    }
-
-    .sign-up-redirect button {
-      border: 1px solid #fff;
-      color: #fff;
-      padding: .5rem 3rem;
-      border-radius: 0.5rem;
-      background-color: transparent;
-    }
-
-    .sign-up-redirect button:hover {
-      background-color: #fff;
-      color: #000;
-      cursor: pointer;
+      min-height: calc(100vh - 64px);
     }
     `
   ]

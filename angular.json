@@ -48,7 +48,7 @@
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
               "node_modules/primeng/resources/primeng.min.css",
-              "src/typography.config.scss",
+              "src/custom-theme.config.scss",
               "src/styles.css"
             ],
             "tsConfig": "tsconfig.app.json"

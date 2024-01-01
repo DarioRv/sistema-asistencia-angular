@@ -1,5 +1,5 @@
-<form class="flex flex-column bg-white border-round border-500 shadow-2 p-3" [formGroup]="courseForm" (ngSubmit)="onSubmit()">
-  <h2 class="text-indigo-600">{{ editMode ? 'Editar curso' : 'Crear curso'}}</h2>
+<form class="flex flex-col bg-white rounded shadow-md p-3 dark:bg-slate-700" [formGroup]="courseForm" (ngSubmit)="onSubmit()">
+  <h2 class="text-core-primary dark:text-white">{{ editMode ? 'Editar curso' : 'Crear curso'}}</h2>
   <input hidden formControlName="id">
   <mat-form-field hintLabel="Máximo 50 caracteres" class="mb-3">
     <mat-label>Nombre del curso</mat-label>
@@ -25,7 +25,7 @@
       El programa universitario del curso es requerido
     </mat-error>
   </mat-form-field>
-  <div class="actions flex flex-column gap-3">
+  <div class="actions flex flex-col gap-3">
     <button mat-flat-button type="submit" color="primary" [disabled]="isLoading">
       <mat-icon>send</mat-icon>
       <span>{{ isLoading ? 'Enviando...' : 'Enviar'}}</span>

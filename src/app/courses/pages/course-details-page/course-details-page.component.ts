@@ -31,22 +31,28 @@ export class CourseDetailsPageComponent implements OnInit {
     });
   }
 
+  /**
+   * Redirect to course list page.
+   */
   redirectToCourseListPage() {
     this.router.navigate(['/dashboard/courses']);
   }
 
-
-  reloadCurrentPage(uri: string) {
-
-  }
-
-  onEditCourse($event: Course): void {
-    this.coursesDataService.updateCourse($event).subscribe( () => {
+  /**
+   * Handle edit course event.
+   * Update the edited course.
+   * @param course course to update
+   */
+  onEditCourse(course: Course): void {
+    this.coursesDataService.updateCourse(course).subscribe( () => {
       this.snackbarService.showSnackbar('Se ha actualizado el curso.');
       this.refreshCourseData();
     });
   }
 
+  /**
+   * Refreshes course data when updated.
+   */
   refreshCourseData() {
     this.coursesDataService.findCourseById(this.course.id).subscribe( (course) => {
       if (!course) return;

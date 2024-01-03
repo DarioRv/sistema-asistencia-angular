@@ -9,8 +9,8 @@
       <h2 class="text-core-primary dark:text-core-primary-400">Mis datos</h2>
       <mat-card>
         <mat-card-content>
-            <div class="flex align-items-center mt-1 text-slate-600 dark:text-slate-300"><mat-icon class="text-sm">person</mat-icon> <span>{{user?.lastname}}, {{ user?.name }}</span></div>
-            <div class="flex align-items-center mt-1 text-slate-600 dark:text-slate-300"><mat-icon class="text-sm">mail</mat-icon> <span>{{ user?.email }}</span></div>
+            <div class="flex items-center mt-1 text-slate-600 dark:text-slate-300"><mat-icon class="text-sm">person</mat-icon> <span>{{user?.lastname}}, {{ user?.name }}</span></div>
+            <div class="flex items-center mt-1 text-slate-600 dark:text-slate-300"><mat-icon class="text-sm">mail</mat-icon> <span>{{ user?.email }}</span></div>
         </mat-card-content>
       </mat-card>
     </article>
@@ -24,7 +24,7 @@
           <mat-card-content>
             <p class="dark:text-slate-300">Si eliminas tu cuenta, no podrás recuperarla.</p>
             <button mat-stroked-button color="warn" (click)="deleteAccount()">Eliminar cuenta</button>
-            <p class="mt-2 dark:text-slate-300"><mat-icon class="text-sm text-blue-500">info</mat-icon>Tu cuenta es gratis. No tiene costo de mantenimiento.</p>
+            <div class="flex items-center mt-2 dark:text-slate-300"><mat-icon class="text-sm text-blue-500">info</mat-icon> <span>Tu cuenta es gratis. No tiene costo de mantenimiento.</span></div>
           </mat-card-content>
         </mat-card>
       </div>

@@ -1,32 +1,30 @@
-<section class="acoount flex flex-column">
-  <article class="loading-layout bg-white border-round border-500 shadow-2 p-3" *ngIf="!user; else userInfo">
+<section class="acoount flex flex-col">
+  <article class="loading-layout bg-white rounded border-slate-400 shadow p-3" *ngIf="!user; else userInfo">
     <basic-card-placeholder></basic-card-placeholder>
     <basic-card-placeholder></basic-card-placeholder>
     <basic-card-placeholder></basic-card-placeholder>
   </article>
   <ng-template #userInfo>
     <article class="about-me mb-5">
+      <h2 class="text-core-primary dark:text-core-primary-400">Mis datos</h2>
       <mat-card>
-        <mat-card-header>
-          <mat-card-title class="text-indigo-600">Datos personales</mat-card-title>
-        </mat-card-header>
         <mat-card-content>
-            <p class="flex align-items-center"><mat-icon class="text-500 text-xl">person</mat-icon> {{user?.lastname}}, {{ user?.name }}</p>
-            <p class="flex align-items-center"><mat-icon class="text-500 text-xl">mail</mat-icon> {{ user?.email }}</p>
+            <div class="flex align-items-center mt-1 text-slate-600 dark:text-slate-300"><mat-icon class="text-sm">person</mat-icon> <span>{{user?.lastname}}, {{ user?.name }}</span></div>
+            <div class="flex align-items-center mt-1 text-slate-600 dark:text-slate-300"><mat-icon class="text-sm">mail</mat-icon> <span>{{ user?.email }}</span></div>
         </mat-card-content>
       </mat-card>
     </article>
     <article class="danger-zone mb-5">
-      <h2 class="text-red-500">Zona de peligro</h2>
-      <div class="border-1 border-red-500 border-round">
+      <h2 class="text-red-600 dark:text-red-400">Zona de peligro</h2>
+      <div class="border-[1px] border-red-600 rounded dark:border-red-300">
         <mat-card>
           <mat-card-header>
-            <mat-card-title class="text-red-500">Eliminar cuenta</mat-card-title>
+            <mat-card-title class="text-red-600 dark:text-red-300">Eliminar cuenta</mat-card-title>
           </mat-card-header>
           <mat-card-content>
-            <p>Si eliminas tu cuenta, no podrás recuperarla.</p>
-            <button mat-flat-button color="warn" (click)="deleteAccount()">Eliminar cuenta</button>
-            <p class="flex align-items-center mt-2"><mat-icon class="text-xl text-primary">info</mat-icon>Tu cuenta es gratis. No tiene costo de mantenimiento.</p>
+            <p class="dark:text-slate-300">Si eliminas tu cuenta, no podrás recuperarla.</p>
+            <button mat-stroked-button color="warn" (click)="deleteAccount()">Eliminar cuenta</button>
+            <p class="mt-2 dark:text-slate-300"><mat-icon class="text-sm text-blue-500">info</mat-icon>Tu cuenta es gratis. No tiene costo de mantenimiento.</p>
           </mat-card-content>
         </mat-card>
       </div>

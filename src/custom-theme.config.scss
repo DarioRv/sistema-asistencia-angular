@@ -54,8 +54,12 @@ $dark-theme: mat.define-dark-theme((
 ));
 
 @include mat.typography-hierarchy($custom-typography);
-@include mat.all-component-themes($custom-ligth-theme);
+@include mat.all-component-typographies($custom-typography);
 
-@media (prefers-color-scheme: dark) {
+.dark {
   @include mat.all-component-colors($dark-theme);
+}
+
+.light {
+  @include mat.all-component-colors($custom-ligth-theme);
 }

@@ -7,6 +7,8 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
 import { MaterialModule } from '../material/material.module';
 import { LoaderComponent } from './components/loader/loader.component';
 import { SnackbarService } from './services/snackbar.service';
+import { ThemeToggleButtonComponent } from './components/theme-toggle-button/theme-toggle-button.component';
+import { CommonModule } from '@angular/common';
 
 
 
@@ -17,8 +19,10 @@ import { SnackbarService } from './services/snackbar.service';
     BasicCardPlaceholderComponent,
     ConfirmDialogComponent,
     LoaderComponent,
+    ThemeToggleButtonComponent,
   ],
   imports: [
+    CommonModule,
     PrimeNgModule,
     MaterialModule
   ],
@@ -26,7 +30,8 @@ import { SnackbarService } from './services/snackbar.service';
     MenubarComponent,
     BasicCardPlaceholderComponent,
     ContentNotAvailableComponent,
-    LoaderComponent
+    LoaderComponent,
+    ThemeToggleButtonComponent
   ],
   providers: [
     SnackbarService

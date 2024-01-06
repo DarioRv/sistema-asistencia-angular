@@ -15,7 +15,7 @@ export class HomePageComponent {
     { icon: 'check_circle', label: 'Ahorra tiempo' },
     { icon: 'check_circle', label: 'Hasta 15 cursos gratis' },
     { icon: 'check_circle', label: 'Sistema intuitivo' },
-    { icon: 'check_circle', label: 'Podés importar tu lista en formate CSV' },
+    { icon: 'check_circle', label: 'Podés importar tu lista en formato CSV' },
     { icon: 'check_circle', label: 'Ténes informes en formato CSV' },
     { icon: 'check_circle', label: 'Es segura y escalable' },
     { icon: 'check_circle', label: 'Mayor flexibilidad' },

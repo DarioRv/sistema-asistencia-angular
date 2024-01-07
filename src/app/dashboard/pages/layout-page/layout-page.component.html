@@ -1,30 +1,27 @@
-<mat-sidenav-container fullscreen>
-  <mat-sidenav #sidenav [mode]="mode" opened="true" class="border-round-right-3xl bg-indigo-600" [ngStyle]="{width: '250px', border: 'none'}">
-    <mat-toolbar color="primary">
-      <span class="text-3xl">Menú</span>
-      <!-- <button mat-icon-button (click)="sidenav.toggle()">
-        <mat-icon>close</mat-icon>
-      </button> -->
+<mat-sidenav-container fullscreen class="dark:bg-slate-900">
+  <mat-sidenav #sidenav [mode]="mode" opened="true" class="rounded-r-[2rem] bg-core-primary dark:bg-slate-700" [ngStyle]="{width: '250px', border: 'none'}">
+    <mat-toolbar ngClass="bg-core-primary dark:bg-slate-700">
+      <span class="text-3xl text-white">Menú</span>
     </mat-toolbar>
-    <mat-nav-list *ngFor="let itemGroup of sidebarItems" class="border-round-right-3xl">
+    <mat-nav-list *ngFor="let itemGroup of sidebarItems" class="rounded-r-[2rem]">
       <mat-list-item *ngFor="let item of itemGroup"  [routerLink]="item.url" (click)="mode == 'over' ? sidenav.toggle() : null">
         <mat-icon matListItemIcon class="text-white">{{ item.icon }}</mat-icon>
         <span class="text-white">{{ item.label }}</span>
       </mat-list-item>
       <mat-divider class="bg-white"></mat-divider>
     </mat-nav-list>
-
+    <shared-theme-toggle-button backgroundColor="bg-core-primary-600 dark:bg-slate-800" iconColor="text-white" selectedIconColor="bg-core-primary-300 dark:bg-slate-500"></shared-theme-toggle-button>
   </mat-sidenav>
 
-  <mat-toolbar class="m-3 border-round-xl w-auto">
-    <nav class="flex justify-content-between w-full align-items-center">
-      <div class="flex align-items-center gap-3">
+  <mat-toolbar class="m-3 rounded-2xl w-auto dark:bg-slate-700">
+    <nav class="flex justify-between w-full items-center">
+      <div class="flex items-center gap-3">
         <button mat-icon-button color="primary" (click)="sidenav.toggle()">
           <mat-icon>menu</mat-icon>
         </button>
-        <h1 class="text-3xl">{{ title }}</h1>
+        <h1 class="text-xl md:text-3xl text-slate-500 dark:text-slate-300 text-pretty">{{ title }}</h1>
       </div>
-      <button mat-flat-button color="primary" (click)="logout()">
+      <button mat-flat-button class="bg-core-primary text-white dark:bg-core-primary-400 dark:text-slate-900" (click)="logout()">
         <mat-icon>power_settings_new</mat-icon>
         Logout
       </button>

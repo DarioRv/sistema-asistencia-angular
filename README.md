@@ -1,5 +1,5 @@
-<img src="https://img.shields.io/github/repo-size/DarioRv/sistema-asistencia-angular?style=for-the-badge" alt="repo size">
-<img src="https://img.shields.io/github/last-commit/DarioRv/sistema-asistencia-angular?style=for-the-badge" alt="last commit">
+![repo size](https://img.shields.io/github/repo-size/DarioRv/sistema-asistencia-angular?style=for-the-badge)
+![last commit](https://img.shields.io/github/last-commit/DarioRv/sistema-asistencia-angular?style=for-the-badge)
 
 
 ---
@@ -14,13 +14,13 @@ El objetivo del proyecto es diseñar e implementar una aplicación web para simp
 
 ## Tecnologías utilizadas
 
-<img src="https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white" alt="Angular">
-<img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS">
-<img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5">
-<img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="Typescript">
-<img src="https://img.shields.io/badge/SASS-CC6699?style=for-the-badge&logo=sass&logoColor=white" alt="SASS">
-<img src="https://img.shields.io/badge/Angular_Material-F79114?style=for-the-badge&logo=angular-material&logoColor=white" alt="Angular Material">
-<img src="https://img.shields.io/badge/PrimeNG-DD0031?style=for-the-badge&logo=prime-ng&logoColor=white" alt="PrimeNG">
+![Angular](https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![Typescript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![SASS](https://img.shields.io/badge/SASS-CC6699?style=for-the-badge&logo=sass&logoColor=white)
+![Angular Material](https://img.shields.io/badge/Angular_Material-F79114?style=for-the-badge&logo=angular-material&logoColor=white)
+![PrimeNG](https://img.shields.io/badge/PrimeNG-DD0031?style=for-the-badge&logo=prime-ng&logoColor=white)
 
 
 ## Instalación

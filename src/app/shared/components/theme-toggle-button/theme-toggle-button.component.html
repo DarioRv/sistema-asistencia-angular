@@ -23,5 +23,5 @@
       }"
     ></div>
   </label>
-  <input type="checkbox" name="theme" id="theme" class="hidden" (change)="show(checkbox)" [checked]="currentTheme == 'dark' ? true : false" #checkbox>
+  <input type="checkbox" name="theme" id="theme" class="hidden" (change)="toggleCurrentTheme(checkbox)" [checked]="currentTheme == 'dark' ? true : false" #checkbox>
 </div>

@@ -1,5 +1,4 @@
-<section class="container-limited">
-  <div class="w-fit mx-auto mt-16">
+<section class="w-fit mx-auto mt-16">
     <shared-loader size="15px" *ngIf="isLoading"></shared-loader>
     <div class="bg-core-primary rounded-xl py-5 px-4 md:px-10 my-6" *ngIf="!isLoading">
       <h3 class="text-white text-center text-3xl mb-3 md:text-4xl md:mb-7">{{ course?.title }}</h3>
@@ -17,10 +16,9 @@
       </form>
     </div>
 
-    <div class="p-2 bg-core-secondary-100 text-core-secondary rounded" *ngIf="hasDepartureTime() && isOutTime()">
+    <div class="p-2 bg-core-secondary-100 text-core-secondary rounded w-fit mx-auto mb-5" *ngIf="hasDepartureTime() && isOutTime()">
       <p class="font-bold text-center m-0">Lo sentimos, te encuentras fuera del horario permitido.</p>
     </div>
 
     <a class="underline text-slate-400 block" routerLink="/attendance">Regresar al inicio</a>
-  </div>
 </section>

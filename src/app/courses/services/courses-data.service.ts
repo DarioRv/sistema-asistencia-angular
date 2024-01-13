@@ -76,4 +76,22 @@ export class CoursesDataService {
   getSuggestions(searchTerm: string): Observable<Course[]> {
     return this.http.get<Course[]>(`${this.baseUrl}/courses?q=${searchTerm}`);
   }
+
+  /**
+   * HTTP get request to find a course by attendance code
+   * @param code attendance code to use for the search
+   * @returns Observable of course or undefined if not found or error ocurred
+   */
+  findCourseByCode(code: string): Observable<Course | undefined> {
+    return this.http.get<Course[]>(`${this.baseUrl}/courses?attendanceCode=${code}`).pipe(
+      map( (courses: Course[]) => {
+        if (courses.length > 0) {
+          return courses[0];
+        } else {
+          return undefined;
+        }
+      }),
+      catchError( err => of(undefined))
+    );
+  }
 }

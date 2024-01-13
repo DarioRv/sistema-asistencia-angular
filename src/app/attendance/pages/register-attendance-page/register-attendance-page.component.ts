@@ -18,8 +18,9 @@ export class RegisterAttendancePageComponent implements OnInit {
   constructor(private activatedRouter: ActivatedRoute, private coursesDataService: CoursesDataService, private snackbar: SnackbarService) { }
 
   ngOnInit(): void {
-    this.activatedRouter.params.subscribe( ({id}) => {
-      this.coursesDataService.findCourseById(id).subscribe( (course) => {
+    this.activatedRouter.params.subscribe( ({attendanceCode}) => {
+      console.log(attendanceCode);
+      this.coursesDataService.findCourseByCode(attendanceCode).subscribe( (course) => {
         if (!course) {
           this.snackbar.showSnackbar('No se encontró el curso');
           return;
@@ -31,10 +32,18 @@ export class RegisterAttendancePageComponent implements OnInit {
     });
   }
 
+  /**
+   * Check if the course has a departure time
+   * @returns true if the course has a departure time, false otherwise
+   */
   hasDepartureTime(): boolean {
     return this.course?.schedule?.departureTime !== undefined;
   }
 
+  /**
+   * Check if the current time is after the departure time of the course
+   * @returns true if the current time is after the departure time of the course, false otherwise
+   */
   isOutTime(): boolean {
     if (!this.course?.schedule?.departureTime) {
       return false;

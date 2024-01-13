@@ -7,12 +7,16 @@ import { MaterialModule } from '../material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { LayoutPageComponent } from './pages/layout-page/layout-page.component';
+import { AttendanceHistoryPageComponent } from './pages/attendance-history-page/attendance-history-page.component';
+import { CodeIntroductionPageComponent } from './pages/code-introduction-page/code-introduction-page.component';
 
 
 @NgModule({
   declarations: [
     RegisterAttendancePageComponent,
-    LayoutPageComponent
+    LayoutPageComponent,
+    AttendanceHistoryPageComponent,
+    CodeIntroductionPageComponent
   ],
   imports: [
     CommonModule,

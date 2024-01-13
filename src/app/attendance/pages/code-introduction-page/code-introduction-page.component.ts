@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CoursesDataService } from 'src/app/courses/services/courses-data.service';
+import { attendanceService } from '../../services/attendance.service';
 
 @Component({
   selector: 'code-introduction-page',
@@ -17,7 +17,7 @@ export class CodeIntroductionPageComponent {
   isLoading = false;
   courseNotFound = false;
 
-  constructor(private formBuilder: FormBuilder, private courseDataService: CoursesDataService, private router: Router) { }
+  constructor(private formBuilder: FormBuilder, private attendanceService: attendanceService, private router: Router) { }
 
   get code(): FormControl {
     return this.form.get('code') as FormControl;
@@ -36,14 +36,15 @@ export class CodeIntroductionPageComponent {
       return;
     }
 
-    this.courseDataService.findCourseByCode(this.code.value).subscribe((course) => {
+    this.attendanceService.findCourseByCode(this.code.value).subscribe((course) => {
       if (!course) {
         this.courseNotFound = true;
+        this.isLoading = false;
         return;
       }
       this.redirectToRegisterAttendancePage(course.attendanceCode!);
+      this.isLoading = false;
     });
-    this.isLoading = false;
   }
 
   /**

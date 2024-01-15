@@ -1,11 +1,11 @@
-<section class="w-fit mx-auto mt-16" [formGroup]="form" (ngSubmit)="onSubmit()">
+<section class="w-fit mx-auto mt-16">
     <shared-loader size="15px" *ngIf="isLoading"></shared-loader>
     <div class="bg-core-primary rounded-xl py-5 px-4 md:px-10 my-6" *ngIf="!isLoading">
       <h3 class="text-white text-center text-3xl mb-3 md:text-4xl md:mb-7">{{ course?.title }}</h3>
       <p class="text-white m-0 text-center">Introduce tu <strong>LU</strong> <mat-icon class="text-sm w-fit" matTooltip="Libreta universitaria">help</mat-icon> para registrar tu asistencia</p>
       <p class="text-center"><strong class="text-white text-xs" *ngIf="hasDepartureTime()">Tenés tiempo hasta las {{ course?.schedule?.departureTime }}</strong></p>
 
-      <form>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <mat-form-field class="mt-5 w-full">
           <mat-label>Libreta universitaria completa</mat-label>
           <input matInput type="text" placeholder="Ej: APU003951" formControlName="lu">

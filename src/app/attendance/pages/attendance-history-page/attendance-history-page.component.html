@@ -1,1 +1,20 @@
-<p>attendance-history-page works!</p>
+<section class="grid place-items-center">
+  <table class="mt-10 w-3/4" *ngIf="attendanceHistory.length != 0">
+    <div class="grid grid-cols-3 text-center">
+      <span class="bg-core-primary-100 text-core-primary font-bold mx-10 p-2 rounded-xl">FECHA</span>
+      <span class="bg-core-primary-100 text-core-primary font-bold mx-10 p-2 rounded-xl">MATERIA</span>
+      <span class="bg-core-primary-100 text-core-primary font-bold mx-10 p-2 rounded-xl">LU</span>
+    </div>
+    <div class="grid grid-cols-3 text-center border-b border-slate-300 my-4 pb-3" *ngFor="let attendance of attendanceHistory">
+      <span>{{ attendance.date | date: 'dd/MM/yyyy' }}</span>
+      <span>{{ attendance.courseName }}</span>
+      <span>{{ attendance.lu }}</span>
+    </div>
+  </table>
+  <div class="flex justify-center items-center gap-2 bg-sky-100 text-sky-700 p-2 mt-5 rounded" *ngIf="attendanceHistory.length == 0">
+    <mat-icon>info</mat-icon>
+    <p class="m-0 font-bold">
+      No hay historial
+    </p>
+  </div>
+</section>

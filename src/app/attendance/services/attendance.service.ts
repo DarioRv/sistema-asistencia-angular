@@ -62,4 +62,16 @@ export class attendanceService {
 
     return course.students.some( student => student.lu === lu);
   }
+
+  /**
+   * Gets course name by id
+   * @param courseId course's id
+   * @returns course name
+   */
+  getCourseName(courseId: number): Observable<string> {
+    return this.http.get<Course>(`${this.baseUrl}/courses/${courseId}`).pipe(
+      map( course => course.title ),
+      catchError( err => of('') )
+    );
+    }
 }

@@ -3,11 +3,11 @@
     <p class="bg-slate-100 dark:bg-slate-600 rounded p-2">
       <small class="text-core-primary dark:text-core-primary-400">Link de la asistencia</small>
       <br>
-      https://asistencia-del-dia.com
+      {{ attendanceCode ? ('http://localhost:4200/attendance/code/'+ attendanceCode) : 'No existe el link aún' }}
     </p>
     <div class="buttons flex gap-2">
       <button mat-flat-button color="primary">Mostrar QR</button>
-      <button mat-button color="primary">Cambiar link</button>
+      <button mat-button color="primary" (click)="onChangeAttendanceCode()">Cambiar link</button>
     </div>
   </div>
   <mat-divider></mat-divider>

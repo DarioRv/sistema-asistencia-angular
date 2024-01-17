@@ -8,5 +8,6 @@ export interface Course {
   title:             string;
   universityProgram: string;
   schedule?:         ClassSchedule;
+  attendanceCode?:   string;
 }
 

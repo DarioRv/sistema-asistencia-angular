@@ -13,6 +13,9 @@ export class CourseAssistanceViewComponent {
   @Output()
   onEditCourse: EventEmitter<Course> = new EventEmitter<Course>();
 
+  qrCodeUrl: string = 'localhost:4200/attendance/code/';
+  seeQRCode: boolean = false;
+
   constructor() { }
 
   /**
@@ -37,5 +40,12 @@ export class CourseAssistanceViewComponent {
       result += chars[Math.floor(Math.random() * chars.length)];
     }
     return result;
+  }
+
+  /**
+   * Shows the QR code
+   */
+  showQRCode(): void {
+    this.seeQRCode = !this.seeQRCode;
   }
 }

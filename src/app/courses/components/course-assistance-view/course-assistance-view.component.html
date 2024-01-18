@@ -6,8 +6,16 @@
       <span class="text-3xl">{{ course.attendanceCode ? (course.attendanceCode) : 'No existe el link aún' }}</span>
     </p>
     <div class="buttons flex gap-2">
-      <button mat-flat-button color="primary">Mostrar QR</button>
+      <button mat-flat-button color="primary" (click)="showQRCode()" *ngIf="course.attendanceCode">Mostrar QR</button>
       <button mat-button color="primary" (click)="onChangeAttendanceCode()">{{ course.attendanceCode ? 'Cambiar link' : 'Generar link' }}</button>
+    </div>
+    <div class="w-fit bg-slate-500 p-3 my-4 rounded" *ngIf="seeQRCode">
+      <qr-code
+        [value]="qrCodeUrl + course.attendanceCode"
+        errorCorrectionLevel="M"
+        darkColor="#333"
+        [margin]="0"
+      ></qr-code>
     </div>
   </div>
   <mat-divider></mat-divider>

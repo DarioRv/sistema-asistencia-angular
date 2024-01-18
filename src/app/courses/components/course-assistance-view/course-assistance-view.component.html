@@ -1,13 +1,13 @@
 <div class="p-2">
   <div class="link-configuration my-3">
     <p class="bg-slate-100 dark:bg-slate-600 rounded p-2">
-      <small class="text-core-primary dark:text-core-primary-400">Link de la asistencia</small>
+      <small class="text-core-primary dark:text-core-primary-400">Código de asistencia</small>
       <br>
-      {{ attendanceCode ? ('http://localhost:4200/attendance/code/'+ attendanceCode) : 'No existe el link aún' }}
+      <span class="text-3xl">{{ course.attendanceCode ? (course.attendanceCode) : 'No existe el link aún' }}</span>
     </p>
     <div class="buttons flex gap-2">
       <button mat-flat-button color="primary">Mostrar QR</button>
-      <button mat-button color="primary" (click)="onChangeAttendanceCode()">Cambiar link</button>
+      <button mat-button color="primary" (click)="onChangeAttendanceCode()">{{ course.attendanceCode ? 'Cambiar link' : 'Generar link' }}</button>
     </div>
   </div>
   <mat-divider></mat-divider>

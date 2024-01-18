@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { CoursesDataService } from '../../services/courses-data.service';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Course } from '../../interfaces/course.interface';
 
 @Component({
   selector: 'course-assistance-view',
@@ -7,24 +7,28 @@ import { CoursesDataService } from '../../services/courses-data.service';
   styles: [
   ]
 })
-export class CourseAssistanceViewComponent implements OnInit {
+export class CourseAssistanceViewComponent {
   @Input({ required: true, alias: 'courseData' })
-  courseId!: number;
-  attendanceCode?: string;
+  course!: Course;
+  @Output()
+  onEditCourse: EventEmitter<Course> = new EventEmitter<Course>();
 
-  constructor(private courseData: CoursesDataService) { }
+  constructor() { }
 
-  ngOnInit(): void {
-    this.courseData.findCourseById(this.courseId).subscribe( course => {
-
-    });
-  }
-
+  /**
+   * Generates a new random code for the course
+   */
   onChangeAttendanceCode(): void {
     const newCode = this.generateRandomCode();
-    this.attendanceCode = newCode;
+    this.course.attendanceCode = newCode;
+
+    this.onEditCourse.emit(this.course);
   }
 
+  /**
+   * Generates a random code of 4 characters
+   * @returns a random code
+   */
   generateRandomCode(): string {
     const length = 4;
     const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';

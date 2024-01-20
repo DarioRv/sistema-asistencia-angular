@@ -3,7 +3,7 @@
     <p class="bg-slate-100 dark:bg-slate-600 rounded p-2">
       <small class="text-core-primary dark:text-core-primary-400">Código de asistencia</small>
       <br>
-      <span class="text-3xl">{{ course.attendanceCode ? (course.attendanceCode) : 'No existe el link aún' }}</span>
+      <span class="text-3xl">{{ course.attendanceCode ? (course.attendanceCode) : 'Aún no generaste el código' }}</span>
     </p>
     <div class="buttons flex gap-2">
       <button mat-flat-button color="primary" (click)="showQRCode()" *ngIf="course.attendanceCode">Mostrar QR</button>
@@ -20,7 +20,7 @@
   </div>
   <mat-divider></mat-divider>
   <div class="assistance-report my-3">
-    <p>Aún no hay registros</p>
+    <course-attendance-list [courseId]="course.id"></course-attendance-list>
   </div>
   <mat-divider></mat-divider>
   <div class="actions my-3">

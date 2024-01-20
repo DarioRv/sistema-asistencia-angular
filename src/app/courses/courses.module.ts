@@ -22,6 +22,7 @@ import { SharedModule } from '../shared/shared.module';
 import { CourseFormPageComponent } from './pages/course-form-page/course-form-page.component';
 import { UploadFileComponent } from './components/upload-file/upload-file.component';
 import { QrCodeModule } from 'ng-qrcode';
+import { AttendanceListComponent } from './components/attendance-list/attendance-list.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { QrCodeModule } from 'ng-qrcode';
     TabGroupPlaceholderComponent,
     CourseFormPageComponent,
     UploadFileComponent,
+    AttendanceListComponent,
   ],
   imports: [
     CommonModule,

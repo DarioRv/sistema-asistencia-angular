@@ -19,6 +19,8 @@ export class RegisterAttendancePageComponent implements OnInit {
   course: Course | undefined;
   isLoading = true;
   isFormLoading = false;
+  isOutTime = false;
+  hasDepartureTime = false;
 
   constructor(private activatedRouter: ActivatedRoute, private attendanceService: attendanceService, private snackbar: SnackbarService, private formBuilder: FormBuilder) { }
 
@@ -31,6 +33,8 @@ export class RegisterAttendancePageComponent implements OnInit {
         }
         this.course = course;
         this.isLoading = false;
+        this.isOutTime = this.checkOutTime();
+        this.hasDepartureTime = this.checkIfHasDepartureTime();
       });
     });
   }
@@ -47,7 +51,7 @@ export class RegisterAttendancePageComponent implements OnInit {
       return;
     }
 
-    if (this.isOutTime()) {
+    if (this.checkOutTime()) {
       this.snackbar.showSnackbar('Ya no podes registrar asistencia');
       this.isFormLoading = false;
       return;
@@ -81,20 +85,34 @@ export class RegisterAttendancePageComponent implements OnInit {
    * Check if the course has a departure time
    * @returns true if the course has a departure time, false otherwise
    */
-  hasDepartureTime(): boolean {
+  checkIfHasDepartureTime(): boolean {
     return this.course?.schedule?.departureTime !== undefined;
   }
 
   /**
    * Check if the current time is after the departure time of the course
-   * @returns true if the current time is after the departure time of the course, false otherwise
+   * @returns true if the current time is not between the entry time and departure time, false otherwise
    */
-  isOutTime(): boolean {
+  checkOutTime(): boolean {
     if (!this.course?.schedule?.departureTime) {
       return false;
     }
-    const departureTime = new Date(this.course.schedule.departureTime);
-    const now = new Date();
-    return now.getHours() >= departureTime.getHours() && now.getMinutes() >= departureTime.getMinutes();
+
+    const now = {
+      hour: new Date().getHours(),
+      minutes: new Date().getMinutes()
+    };
+
+    const departureTime = {
+      hour: Number.parseInt(this.course.schedule.departureTime.split(':')[0]),
+      minutes: Number.parseInt(this.course.schedule.departureTime.split(':')[1])
+    };
+
+    const entryTime = {
+      hour: Number.parseInt(this.course.schedule.entryTime.split(':')[0]),
+      minutes: Number.parseInt(this.course.schedule.entryTime.split(':')[1])
+    };
+
+    return (entryTime.hour > now.hour || now.hour > departureTime.hour) || (entryTime.hour === now.hour && entryTime.minutes > now.minutes) || (departureTime.hour === now.hour && departureTime.minutes < now.minutes);
   }
 }

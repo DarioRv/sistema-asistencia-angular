@@ -27,10 +27,13 @@ export class AttendanceService {
    * @param date the date
    * @returns the students attendance
    */
-  getStudentsAttendanceByDate(courseId: number, date: string): Observable<Attendance[]> {
+  getStudentsAttendanceByDate(courseId: number, date: Date): Observable<Attendance[]> {
     return this.htpp.get<Attendance[]>(`${this.baseUrl}/attendances?courseId=${courseId}`).pipe(
       map( (attendances) => {
-        return attendances.filter( attendance => attendance.date.toString().split('T')[0] === date);
+        return attendances.filter( attendance => {
+          const attendanceDate: Date = new Date(attendance.date);
+          return attendanceDate.getDate() === date.getDate() && attendanceDate.getMonth() === date.getMonth() && attendanceDate.getFullYear() === date.getFullYear();
+        });
       })
     );
   }

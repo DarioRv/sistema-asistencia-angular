@@ -21,6 +21,8 @@ import { PrimeNgModule } from '../prime-ng/prime-ng.module';
 import { SharedModule } from '../shared/shared.module';
 import { CourseFormPageComponent } from './pages/course-form-page/course-form-page.component';
 import { UploadFileComponent } from './components/upload-file/upload-file.component';
+import { QrCodeModule } from 'ng-qrcode';
+import { AttendanceListComponent } from './components/attendance-list/attendance-list.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,7 @@ import { UploadFileComponent } from './components/upload-file/upload-file.compon
     TabGroupPlaceholderComponent,
     CourseFormPageComponent,
     UploadFileComponent,
+    AttendanceListComponent,
   ],
   imports: [
     CommonModule,
@@ -45,7 +48,8 @@ import { UploadFileComponent } from './components/upload-file/upload-file.compon
     ReactiveFormsModule,
     MaterialModule,
     PrimeNgModule,
-    SharedModule
+    SharedModule,
+    QrCodeModule
   ]
 })
 export class CoursesModule { }

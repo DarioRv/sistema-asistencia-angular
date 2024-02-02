@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FileRemoveEvent, FileSelectEvent } from 'primeng/fileupload';
+import { FileRemoveEvent } from 'primeng/fileupload';
 import { CsvReaderService } from '../../services/csv-reader.service';
 import { Student } from '../../interfaces/student.interface';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
@@ -11,7 +11,7 @@ import { SnackbarService } from 'src/app/shared/services/snackbar.service';
   ]
 })
 export class UploadFileComponent {
-  selectedFile: File | undefined;
+  selectedFile?: File | null;
 
   @Output()
   onUploadFile: EventEmitter<Student[]> = new EventEmitter();
@@ -22,10 +22,12 @@ export class UploadFileComponent {
    * Method to handle the file upload event
    * @param event FileUploadEvent
    */
-  onSelect(event: FileSelectEvent) {
-    for(let file of event.files) {
-      this.selectedFile = file;
+  onSelect(event: FileList) {
+    if (!event.item(0)) {
+      this.snackbarService.showSnackbar('Hubo un error al subir el archivo.');
+      return;
     }
+    this.selectedFile = event.item(0)
     this.snackbarService.showSnackbar('Se ha seleccionado el archivo.');
   }
 

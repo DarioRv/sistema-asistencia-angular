@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FileRemoveEvent } from 'primeng/fileupload';
 import { CsvReaderService } from '../../services/csv-reader.service';
 import { Student } from '../../interfaces/student.interface';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
@@ -16,14 +15,16 @@ export class UploadFileComponent {
   @Output()
   onUploadFile: EventEmitter<Student[]> = new EventEmitter();
 
+  fileIcon = 'assets/svg/archivo-csv.svg';
+
   constructor(private csvReader: CsvReaderService, private snackbarService: SnackbarService) {}
 
   /**
-   * Method to handle the file upload event
-   * @param event FileUploadEvent
+   * Method to handle the drop event
+   * @param event FileList with the files dropped
    */
-  onSelect(event: FileList) {
-    if (!event.item(0)) {
+  onDropFile(event: FileList) {
+    if (!event || !event.item(0)) {
       this.snackbarService.showSnackbar('Hubo un error al subir el archivo.');
       return;
     }
@@ -31,19 +32,20 @@ export class UploadFileComponent {
     this.snackbarService.showSnackbar('Se ha seleccionado el archivo.');
   }
 
-  /**
-   * Method to handle the clear event, set the selectedFiles array to empty
-   */
-  onClear() {
-    this.selectedFile = undefined;
-    this.snackbarService.showSnackbar('Se ha eliminado el archivo.');
+  onSelectFileFromBrowser(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (!input.files || !input.files[0]) {
+      this.snackbarService.showSnackbar('Hubo un error al subir el archivo.');
+      return;
+    }
+    this.selectedFile = input.files[0];
+    this.snackbarService.showSnackbar('Se ha seleccionado el archivo.');
   }
 
   /**
-   * Method to handle the file remove event, remove the file from the selectedFiles array
-   * @param $event FileRemoveEvent
+   * removes the selected file
    */
-  onRemove($event: FileRemoveEvent) {
+  onRemove() {
     this.selectedFile = undefined;
     this.snackbarService.showSnackbar('Se ha eliminado el archivo.');
   }
@@ -61,6 +63,7 @@ export class UploadFileComponent {
       .catch( (error) => {
         this.snackbarService.showSnackbar('Error al procesar el archivo csv.')
       });
+    this.selectedFile = null;
   }
 
   /**

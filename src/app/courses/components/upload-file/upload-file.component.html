@@ -1,38 +1,10 @@
-<!-- <p-fileUpload
-  accept=".csv"
-  [maxFileSize]="1000000"
-  [multiple]="false"
-  chooseLabel="Importar"
-  chooseStyleClass="bg-core-primary text-white font-bold p-2 rounded border-none"
-  cancelLabel="Cancelar"
-  cancelStyleClass="bg-red-600 text-white font-bold p-2 rounded border-none"
-  uploadLabel="Subir"
-  uploadStyleClass="bg-green-600 text-white font-bold p-2 rounded border-none"
-  invalidFileTypeMessageSummary="Tipo de archivo inválido"
-  invalidFileTypeMessageDetail="El archivo debe ser de tipo CSV"
-  invalidFileSizeMessageSummary="Tamaño de archivo inválido"
-  invalidFileSizeMessageDetail="El archivo debe pesar menos de 1MB"
-  invalidFileMessageSummary="Archivo inválido"
-  invalidFileMessageDetail="El archivo debe ser de tipo CSV y pesar menos de 1MB"
-  [customUpload]="true"
-  (onSelect)="onSelect($event)"
-  (onClear)="onClear()"
-  (onRemove)="onRemove($event)"
-  (uploadHandler)="onUpload()"
-  styleClass="bg-white dark:bg-slate-600"
-  >
-    <ng-template pTemplate="content">
-        <p class="text-center" *ngIf="!selectedFile">Drag and drop your files</p>
-    </ng-template>
-</p-fileUpload> -->
-
 <div
   dragAndDrop
-  (fileDropped)="onSelect($event)"
-  class="dropzone bg-white dark:bg-slate-600 text-center relative border-2 border-slate-400 border-dashed rounded p-8"
-  [ngClass]="{'border-core-primary': selectedFile != undefined && selectedFile != null}"
+  (fileDropped)="onDropFile($event)"
+  class="dropzone bg-white dark:bg-slate-600 text-center relative border-2 rounded p-8"
+  [ngClass]="{'border-dashed border-slate-400': !selectedFile, 'border-solid border-sky-600': selectedFile}"
 >
-  <input class="opacity-0 absolute w-full h-full top-0 left-0" type="file" id="fileDropRef" #fileDropRef>
+  <input class="opacity-0 absolute top-0 left-0" type="file" id="fileDropRef" (change)="onSelectFileFromBrowser($event)" #fileDropRef>
   <ng-template [ngIf]="!selectedFile">
     <img src="" alt="">
     <h3 class="text-xl text-slate-700">Arrastra y suelta tu archivo aquí</h3>
@@ -41,9 +13,14 @@
   </ng-template>
   <ng-template [ngIf]="selectedFile">
     <h3 class="text-xl text-slate-700">Archivo seleccionado</h3>
-    <div class="bg-slate-200 flex justify-between items-center rounded px-6 py-2 z-20">
-      <p class="m-0">{{selectedFile.name}} - {{ selectedFile.size }}</p>
-      <button class="bg-red-600 text-white font-bold rounded border-none" (click)="onClear()"><mat-icon>close</mat-icon></button>
+    <div class="bg-slate-200 flex justify-between items-center rounded px-6 py-2 z-20 mb-4">
+      <mat-icon class="size-4 text-green-400">csv</mat-icon>
+      <p class="m-0">{{selectedFile.name}} - {{ selectedFile.size }} bytes</p>
+      <button mat-icon-button class="text-red-600 font-bold hover:text-white hover:bg-red-600 transition-colors duration-50" (click)="onRemove()"><mat-icon>close</mat-icon></button>
     </div>
+    <button mat-flat-button color="primary" (click)="onUpload()">
+      <mat-icon>upload</mat-icon>
+      Subir
+    </button>
   </ng-template>
 </div>

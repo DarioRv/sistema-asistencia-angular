@@ -10,35 +10,84 @@ import { SnackbarService } from 'src/app/shared/services/snackbar.service';
   ]
 })
 export class UploadFileComponent {
+  acceptedFileType: string = '.csv';
+  maxFileSize: number = 1_048_576; // 1MB
+  errors: string[] = [];
   selectedFile?: File | null;
 
   @Output()
   onUploadFile: EventEmitter<Student[]> = new EventEmitter();
 
-  fileIcon = 'assets/svg/archivo-csv.svg';
-
   constructor(private csvReader: CsvReaderService, private snackbarService: SnackbarService) {}
+
+  /**
+   * Checks if the file extension is csv
+   * @param file File to check
+   * @returns true if the file extension is csv, false otherwise
+   */
+  checkFileExtension(file: File): boolean {
+    if (this.acceptedFileType.includes(file.name.split('.').pop() || "")) return true;
+
+    this.errors.push('El archivo seleccionado no es un archivo csv.');
+    return false;
+  }
+
+  /**
+   * Checks if the file size is less than the max file size
+   * @param file File to check
+   * @returns true if the file size is less than the max file size, false otherwise
+   */
+  checkFileSize(file: File): boolean {
+    if (file.size <= this.maxFileSize) return true;
+
+    this.errors.push('El archivo seleccionado es demasiado grande (Límite 1MB).');
+    return false;
+  }
+
+  /**
+   * Checks if the file is acceptable
+   * @param file File to check
+   * @returns true if the file is acceptable, false otherwise
+   */
+  isAnAcceptableFile(file: File): boolean {
+    this.errors = [];
+    return this.checkFileExtension(file) && this.checkFileSize(file);
+  }
 
   /**
    * Method to handle the drop event
    * @param event FileList with the files dropped
    */
   onDropFile(event: FileList) {
-    if (!event || !event.item(0)) {
+    const file = event.item(0);
+
+    if (!file) {
       this.snackbarService.showSnackbar('Hubo un error al subir el archivo.');
       return;
     }
-    this.selectedFile = event.item(0)
+
+    if (!this.isAnAcceptableFile(file)) return;
+
+    this.selectedFile = file;
     this.snackbarService.showSnackbar('Se ha seleccionado el archivo.');
   }
 
+  /**
+   * Method to handle the file input event
+   * @param event Event with the input element
+   */
   onSelectFileFromBrowser(event: Event) {
     const input = event.target as HTMLInputElement;
-    if (!input.files || !input.files[0]) {
+    const file = input.files?.item(0);
+
+    if (!file) {
       this.snackbarService.showSnackbar('Hubo un error al subir el archivo.');
       return;
     }
-    this.selectedFile = input.files[0];
+
+    if (!this.isAnAcceptableFile(file)) return;
+
+    this.selectedFile = file;
     this.snackbarService.showSnackbar('Se ha seleccionado el archivo.');
   }
 

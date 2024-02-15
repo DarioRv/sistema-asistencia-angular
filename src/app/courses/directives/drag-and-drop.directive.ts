@@ -5,7 +5,7 @@ import { Directive, EventEmitter, HostBinding, HostListener, Output } from '@ang
 })
 export class DragAndDropDirective {
 
-  @HostBinding('class.border-core-primary') fileOver: boolean = false;
+  @HostBinding('class.dragover') fileOver: boolean = false;
   @Output()
   fileDropped = new EventEmitter<FileList>();
 
@@ -33,7 +33,6 @@ export class DragAndDropDirective {
     this.fileOver = false;
     const files = (event as DragEvent).dataTransfer?.files;
     if (files && files.length > 0) {
-      console.log('Se han seleccionado archivos.')
       this.fileDropped.emit(files);
     }
   }

@@ -13,8 +13,8 @@
   </ng-template>
   <ng-template [ngIf]="selectedFile">
     <h3 class="text-base text-slate-700">Archivo seleccionado</h3>
-    <div class="bg-slate-200 flex justify-between items-center rounded px-6 py-2 z-20 mb-4">
-      <mat-icon class="size-4 text-green-400">csv</mat-icon>
+    <div class="bg-slate-100 flex justify-between items-center rounded px-6 py-2 z-20 mb-4">
+      <mat-icon class="text-green-700">description</mat-icon>
       <p class="m-0">{{selectedFile.name}} - {{ selectedFile.size }} bytes</p>
       <button mat-icon-button class="text-red-600 font-bold hover:text-white hover:bg-red-600 transition-colors duration-50" (click)="onRemove()"><mat-icon>close</mat-icon></button>
     </div>

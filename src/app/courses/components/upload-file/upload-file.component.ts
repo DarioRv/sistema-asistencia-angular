@@ -26,9 +26,10 @@ export class UploadFileComponent {
    * @returns true if the file extension is csv, false otherwise
    */
   checkFileExtension(file: File): boolean {
-    if (this.acceptedFileType.includes(file.name.split('.').pop() || "")) return true;
+    const fileExtension: string = file.name.split('.').pop() || '';
+    if (this.acceptedFileType.includes(fileExtension)) return true;
 
-    this.errors.push('El archivo seleccionado no es un archivo csv.');
+    this.errors.push(`El archivo ${file.name}  no es un archivo csv.`);
     return false;
   }
 
@@ -40,7 +41,7 @@ export class UploadFileComponent {
   checkFileSize(file: File): boolean {
     if (file.size <= this.maxFileSize) return true;
 
-    this.errors.push('El archivo seleccionado es demasiado grande (Límite 1MB).');
+    this.errors.push(`El archivo ${file.name} es demasiado grande (Límite 1MB).`);
     return false;
   }
 

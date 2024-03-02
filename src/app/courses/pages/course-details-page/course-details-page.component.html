@@ -14,7 +14,7 @@
             </div>
           </mat-tab>
           <mat-tab label="Asistencia del día">
-            <course-assistance-view></course-assistance-view>
+            <course-assistance-view [courseData]="course" (onEditCourse)="onEditCourse($event)"></course-assistance-view>
           </mat-tab>
           <mat-tab label="Opciones">
             <course-settings [courseData]="course" (onEditCourse)="onEditCourse($event)"></course-settings>

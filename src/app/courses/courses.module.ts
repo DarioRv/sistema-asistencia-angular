@@ -22,6 +22,8 @@ import { SharedModule } from '../shared/shared.module';
 import { CourseFormPageComponent } from './pages/course-form-page/course-form-page.component';
 import { UploadFileComponent } from './components/upload-file/upload-file.component';
 import { DragAndDropDirective } from './directives/drag-and-drop.directive';
+import { QrCodeModule } from 'ng-qrcode';
+import { AttendanceListComponent } from './components/attendance-list/attendance-list.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,7 @@ import { DragAndDropDirective } from './directives/drag-and-drop.directive';
     CourseFormPageComponent,
     UploadFileComponent,
     DragAndDropDirective,
+    AttendanceListComponent,
   ],
   imports: [
     CommonModule,
@@ -47,7 +50,8 @@ import { DragAndDropDirective } from './directives/drag-and-drop.directive';
     ReactiveFormsModule,
     MaterialModule,
     PrimeNgModule,
-    SharedModule
+    SharedModule,
+    QrCodeModule
   ]
 })
 export class CoursesModule { }

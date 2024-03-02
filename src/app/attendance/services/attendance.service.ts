@@ -54,7 +54,7 @@ export class attendanceService {
   /**
    * Check if the student is registered in the course.
    * @param lu student's lu
-   * @param courseId course's id
+   * @param course course to check
    * @returns true if the student is registered in the course, false otherwise
    */
   isStudentRegisteredInCourse(lu: string, course: Course): boolean {

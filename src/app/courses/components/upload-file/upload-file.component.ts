@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FileRemoveEvent, FileSelectEvent } from 'primeng/fileupload';
 import { CsvReaderService } from '../../services/csv-reader.service';
 import { Student } from '../../interfaces/student.interface';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
@@ -11,7 +10,10 @@ import { SnackbarService } from 'src/app/shared/services/snackbar.service';
   ]
 })
 export class UploadFileComponent {
-  selectedFile: File | undefined;
+  acceptedFileType: string = '.csv';
+  maxFileSize: number = 1_048_576; // 1MB
+  errors: string[] = [];
+  selectedFile?: File | null;
 
   @Output()
   onUploadFile: EventEmitter<Student[]> = new EventEmitter();
@@ -19,29 +21,81 @@ export class UploadFileComponent {
   constructor(private csvReader: CsvReaderService, private snackbarService: SnackbarService) {}
 
   /**
-   * Method to handle the file upload event
-   * @param event FileUploadEvent
+   * Checks if the file extension is csv
+   * @param file File to check
+   * @returns true if the file extension is csv, false otherwise
    */
-  onSelect(event: FileSelectEvent) {
-    for(let file of event.files) {
-      this.selectedFile = file;
+  checkFileExtension(file: File): boolean {
+    const fileExtension: string = file.name.split('.').pop() || '';
+    if (this.acceptedFileType.includes(fileExtension)) return true;
+
+    this.errors.push(`El archivo ${file.name}  no es un archivo csv.`);
+    return false;
+  }
+
+  /**
+   * Checks if the file size is less than the max file size
+   * @param file File to check
+   * @returns true if the file size is less than the max file size, false otherwise
+   */
+  checkFileSize(file: File): boolean {
+    if (file.size <= this.maxFileSize) return true;
+
+    this.errors.push(`El archivo ${file.name} es demasiado grande (Límite 1MB).`);
+    return false;
+  }
+
+  /**
+   * Checks if the file is acceptable
+   * @param file File to check
+   * @returns true if the file is acceptable, false otherwise
+   */
+  isAnAcceptableFile(file: File): boolean {
+    this.errors = [];
+    return this.checkFileExtension(file) && this.checkFileSize(file);
+  }
+
+  /**
+   * Method to handle the drop event
+   * @param event FileList with the files dropped
+   */
+  onDropFile(event: FileList) {
+    const file = event.item(0);
+
+    if (!file) {
+      this.snackbarService.showSnackbar('Hubo un error al subir el archivo.');
+      return;
     }
+
+    if (!this.isAnAcceptableFile(file)) return;
+
+    this.selectedFile = file;
     this.snackbarService.showSnackbar('Se ha seleccionado el archivo.');
   }
 
   /**
-   * Method to handle the clear event, set the selectedFiles array to empty
+   * Method to handle the file input event
+   * @param event Event with the input element
    */
-  onClear() {
-    this.selectedFile = undefined;
-    this.snackbarService.showSnackbar('Se ha eliminado el archivo.');
+  onSelectFileFromBrowser(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.item(0);
+
+    if (!file) {
+      this.snackbarService.showSnackbar('Hubo un error al subir el archivo.');
+      return;
+    }
+
+    if (!this.isAnAcceptableFile(file)) return;
+
+    this.selectedFile = file;
+    this.snackbarService.showSnackbar('Se ha seleccionado el archivo.');
   }
 
   /**
-   * Method to handle the file remove event, remove the file from the selectedFiles array
-   * @param $event FileRemoveEvent
+   * removes the selected file
    */
-  onRemove($event: FileRemoveEvent) {
+  onRemove() {
     this.selectedFile = undefined;
     this.snackbarService.showSnackbar('Se ha eliminado el archivo.');
   }
@@ -59,6 +113,7 @@ export class UploadFileComponent {
       .catch( (error) => {
         this.snackbarService.showSnackbar('Error al procesar el archivo csv.')
       });
+    this.selectedFile = null;
   }
 
   /**

@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AuthenticationService } from '../../services/auth.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { AuthUser } from '../../interfaces/auth-user.interface';
 
 @Component({
   selector: 'auth-sign-in',
@@ -36,6 +37,13 @@ export class SignInPageComponent {
     return this.signInForm.get('password');
   }
 
+  getFormData() {
+    return {
+      correo: this.Email?.value,
+      contrasena: this.Password?.value
+    } as AuthUser;
+  }
+
   /**
    * Method to login and redirect to the dashboard if the user is authenticated successfully
    * or show a snackbar if the user could not be authenticated
@@ -43,15 +51,19 @@ export class SignInPageComponent {
   login(): void {
     if (this.signInForm.valid) {
       this.isSubmitting = true;
-      this.authService.authenticateUser(this.signInForm.value).subscribe((user) => {
-        if (user) {
-          this.snackbarService.showSnackbar('Inicio de sesión correcto');
+      this.authService.authenticateUser(this.getFormData()).subscribe({
+        next: (user) => {
+          this.isSubmitting = false;
           this.router.navigate(['/dashboard']);
+        },
+        error: (err) => {
+          this.snackbarService.showSnackbar(err.error.mensaje, 'OK', 8000);
+          this.isSubmitting = false;
+          this.signInForm.reset();
+        },
+        complete: () => {
+          this.signInForm.reset();
         }
-        else {
-          this.snackbarService.showSnackbar('Error al iniciar sesión');
-        }
-        this.isSubmitting = false;
       });
     }
     else {

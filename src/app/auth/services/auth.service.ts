@@ -1,33 +1,62 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { Observable, catchError, map, of, tap, throwError } from "rxjs";
+import { Injectable, computed, signal } from "@angular/core";
+import { Observable, catchError, map, of, throwError } from "rxjs";
 import { CookieService } from "ngx-cookie-service";
 import { User } from "../interfaces/user.interface";
 import { AuthUser } from "../interfaces/auth-user.interface";
 import { environment } from "src/environments/environment";
 import { RegisterUser } from "../interfaces/register-user.interface";
+import { AuthStatus } from "../enums/auth-status.enum";
+import { UserData } from "../interfaces/user-data.interface";
+import { LoginResponse } from "../interfaces/login-response.interface";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
   private baseUrl: string = environment.API_URL;
-  private activeSession?: User;
+  private _currentUser = signal<UserData | null>(null);
+  private _authStatus = signal<AuthStatus>(AuthStatus.notAuthenticated);
+
+  activeSession: User | undefined;
+
+  public currentUser = computed(() => this._currentUser);
+  public authStatus = computed(() => this._authStatus);
 
   constructor(private http: HttpClient, private cookieService: CookieService) {}
 
   /**
+   * Sets the authentication data of the user
+   * @param user user data
+   * @param token token
+   * @returns true if the authentication was successful, false otherwise
+   */
+  private setAuthentication(user: UserData, token: string): boolean {
+    if (!user) return false;
+
+    this._currentUser.set(user);
+    this._authStatus.set(AuthStatus.authenticated);
+
+    this.cookieService.set('token', token.replace('Bearer ', ''));
+
+    return true;
+  }
+
+  /**
    * Method to authenticate a user
    * @param user The user to authenticate
-   * @returns Observable of the authenticated user or undefined if the user could not be authenticated
+   * @returns Observable of the authenticated user
    */
-  authenticateUser(user: AuthUser): Observable<User | undefined> {
-    return this.http.get<User[]>(`${this.baseUrl}/users/?email=${user.email}&password=${user.password}`).pipe(
-      map( (users: User[]) => users[0] ),
-      tap( user => {
-        if (user) this.login(user);
+  authenticateUser(user: AuthUser): Observable<UserData> {
+    const url = `${this.baseUrl}/auth/login`;
+    const body = user;
+    return this.http.post<LoginResponse>(url, body).pipe(
+      map( res => {
+        const { usuario, token } = res;
+        this.setAuthentication(usuario, token);
+        return usuario;
       }),
-      catchError( (err) => of(undefined) )
+      catchError( err => throwError( () => err) )
     );
   }
 
@@ -70,6 +99,7 @@ export class AuthenticationService {
   /**
    * Method to save the session of the authenticated user
    * @param user The user to save in the session
+   * @deprecated
    */
   private saveSession(user: User): void {
     this.cookieService.set('user', JSON.stringify(user));
@@ -77,6 +107,7 @@ export class AuthenticationService {
 
   /**
    * Method to delete the session of the authenticated user from the cookies
+   * @deprecated
    */
   private deleteSession(): void {
     this.cookieService.delete('user');
@@ -84,6 +115,7 @@ export class AuthenticationService {
 
   /**
    * Method to set the session of the authenticated user
+   * @deprecated
    */
   private setSession(user: User): void {
     this.activeSession = user;
@@ -92,6 +124,7 @@ export class AuthenticationService {
   /**
    * Method to login the authenticated user
    * @param user The user to login
+   * @deprecated
    */
   login(user: User): void {
     if (this.currentSession || this.cookieService.check('user')) this.logout();
@@ -101,6 +134,7 @@ export class AuthenticationService {
 
   /**
    * Method to logout the authenticated user
+   * @deprecated
    */
   logout(): void {
     this.deleteSession();
@@ -112,23 +146,13 @@ export class AuthenticationService {
    * @returns True if there is a session of the authenticated user, false otherwise
    */
   checkAuthentication(): Observable<boolean> {
-    if (!this.cookieService.check('user') || !this.cookieService.get('user')) return of(false);
-    let user: User;
-    try {
-      user = JSON.parse(this.cookieService.get('user'));
-    }
-    catch(err) {
-      return of(false);
-    }
-    return this.http.get<User | undefined>(`${this.baseUrl}/users/${user.id}`).pipe(
-      map( user => !!user ),
-      catchError( err => of(false) )
-    );
+    return (this._authStatus() === AuthStatus.authenticated) ? of(true) : of(false);
   }
 
   /**
    * Method to get the current session of the authenticated user
    * @returns The current session of the authenticated user or undefined if there is no session
+   * @deprecated
    */
   get currentSession(): User | undefined {
     if (this.activeSession) return this.activeSession;

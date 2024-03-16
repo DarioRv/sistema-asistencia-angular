@@ -1,17 +1,17 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, catchError, map, of, tap } from "rxjs";
+import { Observable, catchError, map, of, tap, throwError } from "rxjs";
 import { CookieService } from "ngx-cookie-service";
 import { User } from "../interfaces/user.interface";
 import { AuthUser } from "../interfaces/auth-user.interface";
+import { environment } from "src/environments/environment";
+import { RegisterUser } from "../interfaces/register-user.interface";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  // TODO: refactor this to use a real API
-
-  private baseUrl: string = 'http://localhost:3000';
+  private baseUrl: string = environment.API_URL;
   private activeSession?: User;
 
   constructor(private http: HttpClient, private cookieService: CookieService) {}
@@ -36,9 +36,11 @@ export class AuthenticationService {
    * @param user The user to register
    * @returns Observable of the registered user or undefined if the user could not be registered
    */
-  registerUser(user: User): Observable<User | undefined> {
-    return this.http.post<User>(`${this.baseUrl}/users`, user).pipe(
-      catchError( (err) => of(undefined) )
+  registerUser(user: RegisterUser): Observable<any> {
+    const url = `${this.baseUrl}/usuario/registro`;
+    const body = user;
+    return this.http.post<any>(url, body).pipe(
+      catchError( err => throwError( () => err) )
     );
   }
 

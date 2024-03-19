@@ -166,4 +166,30 @@ export class AuthenticationService {
     }
     return user;
   }
+
+  /**
+   * Verifies the email of the user with the token provided
+   * @param token The token to verify the email
+   * @returns Observable of true if the email was verified, error otherwise
+   */
+  verifyEmail(token: string): Observable<boolean> {
+    const url = `${this.baseUrl}/usuario/validar/${token}`;
+    return this.http.patch(url, token).pipe(
+      map( () => true ),
+      catchError( (err) => throwError( () => err) )
+    );
+  }
+
+  /**
+   * Resend the verification email
+   * @param email The email to resend the verification email
+   * @returns Observable of true if the email was resent, error otherwise
+   */
+  resendVerificationEmail(email: string): Observable<boolean> {
+    const url = `${this.baseUrl}/usuario/reenviar-correo-confirmacion?correo=${email}`;
+    return this.http.request('POST', url).pipe(
+      map( () => true ),
+      catchError( (err) => throwError( () => err) )
+    );
+  }
 }

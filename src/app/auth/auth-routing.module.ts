@@ -4,6 +4,7 @@ import { LayoutPageComponent } from "./pages/layout-page/layout-page.component";
 import { SignInPageComponent } from "./pages/sign-in-page/sign-in-page.component";
 import { SignUpPageComponent } from "./pages/sign-up-page/sign-up-page.component";
 import { isAlreadyAuthenticated } from "./guards/sign-in.guard";
+import { VerifyEmailPageComponent } from "./pages/verify-email-page/verify-email-page.component";
 
 const routes: Routes = [
   {
@@ -18,6 +19,10 @@ const routes: Routes = [
       {
         path: 'sign-up',
         component: SignUpPageComponent
+      },
+      {
+        path: 'verify-email/:token',
+        component: VerifyEmailPageComponent
       }
     ]
   }

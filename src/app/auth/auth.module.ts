@@ -9,6 +9,8 @@ import { MaterialModule } from '../material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { CookieService } from 'ngx-cookie-service';
+import { VerifyEmailPageComponent } from './pages/verify-email-page/verify-email-page.component';
+import { EmailResendFormComponent } from './components/email-resend-form/email-resend-form.component';
 
 
 
@@ -16,7 +18,9 @@ import { CookieService } from 'ngx-cookie-service';
   declarations: [
     SignInPageComponent,
     SignUpPageComponent,
-    LayoutPageComponent
+    LayoutPageComponent,
+    VerifyEmailPageComponent,
+    EmailResendFormComponent
   ],
   imports: [
     CommonModule,

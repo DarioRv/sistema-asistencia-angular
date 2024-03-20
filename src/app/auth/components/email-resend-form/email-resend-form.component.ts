@@ -13,7 +13,6 @@ export class EmailResendFormComponent {
   form: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email])
   });
-
   isSubmitting: boolean = false;
 
   constructor(private authService: AuthenticationService, private snackbarService: SnackbarService) { }
@@ -57,6 +56,9 @@ export class EmailResendFormComponent {
     this.resendEmail(this.email.value);
   }
 
+  /**
+   * Sets the email does not exists error
+   */
   setEmailDoesNotExistsError(): void {
     this.email.setErrors({ emailDoesNotExists: true });
   }

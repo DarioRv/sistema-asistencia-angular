@@ -1,17 +1,17 @@
-<section class="grid place-items-center" [ngSwitch]="verificationStatus">
+<section class="grid place-items-center px-2" [ngSwitch]="verificationStatus">
 
   <div class="w-fit mt-20 bg-slate-200 p-4 rounded dark:bg-slate-700" *ngSwitchCase="'verified'">
-    <h1 class="text-5xl font-bold text-core-primary text-center dark:text-core-primary-400">Felicidades</h1>
+    <h1 class="text-2xl font-bold text-core-primary text-center dark:text-core-primary-400 md:text-5xl">Felicidades</h1>
 
-    <p class="dark:text-slate-300">
+    <p class="dark:text-slate-300 text-center">
       Tu correo ha sido verificado. Ahora puedes <a class="underline text-core-secondary dark:text-core-secondary-300" routerLink="/auth/sign-in">iniciar sesión</a>.
     </p>
   </div>
 
   <div class="w-fit mt-20 bg-slate-200 p-4 rounded dark:bg-slate-700" *ngSwitchCase="'verifying'">
-    <h1 class="text-5xl font-bold text-slate-700 text-center dark:text-slate-400">Verificando token</h1>
+    <h1 class="text-2xl font-bold text-slate-700 text-center dark:text-slate-400 md:text-5xl">Verificando token</h1>
 
-    <p class="dark:text-slate-300">
+    <p class="dark:text-slate-300 text-center">
       Espera un momento mientras verificamos tu token.
     </p>
 
@@ -19,9 +19,9 @@
   </div>
 
   <div class="w-fit mt-20 bg-slate-200 p-4 rounded dark:bg-slate-700" *ngSwitchCase="'error'">
-    <h1 class="text-5xl font-bold text-red-600 text-center dark:text-red-400">Token inválido</h1>
+    <h1 class="text-2xl font-bold text-red-600 text-center dark:text-red-400 md:text-5xl">Token inválido</h1>
 
-    <p class="dark:text-slate-300">
+    <p class="dark:text-slate-300 text-center">
       Tu token es inválido. Por favor vuelve a pedir un nuevo correo de verificación.
     </p>
 

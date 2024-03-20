@@ -27,13 +27,20 @@ export class EmailResendFormComponent {
    * @param email The email to resend the verification email
    */
   resendEmail(email: string): void {
+    this.isSubmitting = true;
     this.authService.resendVerificationEmail(email)
       .subscribe({
         next: () => {
           this.snackbarService.showSnackbar('Email de verificación reenviado', 'Cerrar', 8000);
+          this.isSubmitting = false;
         },
         error: (err) => {;
+          const emailErrorMessage = 'No existe un usuario con este correo';
+          if (err.error.error == emailErrorMessage) {
+            this.setEmailDoesNotExistsError();
+          }
           this.snackbarService.showSnackbar(err.error.error, 'Cerrar', 8000);
+          this.isSubmitting = false;
         }
       });
   }
@@ -47,8 +54,10 @@ export class EmailResendFormComponent {
       this.snackbarService.showSnackbar('El formulario tiene errores', 'Cerrar', 8000);
       return;
     }
-    this.isSubmitting = true;
     this.resendEmail(this.email.value);
-    this.isSubmitting = false;
+  }
+
+  setEmailDoesNotExistsError(): void {
+    this.email.setErrors({ emailDoesNotExists: true });
   }
 }

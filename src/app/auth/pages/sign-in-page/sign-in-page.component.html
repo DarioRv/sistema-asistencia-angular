@@ -3,13 +3,13 @@
     <div class="form flex flex-col p-4 md:px-16 md:py-8">
       <h2 class="text-3xl lg:text-5xl text-center font-bold mb-6 dark:text-slate-300">Iniciar sesión</h2>
       <p class="text-center">Usá tu email y contraseña</p>
-      <form [formGroup]="signInForm" class="w-full max-w-30rem" (ngSubmit)="login()">
+      <form [formGroup]="signInForm" class="w-full max-w-30rem" (ngSubmit)="onSubmit()">
         <div>
           <mat-form-field class="w-full mb-1">
             <mat-label>Ingresa tu email</mat-label>
             <input matInput placeholder="pat@example.com" name="email" id="email" formControlName="email" required>
-            <mat-error *ngIf="Email?.hasError('required')">Es necesario el email</mat-error>
-            <mat-error *ngIf="Email?.hasError('email')">El formato no es correcto</mat-error>
+            <mat-error *ngIf="email?.hasError('required')">Es necesario el email</mat-error>
+            <mat-error *ngIf="email?.hasError('email')">El formato no es correcto</mat-error>
           </mat-form-field>
         </div>
         <div>
@@ -19,7 +19,7 @@
             <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
               <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
-            <mat-error *ngIf="Password?.hasError('required')">Es necesaria la contraseña</mat-error>
+            <mat-error *ngIf="password?.hasError('required')">Es necesaria la contraseña</mat-error>
           </mat-form-field>
         </div>
         <button type="submit" mat-flat-button class="w-full mt-2 bg-core-primary text-white rounded-lg" [disabled]="isSubmitting">

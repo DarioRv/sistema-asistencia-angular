@@ -2,7 +2,7 @@
   <div class="grid grid-cols-1 lg:grid-cols-2 items-stretch bg-slate-200 rounded-xl md:rounded-3xl max-w-7xl dark:bg-slate-700">
     <div class="form flex flex-col p-4 md:px-16 md:py-8">
       <h2 class="text-3xl lg:text-5xl text-center font-bold mb-6 dark:text-slate-300">Registrarme</h2>
-      <form [formGroup]="signUpForm" class="w-full" (ngSubmit)="register()">
+      <form [formGroup]="signUpForm" class="w-full" (ngSubmit)="onSubmit()">
         <div>
           <mat-form-field class="w-full mb-2">
             <mat-label>Ingresa tu email</mat-label>

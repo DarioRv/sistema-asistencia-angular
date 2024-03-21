@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutPageComponent } from './pages/layout-page/layout-page.component';
-import { AccountPageComponent } from './pages/account-page/account-page.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { checkAuthentication } from '../auth/guards/auth.guard';
 
@@ -22,7 +21,7 @@ const routes: Routes = [
       },
       {
         path: 'account',
-        component: AccountPageComponent,
+        loadChildren: () => import('../user/user.module').then( (m) => m.UserModule ),
         data: { title: 'Mi perfil' }
       },
       {

@@ -57,7 +57,10 @@
               "src/custom-theme.config.scss",
               "src/styles.css"
             ],
-            "tsConfig": "tsconfig.app.json"
+            "tsConfig": "tsconfig.app.json",
+            "allowedCommonJsDependencies": [
+              "qrcode"
+            ]
           }
         },
         "extract-i18n": {

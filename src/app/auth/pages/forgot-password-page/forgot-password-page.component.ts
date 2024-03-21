@@ -28,6 +28,11 @@ export class ForgotPasswordPageComponent {
         this.status = 'email sent';
       },
       error: (err) => {
+        if (err.status == 0) {
+          this.status = 'error';
+          this.snackbarService.showSnackbar('No se ha podido establecer conexión con el servidor', 'Cerrar');
+          return;
+        }
         const emailErrorMessage = 'No existe un usuario con este correo';
         if (err.error.error == emailErrorMessage) {
           this.status = 'request email';

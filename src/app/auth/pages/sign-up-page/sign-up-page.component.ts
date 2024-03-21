@@ -71,32 +71,44 @@ export class SignUpPageComponent implements AfterViewInit {
   }
 
   /**
-   * Method to register the user and redirect to the dashboard if the user is registered successfully
+   * Method to submit the form and register the user
    */
-  register():void {
+  onSubmit(): void {
     if (this.signUpForm.valid) {
       this.isSubmitting = true;
-      this.authService.registerUser(this.userData).subscribe({
-        next: () => {
-          this.isSubmitting = false;
-          this.snackbarService.showSnackbar('Usuario registrado correctamente');
-          this.showVerifyEmailAlert();
-        },
-        error: (err) => {
-          this.snackbarService.showSnackbar(err.error.error, 'OK', 10000);
-          this.isSubmitting = false;
-          if (this.emailIsAlreadyTaken(err.error.error)) {
-            this.setEmailError();
-          }
-          this.hideVerifyEmailAlert();
-        }
-      });
+      this.register();
     }
     else {
       this.snackbarService.showSnackbar('Por favor, rellene los campos');
       this.hideVerifyEmailAlert();
       this.signUpForm.markAllAsTouched();
     }
+  }
+
+  /**
+   * Method to register the user and redirect to the dashboard if the user is registered successfully
+   */
+  register():void {
+    this.authService.registerUser(this.userData).subscribe({
+      next: () => {
+        this.isSubmitting = false;
+        this.snackbarService.showSnackbar('Usuario registrado correctamente');
+        this.showVerifyEmailAlert();
+      },
+      error: (err) => {
+        if ( err.status == 0) {
+          this.snackbarService.showSnackbar('No se pudo conectar con el servidor', 'OK', 8000);
+          this.isSubmitting = false;
+          return;
+        }
+        this.snackbarService.showSnackbar(err.error.error, 'OK', 10000);
+        this.isSubmitting = false;
+        if (this.emailIsAlreadyTaken(err.error.error)) {
+          this.setEmailError();
+        }
+        this.hideVerifyEmailAlert();
+      }
+    });
   }
 
   /**

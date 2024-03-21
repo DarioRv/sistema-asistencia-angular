@@ -29,19 +29,33 @@ export class SignInPageComponent {
     });
   }
 
-  get Email() {
+  get email() {
     return this.signInForm.get('email');
   }
 
-  get Password() {
+  get password() {
     return this.signInForm.get('password');
   }
 
   getFormData() {
     return {
-      correo: this.Email?.value,
-      contrasena: this.Password?.value
+      correo: this.email?.value,
+      contrasena: this.password?.value
     } as AuthUser;
+  }
+
+  /**
+   * Method to submit the form and login the user
+   */
+  onSubmit(): void {
+    if (this.signInForm.valid) {
+      this.isSubmitting = true;
+      this.login();
+    }
+    else {
+      this.snackbarService.showSnackbar('Por favor, rellene los campos')
+      this.signInForm.markAllAsTouched();
+    }
   }
 
   /**
@@ -49,27 +63,25 @@ export class SignInPageComponent {
    * or show a snackbar if the user could not be authenticated
    */
   login(): void {
-    if (this.signInForm.valid) {
-      this.isSubmitting = true;
-      this.authService.authenticateUser(this.getFormData()).subscribe({
-        next: (user) => {
-          this.isSubmitting = false;
-          this.router.navigate(['/dashboard']);
-        },
-        error: (err) => {
-          this.snackbarService.showSnackbar(err.error.mensaje, 'OK', 8000);
-          this.isSubmitting = false;
-          this.signInForm.reset();
-        },
-        complete: () => {
-          this.signInForm.reset();
+    this.authService.authenticateUser(this.getFormData()).subscribe({
+      next: () => {
+        this.isSubmitting = false;
+        this.router.navigate(['/dashboard']);
+      },
+      error: (err) => {
+        if ( err.status == 0) {
+          this.snackbarService.showSnackbar('No se pudo conectar con el servidor', 'OK', 8000);
         }
-      });
-    }
-    else {
-      this.snackbarService.showSnackbar('Por favor, rellene los campos')
-      this.signInForm.markAllAsTouched();
-    }
+        else {
+          this.snackbarService.showSnackbar(err.error.mensaje, 'OK', 8000);
+        }
+        this.isSubmitting = false;
+        this.signInForm.reset();
+      },
+      complete: () => {
+        this.signInForm.reset();
+      }
+    });
   }
 
 }

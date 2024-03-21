@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { AuthenticationService } from '../../services/auth.service';
-import { User } from 'src/app/auth/interfaces/user.interface';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { RegisterUser } from '../../interfaces/register-user.interface';
+import { PasswordValidators } from '../../validators/password-validators';
 
 @Component({
   selector: 'auth-sign-up',
@@ -16,18 +16,30 @@ import { SnackbarService } from 'src/app/shared/services/snackbar.service';
     `
   ]
 })
-export class SignUpPageComponent {
-  signUpForm: FormGroup;
+export class SignUpPageComponent implements AfterViewInit {
   hide = true;
   isSubmitting: boolean = false;
+  @ViewChild('alert')
+  verifyEmailAlert?: ElementRef;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthenticationService, private snackbarService: SnackbarService) {
-    this.signUpForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]],
-      lastname: ['', [Validators.required]],
-      name: ['', [Validators.required]]
-    });
+  public signUpForm: FormGroup = this.formBuilder.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required,
+                    PasswordValidators.containsLetters,
+                    PasswordValidators.containsCapitalLetter,
+                    PasswordValidators.containsSpecialCharacters,
+                    Validators.minLength(6),
+                  ]
+              ],
+    lastname: ['', [Validators.required]],
+    name: ['', [Validators.required]]
+  });
+
+  constructor(private formBuilder: FormBuilder, private authService: AuthenticationService, private snackbarService: SnackbarService) {
+  }
+
+  ngAfterViewInit(): void {
+    this.hideVerifyEmailAlert();
   }
 
   get email() {
@@ -46,8 +58,15 @@ export class SignUpPageComponent {
     return this.signUpForm.get('name');
   }
 
-  get formData(): User {
-    const user = this.signUpForm.value as User;
+  /**
+   * Gets the user data from the form
+   */
+  get userData(): RegisterUser {
+    const user = {
+      correo: this.email?.value,
+      contrasena: this.password?.value,
+      nombre: `${this.lastname?.value} ${this.name?.value}`
+    } as RegisterUser
     return user;
   }
 
@@ -57,21 +76,57 @@ export class SignUpPageComponent {
   register():void {
     if (this.signUpForm.valid) {
       this.isSubmitting = true;
-      this.authService.registerUser(this.formData).subscribe((user) => {
-        if (user) {
+      this.authService.registerUser(this.userData).subscribe({
+        next: () => {
+          this.isSubmitting = false;
           this.snackbarService.showSnackbar('Usuario registrado correctamente');
-          this.authService.login(user);
-          this.router.navigate(['/dashboard']);
+          this.showVerifyEmailAlert();
+        },
+        error: (err) => {
+          this.snackbarService.showSnackbar(err.error.error, 'OK', 10000);
+          this.isSubmitting = false;
+          if (this.emailIsAlreadyTaken(err.error.error)) {
+            this.setEmailError();
+          }
+          this.hideVerifyEmailAlert();
         }
-        else {
-          this.snackbarService.showSnackbar('Error al registrar el usuario, asegúrese de que esta conectado a internet');
-        }
-        this.isSubmitting = false;
       });
     }
     else {
       this.snackbarService.showSnackbar('Por favor, rellene los campos');
+      this.hideVerifyEmailAlert();
       this.signUpForm.markAllAsTouched();
     }
+  }
+
+  /**
+   * checks if the email is already taken by comparing the error message from the server
+   * @param errorMessage
+   * @returns
+   */
+  emailIsAlreadyTaken(errorMessage: string): boolean {
+    const emailTakenMessage = 'Ya existe un usuario con este correo';
+    return errorMessage === emailTakenMessage;
+  }
+
+  /**
+   * Sets the email error in the form control
+   */
+  setEmailError(): void {
+    this.email?.setErrors({emailTaken: true});
+  }
+
+  /**
+   * Shows the verify email alert
+   */
+  showVerifyEmailAlert(): void {
+    this.verifyEmailAlert?.nativeElement.classList.remove('hidden');
+  }
+
+  /**
+   * Hides the verify email alert
+   */
+  hideVerifyEmailAlert(): void {
+    this.verifyEmailAlert?.nativeElement.classList.add('hidden');
   }
 }

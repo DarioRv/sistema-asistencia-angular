@@ -20,8 +20,8 @@ export class AuthenticationService {
 
   activeSession: User | undefined;
 
-  public currentUser = computed(() => this._currentUser);
-  public authStatus = computed(() => this._authStatus);
+  public currentUser = computed(() => this._currentUser());
+  public authStatus = computed(() => this._authStatus());
 
   constructor(private http: HttpClient, private cookieService: CookieService) {}
 
@@ -70,29 +70,6 @@ export class AuthenticationService {
     const body = user;
     return this.http.post<any>(url, body).pipe(
       catchError( err => throwError( () => err) )
-    );
-  }
-
-  /**
-   * Method to update a user
-   * @param user The user to update
-   * @returns Observable of the updated user or undefined if the user could not be updated
-   */
-  updateUser(user: User): Observable<User | undefined> {
-    return this.http.patch<User>(`${this.baseUrl}/users/${user.id}`, user).pipe(
-      catchError( (err) => of(undefined) )
-    );
-  }
-
-  /**
-   * Method to delete a user
-   * @param id The id of the user to delete
-   * @returns Observable of true if the user was deleted, false otherwise
-   */
-  deleteUserById(id: string): Observable<boolean> {
-    return this.http.delete(`${this.baseUrl}/users/${id}`).pipe(
-      map( resp => true ),
-      catchError( (err) => of(false) )
     );
   }
 

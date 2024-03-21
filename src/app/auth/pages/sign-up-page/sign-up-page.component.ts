@@ -83,6 +83,11 @@ export class SignUpPageComponent implements AfterViewInit {
           this.showVerifyEmailAlert();
         },
         error: (err) => {
+          if ( err.status == 0) {
+            this.snackbarService.showSnackbar('No se pudo conectar con el servidor', 'OK', 8000);
+            this.isSubmitting = false;
+            return;
+          }
           this.snackbarService.showSnackbar(err.error.error, 'OK', 10000);
           this.isSubmitting = false;
           if (this.emailIsAlreadyTaken(err.error.error)) {

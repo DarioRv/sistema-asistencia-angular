@@ -57,7 +57,12 @@ export class SignInPageComponent {
           this.router.navigate(['/dashboard']);
         },
         error: (err) => {
-          this.snackbarService.showSnackbar(err.error.mensaje, 'OK', 8000);
+          if ( err.status == 0) {
+            this.snackbarService.showSnackbar('No se pudo conectar con el servidor', 'OK', 8000);
+          }
+          else {
+            this.snackbarService.showSnackbar(err.error.mensaje, 'OK', 8000);
+          }
           this.isSubmitting = false;
           this.signInForm.reset();
         },

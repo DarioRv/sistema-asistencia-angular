@@ -9,7 +9,7 @@ import { AuthenticationService } from '../../services/auth.service';
 })
 export class VerifyEmailPageComponent implements OnInit {
 
-  verificationStatus: 'verifying' | 'verified' | 'error' = 'verifying';
+  verificationStatus: 'verifying' | 'verified' | 'fail' | 'error' = 'verifying';
 
   constructor(private activatedRoute: ActivatedRoute, private authService: AuthenticationService) {}
 
@@ -29,8 +29,12 @@ export class VerifyEmailPageComponent implements OnInit {
         next: () => {
           this.verificationStatus = 'verified';
         },
-        error: () => {
-          this.verificationStatus = 'error';
+        error: (err) => {
+          if (err.status == 0) {
+            this.verificationStatus = 'error';
+            return;
+          }
+          this.verificationStatus = 'fail';
         }
       });
   }

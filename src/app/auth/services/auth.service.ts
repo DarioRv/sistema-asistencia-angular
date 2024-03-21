@@ -192,4 +192,26 @@ export class AuthenticationService {
       catchError( (err) => throwError( () => err) )
     );
   }
+
+  /**
+   * Send an email to the user to reset the password
+   * @param email The email to reset the password
+   * @returns Observable of true if the email was sent, error otherwise
+   */
+  forgotPassword(email: string): Observable<boolean> {
+    const url = `${this.baseUrl}/usuario/olvide-mi-contrasena?correo=${email}`;
+    return this.http.request('POST', url).pipe(
+      map( () => true ),
+      catchError( (err) => throwError( () => err) )
+    );
+  }
+
+  resetPassword(token: string, password: string): Observable<boolean> {
+    const url = `${this.baseUrl}/usuario/cambiar-contrasena/${token}`;
+    const body = { contrasena: password };
+    return this.http.patch(url, body).pipe(
+      map( () => true ),
+      catchError( (err) => throwError( () => err) )
+    );
+  }
 }

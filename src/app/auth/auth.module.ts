@@ -11,6 +11,9 @@ import { SharedModule } from '../shared/shared.module';
 import { CookieService } from 'ngx-cookie-service';
 import { VerifyEmailPageComponent } from './pages/verify-email-page/verify-email-page.component';
 import { EmailResendFormComponent } from './components/email-resend-form/email-resend-form.component';
+import { ResetPasswordPageComponent } from './pages/reset-password/reset-password-page.component';
+import { ForgotPasswordPageComponent } from './pages/forgot-password-page/forgot-password-page.component';
+import { ResetPasswordFormComponent } from './components/reset-password-form/reset-password-form.component';
 
 
 
@@ -20,7 +23,10 @@ import { EmailResendFormComponent } from './components/email-resend-form/email-r
     SignUpPageComponent,
     LayoutPageComponent,
     VerifyEmailPageComponent,
-    EmailResendFormComponent
+    EmailResendFormComponent,
+    ResetPasswordPageComponent,
+    ForgotPasswordPageComponent,
+    ResetPasswordFormComponent
   ],
   imports: [
     CommonModule,

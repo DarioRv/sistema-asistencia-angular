@@ -55,6 +55,15 @@ export class AuthenticationService {
   }
 
   /**
+   * Sign out the user from the current session
+   */
+  signOut(): void {
+    this._currentUser.set(null);
+    this._authStatus.set(AuthStatus.notAuthenticated);
+    this.cookieService.delete('token');
+  }
+
+  /**
    * Method to authenticate a user
    * @param user The user to authenticate
    * @returns Observable of the authenticated user

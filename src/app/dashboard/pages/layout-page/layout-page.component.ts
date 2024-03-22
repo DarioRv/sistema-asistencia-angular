@@ -5,6 +5,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, map } from 'rxjs';
 
 import { AuthenticationService } from 'src/app/auth/services/auth.service';
+import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 
 @Component({
   selector: 'dashboard-layout-page',
@@ -29,7 +30,13 @@ export class LayoutPageComponent implements OnInit {
   public title: string = 'Dashboard';
   public mode: MatDrawerMode = 'side';
 
-  constructor(private authService: AuthenticationService, private router: Router, private activatedRoute: ActivatedRoute, private breakpointObserver: BreakpointObserver) {
+  constructor(
+    private authService: AuthenticationService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private breakpointObserver: BreakpointObserver,
+    private snackbarService: SnackbarService
+  ) {
     this.setSidebarMode();
   }
 
@@ -68,10 +75,11 @@ export class LayoutPageComponent implements OnInit {
   }
 
   /**
-   * Method to logout and redirect to the home page
+   * Sign out the user from the current session and navigate to the login page
    */
-  logout(): void {
-    this.authService.logout();
-    this.router.navigate(['/']);
+  signOut(): void {
+    this.authService.signOut();
+    this.router.navigate(['/auth/sign-in']);
+    this.snackbarService.showSnackbar('Sesión cerrada exitosamente', 'Cerrar', 5000);
   }
 }

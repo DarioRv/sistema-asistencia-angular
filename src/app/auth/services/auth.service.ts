@@ -26,16 +26,28 @@ export class AuthenticationService {
   constructor(private http: HttpClient, private cookieService: CookieService) {}
 
   /**
+   * Gets the token of the authenticated user from the cookies
+   * @returns The token of the authenticated user or undefined if there is no token
+   */
+  getToken(): string | undefined {
+    return this.cookieService.get('token');
+  }
+
+  /**
    * Sets the authentication data of the user
    * @param user user data
    * @param token token
    * @returns true if the authentication was successful, false otherwise
    */
   private setAuthentication(user: UserData, token: string): boolean {
-    if (!user) return false;
+    if (!user || !token) return false;
 
     this._currentUser.set(user);
     this._authStatus.set(AuthStatus.authenticated);
+
+    if (this.cookieService.check('token')) {
+      this.cookieService.delete('token');
+    }
 
     this.cookieService.set('token', token.replace('Bearer ', ''));
 

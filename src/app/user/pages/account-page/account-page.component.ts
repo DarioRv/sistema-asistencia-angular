@@ -1,11 +1,8 @@
 import { Component, computed } from '@angular/core';
-import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
-import { filter, switchMap } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';;
 
 import { AuthenticationService } from 'src/app/auth/services/auth.service';
-import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
-import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { ConfirmDeleteAccountDialogComponent } from '../../components/confirm-delete-account-dialog/confirm-delete-account-dialog.component';
 
 @Component({
   selector: 'app-account-page',
@@ -16,6 +13,15 @@ import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 export class AccountPageComponent {
   currentUser = computed(() => this.authService.currentUser());
 
-  constructor(private authService: AuthenticationService) { }
+  constructor(
+    private authService: AuthenticationService,
+    private dialog: MatDialog,
+  ) { }
 
+  /**
+   * Open the dialog to confirm the deletion of the account
+   */
+  deleteAccount(): void {
+    this.dialog.open(ConfirmDeleteAccountDialogComponent, { data: { correo: this.currentUser()!.correo } });
+  }
 }

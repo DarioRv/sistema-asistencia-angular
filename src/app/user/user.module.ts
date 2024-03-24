@@ -8,12 +8,14 @@ import { MaterialModule } from '../material/material.module';
 import { PasswordUpdateFormComponent } from './components/password-update-form/password-update-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PasswordUpdatePageComponent } from './pages/password-update-page/password-update-page.component';
+import { ConfirmDeleteAccountDialogComponent } from './components/confirm-delete-account-dialog/confirm-delete-account-dialog.component';
 
 @NgModule({
   declarations: [
     AccountPageComponent,
     PasswordUpdateFormComponent,
-    PasswordUpdatePageComponent
+    PasswordUpdatePageComponent,
+    ConfirmDeleteAccountDialogComponent
   ],
   imports: [
     CommonModule,

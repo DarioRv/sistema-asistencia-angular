@@ -27,4 +27,19 @@ export class UserService {
     );
   }
 
+  /**
+   * Delete the user account
+   * @param email The email of the user
+   * @param password The password of the user
+   * @returns Observable of true if the account was deleted, throws an error otherwise
+   */
+  deleteAccount(email: string, password: string): Observable<boolean> {
+    const url = `${this.baseUrl}/usuario/eliminar`;
+    const params = { correo: email, contrasena: password };
+
+    return this.http.delete(url, { params }).pipe(
+      map( () => true ),
+      catchError( (err) => throwError( () => err) )
+    );
+  }
 }

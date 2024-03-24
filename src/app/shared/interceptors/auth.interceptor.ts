@@ -14,7 +14,8 @@ import { AuthenticationService } from 'src/app/auth/services/auth.service';
 export class AuthInterceptor implements HttpInterceptor {
 
   private urls = [
-    '/usuario/cambiar-contrasena-logueado'
+    '/usuario/cambiar-contrasena-logueado',
+    '/usuario/eliminar',
   ];
 
   constructor(private authService: AuthenticationService) {}

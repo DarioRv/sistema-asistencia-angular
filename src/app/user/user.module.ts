@@ -9,13 +9,17 @@ import { PasswordUpdateFormComponent } from './components/password-update-form/p
 import { ReactiveFormsModule } from '@angular/forms';
 import { PasswordUpdatePageComponent } from './pages/password-update-page/password-update-page.component';
 import { ConfirmDeleteAccountDialogComponent } from './components/confirm-delete-account-dialog/confirm-delete-account-dialog.component';
+import { UserDataUpdateFormComponent } from './components/user-data-update-form/user-data-update-form.component';
+import { UpdateUserDataPageComponent } from './pages/update-user-data-page/update-user-data-page.component';
 
 @NgModule({
   declarations: [
     AccountPageComponent,
     PasswordUpdateFormComponent,
     PasswordUpdatePageComponent,
-    ConfirmDeleteAccountDialogComponent
+    ConfirmDeleteAccountDialogComponent,
+    UserDataUpdateFormComponent,
+    UpdateUserDataPageComponent,
   ],
   imports: [
     CommonModule,

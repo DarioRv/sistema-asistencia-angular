@@ -16,6 +16,7 @@ export class AuthInterceptor implements HttpInterceptor {
   private urls = [
     '/usuario/cambiar-contrasena-logueado',
     '/usuario/eliminar',
+    '/usuario/actualizar'
   ];
 
   constructor(private authService: AuthenticationService) {}

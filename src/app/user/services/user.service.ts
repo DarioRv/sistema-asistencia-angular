@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { catchError, map, Observable, throwError } from "rxjs";
 import { UpdatePasswordRequest } from "../interfaces/update-password-request.interface";
 import { environment } from "src/environments/environment";
+import { UpdateUserRequest } from "../interfaces/update-user-request.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +39,21 @@ export class UserService {
     const params = { correo: email, contrasena: password };
 
     return this.http.delete(url, { params }).pipe(
+      map( () => true ),
+      catchError( (err) => throwError( () => err) )
+    );
+  }
+
+  /**
+   * Update the user information
+   * @param userData The user data to update
+   * @returns Observable of true if the user was updated, throws an error otherwise
+   */
+  updateUser(userData: UpdateUserRequest): Observable<boolean> {
+    const url = `${this.baseUrl}/usuario/actualizar`;
+    const body = userData;
+
+    return this.http.patch(url, body).pipe(
       map( () => true ),
       catchError( (err) => throwError( () => err) )
     );

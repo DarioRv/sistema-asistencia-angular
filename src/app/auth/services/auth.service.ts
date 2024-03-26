@@ -20,10 +20,18 @@ export class AuthenticationService {
 
   activeSession: User | undefined;
 
-  public currentUser = computed(() => this._currentUser);
-  public authStatus = computed(() => this._authStatus);
+  public currentUser = computed(() => this._currentUser());
+  public authStatus = computed(() => this._authStatus());
 
   constructor(private http: HttpClient, private cookieService: CookieService) {}
+
+  /**
+   * Gets the token of the authenticated user from the cookies
+   * @returns The token of the authenticated user or undefined if there is no token
+   */
+  getToken(): string | undefined {
+    return this.cookieService.get('token');
+  }
 
   /**
    * Sets the authentication data of the user
@@ -32,14 +40,27 @@ export class AuthenticationService {
    * @returns true if the authentication was successful, false otherwise
    */
   private setAuthentication(user: UserData, token: string): boolean {
-    if (!user) return false;
+    if (!user || !token) return false;
 
     this._currentUser.set(user);
     this._authStatus.set(AuthStatus.authenticated);
 
+    if (this.cookieService.check('token')) {
+      this.cookieService.delete('token');
+    }
+
     this.cookieService.set('token', token.replace('Bearer ', ''));
 
     return true;
+  }
+
+  /**
+   * Sign out the user from the current session
+   */
+  signOut(): void {
+    this._currentUser.set(null);
+    this._authStatus.set(AuthStatus.notAuthenticated);
+    this.cookieService.delete('token');
   }
 
   /**
@@ -70,29 +91,6 @@ export class AuthenticationService {
     const body = user;
     return this.http.post<any>(url, body).pipe(
       catchError( err => throwError( () => err) )
-    );
-  }
-
-  /**
-   * Method to update a user
-   * @param user The user to update
-   * @returns Observable of the updated user or undefined if the user could not be updated
-   */
-  updateUser(user: User): Observable<User | undefined> {
-    return this.http.patch<User>(`${this.baseUrl}/users/${user.id}`, user).pipe(
-      catchError( (err) => of(undefined) )
-    );
-  }
-
-  /**
-   * Method to delete a user
-   * @param id The id of the user to delete
-   * @returns Observable of true if the user was deleted, false otherwise
-   */
-  deleteUserById(id: string): Observable<boolean> {
-    return this.http.delete(`${this.baseUrl}/users/${id}`).pipe(
-      map( resp => true ),
-      catchError( (err) => of(false) )
     );
   }
 

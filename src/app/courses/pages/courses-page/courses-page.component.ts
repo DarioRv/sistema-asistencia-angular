@@ -28,12 +28,7 @@ export class CoursesPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (this.coursesDataService.cache().length === 0) {
-      this.getAllCourses();
-      return;
-    }
-    this.courses = this.coursesDataService.cache();
-    this.status = 'success';
+    this.getAllCourses();
   }
 
   /**

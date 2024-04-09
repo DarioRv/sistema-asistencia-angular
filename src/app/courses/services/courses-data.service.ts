@@ -11,9 +11,6 @@ import { CoursesDataResponse } from '../interfaces/courses-data-response.interfa
 })
 export class CoursesDataService {
   private baseUrl: string = environment.API_URL;
-  private _cache = signal<Course[]>([]);
-
-  public cache = computed(() => this._cache());
 
   constructor(private http: HttpClient) {}
 
@@ -26,7 +23,6 @@ export class CoursesDataService {
 
     return this.http.get<CoursesDataResponse>(url).pipe(
       map(({ cursos }) => cursos),
-      tap((courses) => this._cache.set(courses)),
       catchError((err) => throwError(() => err))
     );
   }
@@ -40,10 +36,9 @@ export class CoursesDataService {
     const url = `${this.baseUrl}/cursos`;
     const body = course;
 
-    return this.http.post<Course>(url, body).pipe(
-      tap(() => this.resetCache()),
-      catchError((err) => throwError(() => err))
-    );
+    return this.http
+      .post<Course>(url, body)
+      .pipe(catchError((err) => throwError(() => err)));
   }
 
   /**
@@ -55,10 +50,9 @@ export class CoursesDataService {
     const url = `${this.baseUrl}/cursos`;
     const body = course;
 
-    return this.http.patch<Course>(url, body).pipe(
-      tap(() => this.resetCache()),
-      catchError((err) => throwError(() => err))
-    );
+    return this.http
+      .patch<Course>(url, body)
+      .pipe(catchError((err) => throwError(() => err)));
   }
 
   /**
@@ -69,7 +63,6 @@ export class CoursesDataService {
   deleteCourseById(id: string): Observable<boolean> {
     return this.http.delete(`${this.baseUrl}/cursos/${id}`).pipe(
       map((resp) => true),
-      tap(() => this.resetCache()),
       catchError((err) => of(false))
     );
   }
@@ -94,10 +87,7 @@ export class CoursesDataService {
    * @returns Observable of courses array
    */
   getSuggestions(searchTerm: string): Course[] {
-    const occurrences = this.cache().filter((course) =>
-      course.nombre.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase())
-    );
-    return occurrences;
+    throw new Error('Method not implemented.');
   }
 
   generateAttendanceCode(courseId: string): Observable<string> {
@@ -106,9 +96,5 @@ export class CoursesDataService {
     return this.http
       .get<string>(url)
       .pipe(catchError((err) => throwError(() => err)));
-  }
-
-  private resetCache(): void {
-    this._cache.set([]);
   }
 }

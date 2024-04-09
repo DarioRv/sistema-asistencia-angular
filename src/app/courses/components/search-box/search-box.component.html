@@ -5,7 +5,7 @@
   #auto="matAutocomplete"
   (optionSelected)="onSelectedOption($event)">
     <mat-option *ngFor="let course of suggestedCourses" [value]="course">
-      {{ course.title }}
+      {{ course.nombre }}
     </mat-option>
     <mat-option value="" *ngIf="suggestedCourses.length == 0 && searchInput.value && searchInput.value.length > 0">
       No se encontró nada con el término {{ searchInput.value }}

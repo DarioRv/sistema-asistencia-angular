@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Course } from '../../interfaces/course.interface';
 import { CoursesDataService } from '../../services/courses-data.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { Course } from '../../interfaces/course.interface';
 
 @Component({
   selector: 'app-course-details-page',
@@ -39,14 +39,23 @@ export class CourseDetailsPageComponent implements OnInit {
   }
 
   /**
-   * Handle edit course event.
-   * Update the edited course.
-   * @param course course to update
+   * Updates attendance code for the course.
    */
-  onEditCourse(course: Course): void {
-    this.coursesDataService.updateCourse(course).subscribe( () => {
-      this.snackbarService.showSnackbar('Se ha actualizado el curso.');
-      this.refreshCourseData();
+  updateAttendanceCode(code: string): void {
+    const course: Course = {
+      codigoAsistencia: code,
+      ...this.course
+    };
+
+    this.coursesDataService.updateCourse(course).subscribe({
+      next: () => {
+        this.snackbarService.showSnackbar('Código de asistencia actualizado');
+        this.refreshCourseData();
+      },
+      error: (error) => {
+        console.log(error);
+        this.snackbarService.showSnackbar('Error al actualizar el código de asistencia');
+      }
     });
   }
 

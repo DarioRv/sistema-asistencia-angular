@@ -1,36 +1,48 @@
-import { Injectable } from '@angular/core';
-import { Course } from '../interfaces/course.interface';
+import { computed, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, map, of } from 'rxjs';
+import { Observable, catchError, map, of, tap, throwError } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { Course } from '../interfaces/course.interface';
+import { CreateCourse } from '../interfaces/create-course.interface';
+import { CoursesDataResponse } from '../interfaces/courses-data-response.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CoursesDataService {
+  private baseUrl: string = environment.API_URL;
+  private _cache = signal<Course[]>([]);
 
-  // TODO: refactor this to use a real API
-  // INFO: this is a fake API using json-server
+  public cache = computed(() => this._cache());
 
-  private baseUrl: string = 'http://localhost:3000';
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   /**
-   * HTTP get request to get all courses
-   * @returns Observable of courses array
+   * HTTP get request to get all courses for a user
+   * @returns Observable of courses array, throws error if there is no data
    */
-  getCourses():Observable<Course[]> {
-    return this.http.get<Course[]>(`${this.baseUrl}/courses`);
+  getCourses(userId: string): Observable<Course[]> {
+    const url = `${this.baseUrl}/cursos/usuario/${userId}`;
+
+    return this.http.get<CoursesDataResponse>(url).pipe(
+      map(({ cursos }) => cursos),
+      tap((courses) => this._cache.set(courses)),
+      catchError((err) => throwError(() => err))
+    );
   }
 
   /**
    * HTTP post request to add a new course
    * @param course course to add
-   * @returns Observable of course or undefined
+   * @returns Observable of course created if successful, throws error if there is an error
    */
-  addCourse(course: Course): Observable<Course | undefined> {
-    return this.http.post<Course>(`${this.baseUrl}/courses`, course).pipe(
-      catchError( err => of(undefined) )
+  addCourse(course: CreateCourse): Observable<Course> {
+    const url = `${this.baseUrl}/cursos`;
+    const body = course;
+
+    return this.http.post<Course>(url, body).pipe(
+      tap(() => this.resetCache()),
+      catchError((err) => throwError(() => err))
     );
   }
 
@@ -39,9 +51,13 @@ export class CoursesDataService {
    * @param course course to update
    * @returns Observable of course or undefined
    */
-  updateCourse(course: Course): Observable<Course | undefined> {
-    return this.http.patch<Course>(`${this.baseUrl}/courses/${course.id}`, course).pipe(
-      catchError( err => of(undefined) )
+  updateCourse(course: Course): Observable<Course> {
+    const url = `${this.baseUrl}/cursos`;
+    const body = course;
+
+    return this.http.patch<Course>(url, body).pipe(
+      tap(() => this.resetCache()),
+      catchError((err) => throwError(() => err))
     );
   }
 
@@ -50,10 +66,11 @@ export class CoursesDataService {
    * @param id id of the course to delete
    * @returns Observable of true if the course was deleted, false otherwise
    */
-  deleteCourseById(id: number): Observable<boolean> {
-    return this.http.delete(`${this.baseUrl}/courses/${id}`).pipe(
-      map( resp => true ),
-      catchError( err => of(false) )
+  deleteCourseById(id: string): Observable<boolean> {
+    return this.http.delete(`${this.baseUrl}/cursos/${id}`).pipe(
+      map((resp) => true),
+      tap(() => this.resetCache()),
+      catchError((err) => of(false))
     );
   }
 
@@ -62,9 +79,12 @@ export class CoursesDataService {
    * @param id id of the course to find
    * @returns Observable of course or undefined
    */
-  findCourseById(id: number): Observable<Course | undefined> {
-    return this.http.get<Course>(`${this.baseUrl}/courses/${id}`).pipe(
-      catchError( err => of(undefined))
+  findCourseById(id: string): Observable<Course> {
+    const url = `${this.baseUrl}/cursos/id/${id}`;
+
+    return this.http.get<CoursesDataResponse>(url).pipe(
+      map(({ curso }) => curso),
+      catchError((err) => throwError(() => err))
     );
   }
 
@@ -73,7 +93,22 @@ export class CoursesDataService {
    * @param searchTerm search term to use
    * @returns Observable of courses array
    */
-  getSuggestions(searchTerm: string): Observable<Course[]> {
-    return this.http.get<Course[]>(`${this.baseUrl}/courses?q=${searchTerm}`);
+  getSuggestions(searchTerm: string): Course[] {
+    const occurrences = this.cache().filter((course) =>
+      course.nombre.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase())
+    );
+    return occurrences;
+  }
+
+  generateAttendanceCode(courseId: string): Observable<string> {
+    const url = `${this.baseUrl}/cursos/${courseId}/attendanceCode`;
+
+    return this.http
+      .get<string>(url)
+      .pipe(catchError((err) => throwError(() => err)));
+  }
+
+  private resetCache(): void {
+    this._cache.set([]);
   }
 }

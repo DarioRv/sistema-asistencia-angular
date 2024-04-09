@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Course } from '../../interfaces/course.interface';
+import { CoursesDataService } from '../../services/courses-data.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'course-assistance-view',
@@ -11,35 +13,18 @@ export class CourseAssistanceViewComponent {
   @Input({ required: true, alias: 'courseData' })
   course!: Course;
   @Output()
-  onEditCourse: EventEmitter<Course> = new EventEmitter<Course>();
+  changeAttendanceCodeEvent: EventEmitter<string> = new EventEmitter<string>();
 
-  qrCodeUrl: string = 'localhost:4200/attendance/code/';
+  qrCodeUrl: string = `${environment.API_URL}/attendance/code/`;
   seeQRCode: boolean = false;
 
-  constructor() { }
+  constructor(private courseDataService: CoursesDataService) { }
 
   /**
    * Generates a new random code for the course
    */
   onChangeAttendanceCode(): void {
-    const newCode = this.generateRandomCode();
-    this.course.attendanceCode = newCode;
-
-    this.onEditCourse.emit(this.course);
-  }
-
-  /**
-   * Generates a random code of 4 characters
-   * @returns a random code
-   */
-  generateRandomCode(): string {
-    const length = 4;
-    const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    let result = '';
-    for (let i = length; i > 0; --i) {
-      result += chars[Math.floor(Math.random() * chars.length)];
-    }
-    return result;
+    this.generateAttendanceCode();
   }
 
   /**
@@ -47,5 +32,16 @@ export class CourseAssistanceViewComponent {
    */
   showQRCode(): void {
     this.seeQRCode = !this.seeQRCode;
+  }
+
+  generateAttendanceCode(): void {
+    this.courseDataService.generateAttendanceCode(this.course.id).subscribe({
+      next: (attendanceCode) => {
+        this.changeAttendanceCodeEvent.emit(attendanceCode);
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
   }
 }

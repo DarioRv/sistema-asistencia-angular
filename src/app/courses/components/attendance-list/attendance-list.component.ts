@@ -11,7 +11,7 @@ import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 })
 export class AttendanceListComponent implements OnInit {
   @Input()
-  courseId!: number;
+  courseId!: string;
   attendances: any[] = [];
   displayedColumns: string[] = ['lu', 'date'];;
   isLoading: boolean = false;
@@ -26,21 +26,6 @@ export class AttendanceListComponent implements OnInit {
    * Gets the students attendance for a course
   */
  getStudentsAttendance(): void {
-   this.isLoading = true;
-   this.attendanceService.getStudentsAttendanceByDate(this.courseId, this.getToday())
-   .pipe(
-     delay(500),
-     tap(() => this.isLoading = false)
-     )
-     .subscribe((attendances) => {
-       this.attendances = attendances;
-    });
-  }
-
-  /**
-   * Gets today's date
-   */
-  getToday(): Date {
-    return new Date();
+  this.isLoading = true;
   }
 }

@@ -42,7 +42,7 @@ export class CodeIntroductionPageComponent {
         this.isLoading = false;
         return;
       }
-      this.redirectToRegisterAttendancePage(course.attendanceCode!);
+      this.redirectToRegisterAttendancePage(course.codigoAsistencia!);
       this.isLoading = false;
     });
   }

@@ -5,6 +5,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { Course } from '../../interfaces/course.interface';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { CreateCourse } from '../../interfaces/create-course.interface';
+import { AuthenticationService } from 'src/app/auth/services/auth.service';
 
 @Component({
   selector: 'app-course-form-page',
@@ -17,19 +19,26 @@ export class CourseFormPageComponent {
     id: new FormControl(),
     title: new FormControl('', [Validators.required, Validators.maxLength(50)]),
     description: new FormControl('', [Validators.required, Validators.maxLength(255)]),
-    universityProgram: new FormControl('', [Validators.required, Validators.maxLength(50)])
+    universityProgram: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+    userId: new FormControl(this.authService.currentUser()!.id)
   });
   editMode: boolean = false;
   isLoading: boolean = false;
 
-  constructor(private courseService: CoursesDataService, private router: Router, private activatedRoute: ActivatedRoute, private snackbarService: SnackbarService) { }
+  constructor(
+    private courseService: CoursesDataService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private snackbarService: SnackbarService,
+    private authService: AuthenticationService
+  ) { }
 
   ngOnInit(): void {
     this.setMode();
   }
 
   /**
-   * Method to check if the form is in add mode
+   * Checks if the form is in add mode
    * @returns true if the form is in add mode, false otherwise
    */
   isCreateMode(): boolean {
@@ -37,7 +46,7 @@ export class CourseFormPageComponent {
   }
 
   /**
-   * Method to set the mode of the form
+   * Sets the mode of the form
    * If the url contains the word 'edit' then the form is in edit mode
    * If the url doesn't contain the word 'edit' then the form is in add mode
    */
@@ -48,7 +57,7 @@ export class CourseFormPageComponent {
   }
 
   /**
-   * Method to set the form in edit mode
+   * Sets the form in edit mode
    */
   setEditMode() {
     this.editMode = true;
@@ -59,42 +68,58 @@ export class CourseFormPageComponent {
         this.snackbarService.showSnackbar('El curso no existe');
         return this.router.navigateByUrl('/dashboard');
       }
-      this.courseForm.reset(course);
+      this.courseForm.reset({
+        id: course.id,
+        title: course.nombre,
+        description: course.descripcion,
+        universityProgram: course.carrera,
+        userId: course.idUsuario
+      });
       return;
     });
   }
 
-  /**
-   * Method to get the title form control
-   */
-  get title(){
-    return this.courseForm.get('title');
+  get id(): FormControl {
+    return this.courseForm.get('id') as FormControl;
   }
 
-  /**
-   * Method to get the description form control
-   */
-  get description(){
-    return this.courseForm.get('description');
+  get title(): FormControl {
+    return this.courseForm.get('title') as FormControl;
   }
 
-  /**
-   * Method to get the universityProgram form control
-   */
-  get universityProgram(){
-    return this.courseForm.get('universityProgram');
+  get description(): FormControl {
+    return this.courseForm.get('description') as FormControl;
   }
 
-  /**
-   * Method to get the current course from the form
-   */
+  get universityProgram(): FormControl {
+    return this.courseForm.get('universityProgram') as FormControl;
+  }
+
   get currentCourse(): Course {
-    const course: Course = this.courseForm.value as Course;
+    const course: Course = {
+      id: this.id.value,
+      nombre: this.title.value,
+      descripcion: this.description.value,
+      carrera: this.universityProgram.value,
+      idUsuario: this.authService.currentUser()!.id
+    };
+
+    return course;
+  }
+
+  get currentCreateCourse(): CreateCourse {
+    const course: CreateCourse = {
+      nombre: this.title.value,
+      descripcion: this.description.value,
+      carrera: this.universityProgram.value,
+      idUsuario: this.authService.currentUser()!.id
+    };
+
     return course;
   }
 
   /**
-   * Method to handle the form submit event
+   * Handle the form submit event
    * If the form is invalid, then the method returns
    * If the form is valid, then the method adds or updates the course
    * and navigates to the courses list page
@@ -114,7 +139,7 @@ export class CourseFormPageComponent {
   }
 
   /**
-   * Method to update the course
+   * Updates the course
    */
   updateCourse(): void {
     this.courseService.updateCourse(this.currentCourse).subscribe( () => {
@@ -125,10 +150,10 @@ export class CourseFormPageComponent {
   }
 
   /**
-   * Method to create the course
+   * Creates the course
    */
   createCourse() {
-    this.courseService.addCourse(this.currentCourse).subscribe( () => {
+    this.courseService.addCourse(this.currentCreateCourse).subscribe( () => {
       this.snackbarService.showSnackbar('¡El curso se ha creado!');
       this.isLoading = false;
       this.router.navigateByUrl('dashboard/courses/list');
@@ -136,7 +161,7 @@ export class CourseFormPageComponent {
   }
 
   /**
-   * Method to handle the form cancel event
+   * Handle the form cancel event
    * Navigates to the courses list page
    */
   onCancel(): void {

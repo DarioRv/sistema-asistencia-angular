@@ -1,8 +1,7 @@
-export interface Course {
-  id: string;
+export interface CreateCourse {
   nombre: string;
   descripcion: string;
   carrera: string;
-  codigoAsistencia?: string;
   idUsuario: string;
 }
+

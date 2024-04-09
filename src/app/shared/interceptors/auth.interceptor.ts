@@ -3,31 +3,34 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor
+  HttpInterceptor,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthenticationService } from 'src/app/auth/services/auth.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthInterceptor implements HttpInterceptor {
-
   private urls = [
     '/usuario/cambiar-contrasena-logueado',
     '/usuario/eliminar',
-    '/usuario/actualizar'
+    '/usuario/actualizar',
+    '/cursos',
   ];
 
   constructor(private authService: AuthenticationService) {}
 
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    if (this.urls.some(url => request.url.includes(url))) {
+  intercept(
+    request: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<unknown>> {
+    if (this.urls.some((url) => request.url.includes(url))) {
       const token = this.authService.getToken();
       const clonedRequest = request.clone({
         setHeaders: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
       return next.handle(clonedRequest);
     }

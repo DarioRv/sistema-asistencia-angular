@@ -1,13 +1,12 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CsvReaderService } from '../../services/csv-reader.service';
-import { Student } from '../../interfaces/student.interface';
+import { Student } from '../../interfaces/student-deprecated.interface';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 
 @Component({
   selector: 'upload-file',
   templateUrl: './upload-file.component.html',
-  styles: [
-  ]
+  styles: [],
 })
 export class UploadFileComponent {
   acceptedFileType: string = '.csv';
@@ -18,7 +17,10 @@ export class UploadFileComponent {
   @Output()
   onUploadFile: EventEmitter<Student[]> = new EventEmitter();
 
-  constructor(private csvReader: CsvReaderService, private snackbarService: SnackbarService) {}
+  constructor(
+    private csvReader: CsvReaderService,
+    private snackbarService: SnackbarService
+  ) {}
 
   /**
    * Checks if the file extension is csv
@@ -41,7 +43,9 @@ export class UploadFileComponent {
   checkFileSize(file: File): boolean {
     if (file.size <= this.maxFileSize) return true;
 
-    this.errors.push(`El archivo ${file.name} es demasiado grande (Límite 1MB).`);
+    this.errors.push(
+      `El archivo ${file.name} es demasiado grande (Límite 1MB).`
+    );
     return false;
   }
 
@@ -105,13 +109,14 @@ export class UploadFileComponent {
    */
   onUpload() {
     this.snackbarService.showSnackbar('Procesando el archivo csv...');
-    this.csvReader.read(this.selectedFile!)
-      .then( (studentList) => {
+    this.csvReader
+      .read(this.selectedFile!)
+      .then((studentList) => {
         this.snackbarService.showSnackbar('Subiendo el archivo...');
         this.emitStudentList(studentList);
       })
-      .catch( (error) => {
-        this.snackbarService.showSnackbar('Error al procesar el archivo csv.')
+      .catch((error) => {
+        this.snackbarService.showSnackbar('Error al procesar el archivo csv.');
       });
     this.selectedFile = null;
   }

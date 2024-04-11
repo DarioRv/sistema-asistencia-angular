@@ -3,17 +3,16 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Course } from '../../interfaces/course.interface';
 import { ClassSchedule } from '../../interfaces/class-schedule.interface';
-import { Student } from '../../interfaces/student.interface';
+import { Student } from '../../interfaces/student-deprecated.interface';
 
 @Component({
   selector: 'course-settings',
   templateUrl: './course-settings.component.html',
-  styles: [
-  ],
-  providers: [[MessageService]]
+  styles: [],
+  providers: [[MessageService]],
 })
 export class CourseSettingsComponent {
-  @Input({alias: 'courseData', required: true})
+  @Input({ alias: 'courseData', required: true })
   course!: Course;
   @Output()
   onEditCourse: EventEmitter<Course> = new EventEmitter<Course>();
@@ -43,7 +42,7 @@ export class CourseSettingsComponent {
       schedule: {
         entryTime: $event.entryTime,
         departureTime: $event.departureTime,
-      }
+      },
     } as Course;
   }
 
@@ -59,11 +58,11 @@ export class CourseSettingsComponent {
   /**
    * Set the student list to the course
    * @param $event student list
-  */
- setStudentList($event: Student[]): void {
+   */
+  setStudentList($event: Student[]): void {
     this.course = {
       ...this.course,
-      students: $event
+      students: $event,
     } as Course;
   }
 

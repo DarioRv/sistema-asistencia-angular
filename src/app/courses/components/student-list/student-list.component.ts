@@ -1,5 +1,12 @@
-import { AfterViewInit, Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
-import { Student } from '../../interfaces/student.interface';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { Student } from '../../interfaces/student-deprecated.interface';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
@@ -7,8 +14,7 @@ import { MatPaginator } from '@angular/material/paginator';
 @Component({
   selector: 'course-student-list',
   templateUrl: './student-list.component.html',
-  styles: [
-  ]
+  styles: [],
 })
 export class StudentListComponent implements AfterViewInit, OnInit, OnChanges {
   @Input()

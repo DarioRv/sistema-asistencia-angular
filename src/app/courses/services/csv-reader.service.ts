@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Student } from '../interfaces/student.interface';
+import { Student } from '../interfaces/student-deprecated.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CsvReaderService {
-
-  constructor() { }
+  constructor() {}
 
   /**
    * Map the data from the csv file to a Student object
@@ -17,7 +16,7 @@ export class CsvReaderService {
     return {
       lu: lu,
       name: name,
-      surname: surname
+      surname: surname,
     } as Student;
   }
 
@@ -31,11 +30,11 @@ export class CsvReaderService {
     let lines = text.replace(/\r/g, '').split('\n');
 
     // skip empty lines
-    lines = lines.filter(line => line.length > 0);
+    lines = lines.filter((line) => line.length > 0);
     // skip header
     lines.shift();
     // skip lines with more than 3 columns
-    lines = lines.filter(line => line.split(',').length === 3);
+    lines = lines.filter((line) => line.split(',').length === 3);
     return lines;
   }
 
@@ -47,9 +46,9 @@ export class CsvReaderService {
   private parseCSV(text: string): string[][] {
     let lines = this.getAllTextLines(text);
 
-    return lines.map(line => {
+    return lines.map((line) => {
       let rowValues = line.split(',');
-      return rowValues
+      return rowValues;
     });
   }
 
@@ -67,12 +66,11 @@ export class CsvReaderService {
         let text = fileReader.result as string;
         let studentList = this.parseCSV(text).map(this.mapDataToStudent);
         resolve(studentList);
-      }
+      };
 
       fileReader.onerror = () => {
         reject([]);
-      }
+      };
     });
   }
-
 }

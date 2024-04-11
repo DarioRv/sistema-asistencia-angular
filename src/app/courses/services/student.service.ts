@@ -19,7 +19,7 @@ export class StudentService {
    * @param courseId the course id
    * @returns the students
    */
-  getStudents(courseId: number): Observable<Student[]> {
+  getStudents(courseId: string): Observable<Student[]> {
     const url = `${this.baseUrl}/estudiantes/curso/${courseId}`;
     return this.htpp.get<StudentDataResponse>(url).pipe(
       map(({ estudiantes }) => estudiantes),
@@ -83,7 +83,7 @@ export class StudentService {
    * @param courseId the course id
    * @returns the student if found, throws an error otherwise
    */
-  getStudentByLuAndCourseId(lu: string, courseId: number): Observable<Student> {
+  getStudentByLuAndCourseId(lu: string, courseId: string): Observable<Student> {
     const url = `${this.baseUrl}/estudiantes/lu/${lu}?cursoId=${courseId}`;
     return this.htpp.get<StudentDataResponse>(url).pipe(
       map(({ estudiante }) => estudiante),

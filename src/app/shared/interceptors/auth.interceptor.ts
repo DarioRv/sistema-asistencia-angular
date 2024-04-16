@@ -17,6 +17,7 @@ export class AuthInterceptor implements HttpInterceptor {
     '/usuario/eliminar',
     '/usuario/actualizar',
     '/cursos',
+    '/estudiantes',
   ];
 
   constructor(private authService: AuthenticationService) {}

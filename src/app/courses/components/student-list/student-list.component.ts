@@ -6,10 +6,11 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { Student } from '../../interfaces/student-deprecated.interface';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
+import { Student } from '../../interfaces/student.interface';
+import { StudentService } from '../../services/student.service';
 
 @Component({
   selector: 'course-student-list',
@@ -17,19 +18,20 @@ import { MatPaginator } from '@angular/material/paginator';
   styles: [],
 })
 export class StudentListComponent implements AfterViewInit, OnInit, OnChanges {
-  @Input()
-  public students: Student[] | undefined;
+  @Input({ required: true })
+  public courseId: string = '';
+  public students: Student[] = [];
 
-  displayedColumns: string[] = ['lu', 'apellidos', 'nombres'];
+  displayedColumns: string[] = ['lu', 'fullname'];
   dataSource!: MatTableDataSource<Student>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor() {}
+  constructor(private studentService: StudentService) {}
 
   ngOnInit(): void {
-    this.dataSource = new MatTableDataSource(this.students);
+    this.getStudents();
   }
 
   ngAfterViewInit() {
@@ -54,5 +56,15 @@ export class StudentListComponent implements AfterViewInit, OnInit, OnChanges {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  /**
+   * Method to get the students for the course
+   */
+  getStudents() {
+    this.studentService.getStudents(this.courseId).subscribe((students) => {
+      this.students = students;
+      this.dataSource = new MatTableDataSource(students);
+    });
   }
 }

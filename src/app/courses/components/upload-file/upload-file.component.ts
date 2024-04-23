@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CsvReaderService } from '../../services/csv-reader.service';
-import { Student } from '../../interfaces/student-deprecated.interface';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { StudentService } from '../../services/student.service';
+import { StudentPost } from '../../interfaces/student-post.interface';
 
 @Component({
-  selector: 'upload-file',
+  selector: 'upload-csv-file',
   templateUrl: './upload-file.component.html',
   styles: [],
 })
@@ -13,13 +14,13 @@ export class UploadFileComponent {
   maxFileSize: number = 1_048_576; // 1MB
   errors: string[] = [];
   selectedFile?: File | null;
-
-  @Output()
-  onUploadFile: EventEmitter<Student[]> = new EventEmitter();
+  @Input({ required: true })
+  courseId!: string;
 
   constructor(
     private csvReader: CsvReaderService,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private studentService: StudentService
   ) {}
 
   /**
@@ -113,7 +114,8 @@ export class UploadFileComponent {
       .read(this.selectedFile!)
       .then((studentList) => {
         this.snackbarService.showSnackbar('Subiendo el archivo...');
-        this.emitStudentList(studentList);
+        studentList = this.addCourseIdToStudentList(studentList);
+        this.saveStudentList(studentList);
       })
       .catch((error) => {
         this.snackbarService.showSnackbar('Error al procesar el archivo csv.');
@@ -122,10 +124,35 @@ export class UploadFileComponent {
   }
 
   /**
-   * Emit the student list to the parent component
-   * @param studentList student list
+   * Save the student list
    */
-  emitStudentList(studentList: Student[]) {
-    this.onUploadFile.emit(studentList);
+  saveStudentList(studentList: StudentPost[]) {
+    this.studentService.saveStudents(studentList).subscribe({
+      next: () => {
+        this.snackbarService.showSnackbar(
+          'La lista de estudiantes se ha guardado correctamente.'
+        );
+      },
+      error: (err) => {
+        this.snackbarService.showSnackbar(
+          'Error al guardar la lista de estudiantes.'
+        );
+      },
+    });
+  }
+
+  /**
+   * Add the courseId to the student list
+   * @param studentList student list
+   * @returns student list with the courseId added
+   */
+  addCourseIdToStudentList(studentList: StudentPost[]): StudentPost[] {
+    return studentList.map(
+      (student) =>
+        ({
+          ...student,
+          cursoId: this.courseId,
+        } as StudentPost)
+    );
   }
 }

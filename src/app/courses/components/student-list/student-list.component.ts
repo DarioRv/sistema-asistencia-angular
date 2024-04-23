@@ -11,6 +11,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { Student } from '../../interfaces/student.interface';
 import { StudentService } from '../../services/student.service';
+import { RequestStatus } from 'src/app/shared/types/request-status.type';
 
 @Component({
   selector: 'course-student-list',
@@ -28,21 +29,27 @@ export class StudentListComponent implements AfterViewInit, OnInit, OnChanges {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
+  public status: RequestStatus = 'pending';
+
   constructor(private studentService: StudentService) {}
 
   ngOnInit(): void {
     this.getStudents();
   }
 
-  ngAfterViewInit() {
+  setDataSource(students: Student[]) {
+    this.dataSource = new MatTableDataSource(students);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 
+  ngAfterViewInit() {
+    this.setDataSource(this.students);
+  }
+
   ngOnChanges() {
-    this.dataSource = new MatTableDataSource(this.students);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    this.getStudents();
+    this.setDataSource(this.students);
   }
 
   /**
@@ -62,9 +69,15 @@ export class StudentListComponent implements AfterViewInit, OnInit, OnChanges {
    * Method to get the students for the course
    */
   getStudents() {
-    this.studentService.getStudents(this.courseId).subscribe((students) => {
-      this.students = students;
-      this.dataSource = new MatTableDataSource(students);
+    this.studentService.getStudents(this.courseId).subscribe({
+      next: (students) => {
+        this.students = students;
+        this.setDataSource(students);
+        this.status = 'success';
+      },
+      error: (error) => {
+        this.status = 'error';
+      },
     });
   }
 }

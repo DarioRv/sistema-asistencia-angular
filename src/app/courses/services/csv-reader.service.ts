@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Student } from '../interfaces/student-deprecated.interface';
+import { StudentPost } from '../interfaces/student-post.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -12,12 +12,11 @@ export class CsvReaderService {
    * @param [lu, name, surname] array with the data from the csv file
    * @returns Student object
    */
-  private mapDataToStudent([lu, name, surname]: string[]): Student {
+  private mapDataToStudent([lu, name]: string[]): StudentPost {
     return {
       lu: lu,
-      name: name,
-      surname: surname,
-    } as Student;
+      nombre: name,
+    } as StudentPost;
   }
 
   /**
@@ -34,7 +33,7 @@ export class CsvReaderService {
     // skip header
     lines.shift();
     // skip lines with more than 3 columns
-    lines = lines.filter((line) => line.split(',').length === 3);
+    lines = lines.filter((line) => line.split(',').length === 2);
     return lines;
   }
 
@@ -57,9 +56,8 @@ export class CsvReaderService {
    * @param file csv file
    * @returns Promise that resolves to an array of students
    */
-  async read(file: File): Promise<Student[]> {
+  async read(file: File): Promise<StudentPost[]> {
     return new Promise((resolve, reject) => {
-      //with filereader
       let fileReader = new FileReader();
       fileReader.readAsText(file);
       fileReader.onload = () => {

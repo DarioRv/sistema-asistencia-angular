@@ -43,7 +43,6 @@ export class CoursesPageComponent implements OnInit {
           this.status = 'success';
         },
         error: (error) => {
-          console.log(error);
           if (error.status === 0) {
             this.status = 'fail';
             return;

@@ -1,25 +1,39 @@
 <h4 class="mt-3 dark:text-slate-200">Horario de asistencia</h4>
-<!-- <form [formGroup]="scheduleForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="scheduleForm" (ngSubmit)="onSubmit()">
   <div class="flex gap-2">
     <mat-form-field>
       <mat-label>Horario entrada</mat-label>
-      <input type="time" matInput placeholder="Ej: 10:00" formControlName="entryTime">
-      <mat-error *ngIf="entryTime?.hasError('required')">Llene el campo</mat-error>
+      <input
+        type="time"
+        matInput
+        placeholder="Ej: 10:00"
+        formControlName="entrada"
+      />
+      <mat-error *ngIf="entrada.hasError('required')">Llene el campo</mat-error>
     </mat-form-field>
     <mat-form-field>
       <mat-label>Horario salida</mat-label>
-      <input type="time" matInput placeholder="Ej: 12:30" formControlName="departureTime">
-      <mat-error *ngIf="departureTime?.hasError('required')">Llene el campo</mat-error>
+      <input
+        type="time"
+        matInput
+        placeholder="Ej: 12:30"
+        formControlName="salida"
+      />
+      <mat-error *ngIf="salida.hasError('required')">Llene el campo</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Día</mat-label>
+      <mat-select formControlName="dia">
+        <mat-option [value]="day.value" *ngFor="let day of availableDays">
+          {{ day.label }}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
   </div>
   <div class="flex gap-2">
-    <button mat-flat-button type="submit" color="primary" [disabled]="isDisabled">
+    <button mat-flat-button type="submit" color="primary" (click)="onSubmit()">
       <mat-icon>save</mat-icon>
       Guardar
     </button>
-    <button mat-button type="button" color="primary" (click)="onEdit()">
-      <mat-icon>{{ isDisabled ? 'edit' : 'block'}}</mat-icon>
-      {{ isDisabled ? 'Editar' : 'Cancelar'}}
-    </button>
   </div>
-</form> -->
+</form>

@@ -1,9 +1,7 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { MessageService } from 'primeng/api';
 import { Course } from '../../interfaces/course.interface';
-import { ClassSchedule } from '../../interfaces/class-schedule.interface';
-import { Student } from '../../interfaces/student-deprecated.interface';
 
 @Component({
   selector: 'course-settings',
@@ -14,62 +12,10 @@ import { Student } from '../../interfaces/student-deprecated.interface';
 export class CourseSettingsComponent {
   @Input({ alias: 'courseData', required: true })
   course!: Course;
-  @Output()
-  onEditCourse: EventEmitter<Course> = new EventEmitter<Course>();
 
   constructor() {}
 
   disableAssistance(): boolean {
     return true;
-  }
-
-  /**
-   * Edit the class schedule of the course and update the course in the database
-   * @param $event class schedule from the child component
-   */
-  onEditClassSchedule($event: ClassSchedule): void {
-    this.setClassSchedule($event);
-    this.onEditCurrentCourse();
-  }
-
-  /**
-   * Set the class schedule to the course
-   * @param $event class schedule
-   */
-  setClassSchedule($event: ClassSchedule): void {
-    this.course = {
-      ...this.course,
-      schedule: {
-        entryTime: $event.entryTime,
-        departureTime: $event.departureTime,
-      },
-    } as Course;
-  }
-
-  /**
-   * Edit the student list of the course and update the course in the database
-   * @param $event student list from the child component
-   */
-  onEditStudentList($event: Student[]): void {
-    this.setStudentList($event);
-    this.onEditCurrentCourse();
-  }
-
-  /**
-   * Set the student list to the course
-   * @param $event student list
-   */
-  setStudentList($event: Student[]): void {
-    this.course = {
-      ...this.course,
-      students: $event,
-    } as Course;
-  }
-
-  /**
-   * Emit the edited course to the parent component
-   */
-  onEditCurrentCourse(): void {
-    this.onEditCourse.emit(this.course);
   }
 }

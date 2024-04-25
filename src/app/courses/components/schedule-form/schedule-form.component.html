@@ -9,7 +9,9 @@
         placeholder="Ej: 10:00"
         formControlName="entrada"
       />
-      <mat-error *ngIf="entrada.hasError('required')">Llene el campo</mat-error>
+      <mat-error *ngIf="entrada.hasError('required')">
+        Seleccione un horario de entrada
+      </mat-error>
     </mat-form-field>
     <mat-form-field>
       <mat-label>Horario salida</mat-label>
@@ -19,7 +21,9 @@
         placeholder="Ej: 12:30"
         formControlName="salida"
       />
-      <mat-error *ngIf="salida.hasError('required')">Llene el campo</mat-error>
+      <mat-error *ngIf="salida.hasError('required')">
+        Seleccione un horario de salida
+      </mat-error>
     </mat-form-field>
     <mat-form-field>
       <mat-label>Día</mat-label>
@@ -28,12 +32,18 @@
           {{ day.label }}
         </mat-option>
       </mat-select>
+      <mat-error *ngIf="dia.hasError('required')">Seleccione un día</mat-error>
     </mat-form-field>
   </div>
-  <div class="flex gap-2">
-    <button mat-flat-button type="submit" color="primary" (click)="onSubmit()">
-      <mat-icon>save</mat-icon>
-      Guardar
-    </button>
-  </div>
+  <button
+    mat-flat-button
+    type="submit"
+    color="primary"
+    [disabled]="isLoading"
+    (click)="onSubmit()"
+  >
+    <mat-icon>save</mat-icon>
+    {{ isLoading ? "Guardando" : "Guardar" }}
+    <mat-spinner class="inline-block size-3" *ngIf="isLoading"></mat-spinner>
+  </button>
 </form>

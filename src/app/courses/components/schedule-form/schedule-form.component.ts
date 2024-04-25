@@ -35,7 +35,7 @@ export class ScheduleFormComponent implements AfterViewInit {
     { label: 'Domingo', value: 'DOMINGO' },
   ];
 
-  status: RequestStatus = 'pending';
+  isLoading: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -60,9 +60,10 @@ export class ScheduleFormComponent implements AfterViewInit {
   }
 
   onSubmit(): void {
-    console.log(this.scheduleForm.value);
+    this.isLoading = true;
     if (this.scheduleForm.invalid) {
       this.snackbarService.showSnackbar('Introduzca un horario válido');
+      this.isLoading = false;
       return;
     }
 
@@ -70,10 +71,13 @@ export class ScheduleFormComponent implements AfterViewInit {
       next: () => {
         this.snackbarService.showSnackbar('Horario agregado correctamente');
         this.scheduleForm.reset();
-        this.scheduleForm.clearValidators();
+        this.scheduleForm.markAsPristine();
+        this.scheduleForm.markAsUntouched();
+        this.isLoading = false;
       },
       error: () => {
         this.snackbarService.showSnackbar('Error al agregar el horario');
+        this.isLoading = false;
       },
     });
   }

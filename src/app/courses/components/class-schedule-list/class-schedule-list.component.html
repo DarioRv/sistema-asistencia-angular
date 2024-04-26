@@ -1,0 +1,17 @@
+<div class="flex gap-3">
+  <div class="bg-slate-100 rounded" *ngFor="let schedule of schedules">
+    <h5 class="bg-core-secondary text-white rounded-t text-center px-2 m-0">
+      {{ schedule.dia }}
+    </h5>
+    <span class="block p-2"
+      >{{ schedule.entrada }} - {{ schedule.salida }}</span
+    >
+    <button
+      class="bg-slate-200 text-slate-400 p-1 w-full text-xs rounded-b"
+      (click)="deleteSchedule(schedule.horarioId)"
+      matTooltip="Eliminar horario"
+    >
+      Eliminar
+    </button>
+  </div>
+</div>

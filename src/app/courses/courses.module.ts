@@ -24,6 +24,8 @@ import { UploadFileComponent } from './components/upload-file/upload-file.compon
 import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 import { QrCodeModule } from 'ng-qrcode';
 import { AttendanceListComponent } from './components/attendance-list/attendance-list.component';
+import { ClassScheduleComponent } from './components/class-schedule/class-schedule.component';
+import { ClassScheduleListComponent } from './components/class-schedule-list/class-schedule-list.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,8 @@ import { AttendanceListComponent } from './components/attendance-list/attendance
     UploadFileComponent,
     DragAndDropDirective,
     AttendanceListComponent,
+    ClassScheduleComponent,
+    ClassScheduleListComponent,
   ],
   imports: [
     CommonModule,

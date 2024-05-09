@@ -1,22 +1,23 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AttendanceService } from '../../services/attendance.service';
-import { delay, tap } from 'rxjs';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 
 @Component({
   selector: 'course-attendance-list',
   templateUrl: './attendance-list.component.html',
-  styles: [
-  ]
+  styles: [],
 })
 export class AttendanceListComponent implements OnInit {
   @Input()
   courseId!: string;
-  attendances: any[] = [];
-  displayedColumns: string[] = ['lu', 'date'];;
+  attendances: Array<Array<boolean | string>> = [];
+  displayedColumns: string[] = ['fullName', 'status'];
   isLoading: boolean = false;
 
-  constructor(private attendanceService: AttendanceService, private snackbarService: SnackbarService) { }
+  constructor(
+    private attendanceService: AttendanceService,
+    private snackbarService: SnackbarService
+  ) {}
 
   ngOnInit(): void {
     this.getStudentsAttendance();
@@ -24,8 +25,23 @@ export class AttendanceListComponent implements OnInit {
 
   /**
    * Gets the students attendance for a course
-  */
- getStudentsAttendance(): void {
-  this.isLoading = true;
+   */
+  getStudentsAttendance(): void {
+    this.isLoading = true;
+    this.attendanceService.getStudentsAttendance(this.courseId).subscribe({
+      next: (attendances) => {
+        attendances.shift();
+        attendances.map((attendance) => {
+          attendance[1] = attendance[1] ? '✅' : '❌';
+        });
+        this.attendances = attendances;
+        this.isLoading = false;
+      },
+      error: (err) => {
+        // TODO mejorar
+        console.log(err);
+        this.isLoading = false;
+      },
+    });
   }
 }

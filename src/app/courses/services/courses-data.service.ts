@@ -1,6 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, map, of, throwError } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  catchError,
+  map,
+  of,
+  tap,
+  throwError,
+} from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Course } from '../interfaces/course.interface';
 import { CreateCourse } from '../interfaces/create-course.interface';
@@ -12,8 +20,30 @@ import { attendanceCodeResponse } from '../interfaces/attendance-code-response.i
 })
 export class CoursesDataService {
   private baseUrl: string = environment.API_URL;
+  private _currentCourse: BehaviorSubject<Course | null> =
+    new BehaviorSubject<Course | null>(null);
+  public currentCourse$: Observable<Course | null> =
+    this._currentCourse.asObservable();
 
   constructor(private http: HttpClient) {}
+
+  /**
+   * Set the current course
+   * @param course course to set
+   */
+  setCurrentCourse(course: Course | null): void {
+    this._currentCourse.next(course);
+  }
+
+  /**
+   * Set the current course by id
+   * @param id id of the course to set
+   */
+  setCurrentCourseById(id: string): void {
+    this.findCourseById(id).subscribe((course) => {
+      this._currentCourse.next(course);
+    });
+  }
 
   /**
    * HTTP get request to get all courses for a user
@@ -51,9 +81,11 @@ export class CoursesDataService {
     const url = `${this.baseUrl}/cursos`;
     const body = course;
 
-    return this.http
-      .patch<Course>(url, body)
-      .pipe(catchError((err) => throwError(() => err)));
+    return this.http.patch<CoursesDataResponse>(url, body).pipe(
+      map(({ curso }) => curso),
+      tap((curso) => this.setCurrentCourse(curso)),
+      catchError((err) => throwError(() => err))
+    );
   }
 
   /**

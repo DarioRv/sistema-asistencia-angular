@@ -1,17 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CoursesDataService } from '../../services/courses-data.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { Course } from '../../interfaces/course.interface';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-course-details-page',
   templateUrl: './course-details-page.component.html',
   styles: [],
 })
-export class CourseDetailsPageComponent implements OnInit {
+export class CourseDetailsPageComponent implements OnInit, OnDestroy {
   public course!: Course;
   public isLoading: boolean = true;
+  public subscription$: Subscription = new Subscription();
 
   constructor(
     private activedRouter: ActivatedRoute,
@@ -24,6 +26,7 @@ export class CourseDetailsPageComponent implements OnInit {
     this.activedRouter.params.subscribe(({ id }) => {
       this.getCourse(id);
     });
+    this.suscribeToCourseUpdates();
   }
 
   /**
@@ -59,5 +62,22 @@ export class CourseDetailsPageComponent implements OnInit {
         if (!course) return;
         this.course = course;
       });
+  }
+
+  /**
+   * Subscribe to course updates.
+   */
+  suscribeToCourseUpdates(): void {
+    this.subscription$ = this.coursesDataService.currentCourse$.subscribe(
+      (course) => {
+        if (!course) return;
+        this.course = course;
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.coursesDataService.setCurrentCourse(null);
+    this.subscription$.unsubscribe();
   }
 }

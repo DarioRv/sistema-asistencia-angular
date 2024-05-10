@@ -27,8 +27,8 @@ export class ClassScheduleListComponent implements OnInit {
       next: (schedules) => {
         this.schedules = schedules;
       },
-      error: (error) => {
-        console.error(error);
+      error: () => {
+        this.snackbarService.showSnackbar('Los horarios no están disponibles');
       },
     });
   }
@@ -43,8 +43,8 @@ export class ClassScheduleListComponent implements OnInit {
 
         this.snackbarService.showSnackbar('No se pudo eliminar el horario');
       },
-      error: (error) => {
-        console.error(error);
+      error: () => {
+        this.snackbarService.showSnackbar('No se pudo eliminar el horario');
       },
     });
   }

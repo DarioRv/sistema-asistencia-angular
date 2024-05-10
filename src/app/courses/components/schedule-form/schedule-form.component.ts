@@ -6,7 +6,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
-import { RequestStatus } from 'src/app/shared/types/request-status.type';
 import { ClassScheduleService } from '../../services/class-schedule.service';
 
 @Component({
@@ -71,6 +70,7 @@ export class ScheduleFormComponent implements AfterViewInit {
       next: () => {
         this.snackbarService.showSnackbar('Horario agregado correctamente');
         this.scheduleForm.reset();
+        this.scheduleForm.patchValue({ cursoId: this.courseId });
         this.scheduleForm.markAsPristine();
         this.scheduleForm.markAsUntouched();
         this.isLoading = false;

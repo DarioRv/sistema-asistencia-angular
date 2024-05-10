@@ -1,7 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Course } from '../../interfaces/course.interface';
-import { CoursesDataService } from '../../services/courses-data.service';
-import { environment } from 'src/environments/environment';
 import { AttendanceService } from '../../services/attendance.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 
@@ -13,42 +11,11 @@ import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 export class CourseAssistanceViewComponent {
   @Input({ required: true, alias: 'courseData' })
   course!: Course;
-  @Output()
-  changeAttendanceCodeEvent: EventEmitter<string> = new EventEmitter<string>();
-
-  qrCodeUrl: string = `${environment.API_URL}/attendance/code/`;
-  seeQRCode: boolean = false;
 
   constructor(
-    private courseDataService: CoursesDataService,
     private attendanceService: AttendanceService,
     private snackbarService: SnackbarService
   ) {}
-
-  /**
-   * Generates a new random code for the course
-   */
-  onChangeAttendanceCode(): void {
-    this.generateAttendanceCode();
-  }
-
-  /**
-   * Shows the QR code
-   */
-  showQRCode(): void {
-    this.seeQRCode = !this.seeQRCode;
-  }
-  generateAttendanceCode(): void {
-    this.courseDataService.generateAttendanceCode(this.course.id).subscribe({
-      next: (attendanceCode) => {
-        this.changeAttendanceCodeEvent.emit(attendanceCode);
-      },
-      error: (err) => {
-        // TODO mejorar
-        console.error(err);
-      },
-    });
-  }
 
   /**
    * Downloads the attendance of the day

@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { Course } from '../interfaces/course.interface';
 import { CreateCourse } from '../interfaces/create-course.interface';
 import { CoursesDataResponse } from '../interfaces/courses-data-response.interface';
+import { attendanceCodeResponse } from '../interfaces/attendance-code-response.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -90,11 +91,29 @@ export class CoursesDataService {
     throw new Error('Method not implemented.');
   }
 
-  generateAttendanceCode(courseId: string): Observable<string> {
-    const url = `${this.baseUrl}/cursos/${courseId}/attendanceCode`;
+  /**
+   * HTTP get request to generate a new attendance code for a course
+   * @param courseId id of the course to generate the code for
+   * @returns Observable of the new attendance code
+   */
+  findCourseByAttendanceCode(attendanceCode: string): Observable<Course> {
+    const url = `${this.baseUrl}/cursos/codigo-asistencia/${attendanceCode}`;
 
     return this.http
-      .get<string>(url)
+      .get<Course>(url)
       .pipe(catchError((err) => throwError(() => err)));
+  }
+
+  /**
+   * HTTP get request to generate a new attendance code
+   * @returns Observable of the new attendance code
+   */
+  generateAttendanceCode(): Observable<string> {
+    const url = `${this.baseUrl}/cursos/codigo-asistencia`;
+
+    return this.http.get<attendanceCodeResponse>(url).pipe(
+      map(({ codigoAsistencia }) => codigoAsistencia),
+      catchError((err) => throwError(() => err))
+    );
   }
 }

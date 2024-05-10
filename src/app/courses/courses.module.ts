@@ -26,6 +26,7 @@ import { QrCodeModule } from 'ng-qrcode';
 import { AttendanceListComponent } from './components/attendance-list/attendance-list.component';
 import { ClassScheduleComponent } from './components/class-schedule/class-schedule.component';
 import { ClassScheduleListComponent } from './components/class-schedule-list/class-schedule-list.component';
+import { AttendanceCodeComponent } from './components/attendance-code/attendance-code.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { ClassScheduleListComponent } from './components/class-schedule-list/cla
     AttendanceListComponent,
     ClassScheduleComponent,
     ClassScheduleListComponent,
+    AttendanceCodeComponent,
   ],
   imports: [
     CommonModule,

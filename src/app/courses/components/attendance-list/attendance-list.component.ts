@@ -37,9 +37,10 @@ export class AttendanceListComponent implements OnInit {
         this.attendances = attendances;
         this.isLoading = false;
       },
-      error: (err) => {
-        // TODO mejorar
-        console.log(err);
+      error: () => {
+        this.snackbarService.showSnackbar(
+          'No se pudo obtener la lista de asistencias'
+        );
         this.isLoading = false;
       },
     });

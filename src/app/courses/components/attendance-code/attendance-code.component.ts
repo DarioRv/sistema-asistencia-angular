@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Course } from '../../interfaces/course.interface';
 import { environment } from 'src/environments/environment';
 import { CoursesDataService } from '../../services/courses-data.service';
@@ -10,7 +10,7 @@ import { switchMap } from 'rxjs';
   templateUrl: './attendance-code.component.html',
   styles: [],
 })
-export class AttendanceCodeComponent implements OnInit {
+export class AttendanceCodeComponent {
   @Input({ required: true })
   course!: Course;
 
@@ -21,10 +21,6 @@ export class AttendanceCodeComponent implements OnInit {
     private courseDataService: CoursesDataService,
     private snackbarService: SnackbarService
   ) {}
-
-  ngOnInit(): void {
-    this.qrCodeUrl = `${environment.API_URL}/attendance/code/${this.course.codigoAsistencia}`;
-  }
 
   /**
    * Generates a new random code for the course
@@ -56,6 +52,7 @@ export class AttendanceCodeComponent implements OnInit {
    * Shows the QR code
    */
   showQRCode(): void {
+    this.qrCodeUrl = `${environment.API_URL}/attendance/code/${this.course.codigoAsistencia}`;
     this.seeQRCode = !this.seeQRCode;
   }
 }

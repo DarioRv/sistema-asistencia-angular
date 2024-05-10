@@ -3,6 +3,7 @@ import {
   Component,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -12,19 +13,24 @@ import { MatPaginator } from '@angular/material/paginator';
 import { Student } from '../../interfaces/student.interface';
 import { StudentService } from '../../services/student.service';
 import { RequestStatus } from 'src/app/shared/types/request-status.type';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'course-student-list',
   templateUrl: './student-list.component.html',
   styles: [],
 })
-export class StudentListComponent implements AfterViewInit, OnInit, OnChanges {
+export class StudentListComponent
+  implements AfterViewInit, OnInit, OnChanges, OnDestroy
+{
   @Input({ required: true })
   public courseId: string = '';
   public students: Student[] = [];
 
   displayedColumns: string[] = ['lu', 'fullname'];
   dataSource!: MatTableDataSource<Student>;
+
+  private subscription$: Subscription = new Subscription();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -35,6 +41,7 @@ export class StudentListComponent implements AfterViewInit, OnInit, OnChanges {
 
   ngOnInit(): void {
     this.getStudents();
+    this.subscribeToStudentsUpdates();
   }
 
   setDataSource(students: Student[]) {
@@ -79,5 +86,22 @@ export class StudentListComponent implements AfterViewInit, OnInit, OnChanges {
         this.status = 'error';
       },
     });
+  }
+
+  /**
+   * Method to subscribe to the students updates
+   */
+  subscribeToStudentsUpdates(): void {
+    this.subscription$ = this.studentService.currentStudents$.subscribe(
+      (students) => {
+        this.students = students;
+        this.setDataSource(students);
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription$.unsubscribe();
+    this.studentService.clear();
   }
 }

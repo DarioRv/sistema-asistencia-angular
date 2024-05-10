@@ -1,7 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { catchError, map, Observable, throwError } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  map,
+  Observable,
+  tap,
+  throwError,
+} from 'rxjs';
 import { StudentPost } from '../interfaces/student-post.interface';
 import { StudentDataResponse } from '../interfaces/student-data-response.interface';
 import { Student } from '../interfaces/student.interface';
@@ -11,8 +18,26 @@ import { Student } from '../interfaces/student.interface';
 })
 export class StudentService {
   private baseUrl = environment.API_URL;
+  private _currentStudents$: BehaviorSubject<Student[]> = new BehaviorSubject<
+    Student[]
+  >([]);
 
   constructor(private htpp: HttpClient) {}
+
+  get currentStudents$(): Observable<Student[]> {
+    return this._currentStudents$.asObservable();
+  }
+
+  set currentStudents(students: Student[]) {
+    this._currentStudents$.next(students);
+  }
+
+  /**
+   * Clears the current students
+   */
+  clear(): void {
+    this._currentStudents$.next([]);
+  }
 
   /**
    * Gets the students for a course
@@ -47,6 +72,7 @@ export class StudentService {
     const url = `${this.baseUrl}/estudiantes/lista`;
     return this.htpp.post<StudentDataResponse>(url, students).pipe(
       map(({ estudiantes }) => estudiantes),
+      tap((students) => (this.currentStudents = students)),
       catchError((error) => throwError(() => error))
     );
   }

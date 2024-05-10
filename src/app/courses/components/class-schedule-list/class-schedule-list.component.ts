@@ -74,7 +74,6 @@ export class ClassScheduleListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log(this.subscription$);
     this.subscription$.unsubscribe();
     this.scheduleService.clear();
   }

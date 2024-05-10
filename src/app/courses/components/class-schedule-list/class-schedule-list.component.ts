@@ -1,17 +1,19 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ClassScheduleService } from '../../services/class-schedule.service';
 import { ClassScheduleGet } from '../../interfaces/class-schedule-get.interface';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'class-schedule-list',
   templateUrl: './class-schedule-list.component.html',
   styles: [],
 })
-export class ClassScheduleListComponent implements OnInit {
+export class ClassScheduleListComponent implements OnInit, OnDestroy {
   @Input({ required: true })
   courseId!: string;
   schedules: ClassScheduleGet[] = [];
+  suscription$: Subscription = new Subscription();
 
   constructor(
     private scheduleService: ClassScheduleService,
@@ -19,9 +21,14 @@ export class ClassScheduleListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.scheduleService.currentCourseId = this.courseId;
     this.getSchedules();
+    this.subscribeToClassScheduleUpdates();
   }
 
+  /**
+   * Gets the class schedules
+   */
   getSchedules(): void {
     this.scheduleService.getClassSchedulesByCourseId(this.courseId).subscribe({
       next: (schedules) => {
@@ -33,19 +40,39 @@ export class ClassScheduleListComponent implements OnInit {
     });
   }
 
+  /**
+   * Deletes a class schedule
+   * @param scheduleId The schedule id
+   */
   deleteSchedule(scheduleId: string): void {
     this.scheduleService.deleteClassSchedule(scheduleId).subscribe({
       next: (hasDeleted) => {
-        if (hasDeleted) {
-          this.getSchedules();
-          this.snackbarService.showSnackbar('Horario eliminado correctamente');
+        if (!hasDeleted) {
+          this.snackbarService.showSnackbar('No se pudo eliminar el horario');
+          return;
         }
-
-        this.snackbarService.showSnackbar('No se pudo eliminar el horario');
+        this.getSchedules();
+        this.snackbarService.showSnackbar('Horario eliminado correctamente');
       },
       error: () => {
         this.snackbarService.showSnackbar('No se pudo eliminar el horario');
       },
     });
+  }
+
+  /**
+   * Subscribes to the class schedule updates
+   */
+  subscribeToClassScheduleUpdates(): void {
+    this.scheduleService.currentClassSchedules$.subscribe((schedules) => {
+      if (!schedules) return;
+
+      this.schedules = schedules;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.suscription$.unsubscribe();
+    this.scheduleService.clear();
   }
 }

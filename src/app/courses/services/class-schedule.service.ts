@@ -3,7 +3,15 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { ClassSchedule } from '../interfaces/class-schedule.interface';
 import { ScheduleDataResponse } from '../interfaces/schedule-data-response.interface';
-import { catchError, map, Observable, of, throwError } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  map,
+  Observable,
+  of,
+  tap,
+  throwError,
+} from 'rxjs';
 import { ClassScheduleGet } from '../interfaces/class-schedule-get.interface';
 
 @Injectable({
@@ -11,8 +19,45 @@ import { ClassScheduleGet } from '../interfaces/class-schedule-get.interface';
 })
 export class ClassScheduleService {
   private baseUrl = `${environment.API_URL}/horarios`;
+  private _currentClassSchedules$: BehaviorSubject<ClassScheduleGet[] | null> =
+    new BehaviorSubject<ClassScheduleGet[] | null>(null);
+  private _currentCourseId: string = '';
 
   constructor(private http: HttpClient) {}
+
+  set currentCourseId(courseId: string) {
+    this._currentCourseId = courseId;
+  }
+
+  get currentClassSchedules$(): Observable<ClassScheduleGet[] | null> {
+    return this._currentClassSchedules$.asObservable();
+  }
+
+  set currentClassSchedules(classSchedules: ClassScheduleGet[] | null) {
+    this._currentClassSchedules$.next(classSchedules);
+  }
+
+  /**
+   * Clears the current class schedules and course id
+   */
+  clear(): void {
+    this._currentClassSchedules$.next(null);
+    this._currentCourseId = '';
+  }
+
+  /**
+   * Updates the current class schedule
+   * @param courseId The course id
+   */
+  updateCurrentClassSchedules(): void {
+    this.getClassSchedulesByCourseId(this._currentCourseId)
+      .pipe(
+        tap((schedules) => {
+          this.currentClassSchedules = schedules;
+        })
+      )
+      .subscribe();
+  }
 
   /**
    * Add a new class schedule
@@ -24,6 +69,9 @@ export class ClassScheduleService {
 
     return this.http.post<ScheduleDataResponse>(url, classSchedule).pipe(
       map(({ horario }) => horario),
+      tap((horario) => {
+        this.updateCurrentClassSchedules();
+      }),
       catchError((err) => throwError(() => err))
     );
   }

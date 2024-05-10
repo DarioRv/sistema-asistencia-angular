@@ -13,7 +13,7 @@ export class ClassScheduleListComponent implements OnInit, OnDestroy {
   @Input({ required: true })
   courseId!: string;
   schedules: ClassScheduleGet[] = [];
-  suscription$: Subscription = new Subscription();
+  subscription$: Subscription = new Subscription();
 
   constructor(
     private scheduleService: ClassScheduleService,
@@ -64,15 +64,18 @@ export class ClassScheduleListComponent implements OnInit, OnDestroy {
    * Subscribes to the class schedule updates
    */
   subscribeToClassScheduleUpdates(): void {
-    this.scheduleService.currentClassSchedules$.subscribe((schedules) => {
-      if (!schedules) return;
+    this.subscription$ = this.scheduleService.currentClassSchedules$.subscribe(
+      (schedules) => {
+        if (!schedules) return;
 
-      this.schedules = schedules;
-    });
+        this.schedules = schedules;
+      }
+    );
   }
 
   ngOnDestroy(): void {
-    this.suscription$.unsubscribe();
+    console.log(this.subscription$);
+    this.subscription$.unsubscribe();
     this.scheduleService.clear();
   }
 }

@@ -119,8 +119,19 @@ export class CoursesDataService {
    * @param searchTerm search term to use
    * @returns Observable of courses array
    */
-  getSuggestions(searchTerm: string): Course[] {
-    throw new Error('Method not implemented.');
+  getSuggestions(searchTerm: string, userId: string): Observable<Course[]> {
+    const url = `${this.baseUrl}/cursos/termino/${searchTerm}`;
+
+    const queryParams = {
+      usuarioId: userId,
+    };
+
+    return this.http
+      .get<CoursesDataResponse>(url, { params: queryParams })
+      .pipe(
+        map(({ cursos }) => cursos),
+        catchError((err) => throwError(() => err))
+      );
   }
 
   /**

@@ -1,1 +1,7 @@
-export type RequestStatus = 'pending' | 'success' | 'no content' | 'fail' | 'error';
+export type RequestStatus =
+  | 'no status'
+  | 'pending'
+  | 'success'
+  | 'no content'
+  | 'fail'
+  | 'error';

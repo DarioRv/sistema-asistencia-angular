@@ -1,4 +1,7 @@
 <div class="flex flex-wrap gap-3">
+  <p class="text-center text-slate-400 font-bold" *ngIf="schedules.length <= 0">
+    No hay horarios registrados
+  </p>
   <div
     class="bg-slate-100 dark:bg-slate-800 rounded"
     *ngFor="let schedule of schedules"

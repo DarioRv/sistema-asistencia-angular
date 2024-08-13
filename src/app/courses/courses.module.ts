@@ -27,6 +27,7 @@ import { AttendanceListComponent } from './components/attendance-list/attendance
 import { ClassScheduleComponent } from './components/class-schedule/class-schedule.component';
 import { ClassScheduleListComponent } from './components/class-schedule-list/class-schedule-list.component';
 import { AttendanceCodeComponent } from './components/attendance-code/attendance-code.component';
+import { AttendanceHistoryComponent } from './components/attendance-history/attendance-history.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { AttendanceCodeComponent } from './components/attendance-code/attendance
     ClassScheduleComponent,
     ClassScheduleListComponent,
     AttendanceCodeComponent,
+    AttendanceHistoryComponent,
   ],
   imports: [
     CommonModule,

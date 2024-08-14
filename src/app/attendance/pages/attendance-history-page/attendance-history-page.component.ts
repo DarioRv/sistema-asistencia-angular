@@ -1,18 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { AttendanceService } from '../../services/attendance.service';
 import { Attendance } from '../../interfaces/attendance.interface';
-import { attendanceService } from '../../services/attendance.service';
 
 @Component({
   selector: 'app-attendance-history-page',
   templateUrl: './attendance-history-page.component.html',
-  styles: [
-  ]
+  styles: [],
 })
 export class AttendanceHistoryPageComponent implements OnInit {
-
   attendanceHistory: Attendance[] = [];
 
-  constructor(private attendanceService: attendanceService) { }
+  constructor(private attendanceService: AttendanceService) {}
 
   ngOnInit(): void {
     this.attendanceHistory = this.getAttendanceHistory();
@@ -31,10 +29,12 @@ export class AttendanceHistoryPageComponent implements OnInit {
    * Set course names in attendance history.
    */
   setCourseNames(): void {
-    this.attendanceHistory.map( attendance => {
-      this.attendanceService.getCourseName(attendance.courseId).subscribe( courseName => {
-        attendance.courseName = courseName;
-      });
+    this.attendanceHistory.map((attendance) => {
+      this.attendanceService
+        .getCourseName(attendance.courseId)
+        .subscribe((courseName) => {
+          attendance.courseName = courseName;
+        });
     });
   }
 }

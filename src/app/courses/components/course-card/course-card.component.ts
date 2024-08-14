@@ -29,13 +29,13 @@ export class CourseCardComponent {
    * Delete the selected course before a confirmation dialog
    * @param id course id to delete
    */
-  onDeleteCourse(id: number): void {
+  onDeleteCourse(id: string): void {
     const dialogRef = this.dialog.open(
       ConfirmDialogComponent,
       {
         data: {
           title: '¿Esta seguro?',
-          description: `Esta a punto de eliminar el curso ${this.course.title}`,
+          description: `Esta a punto de eliminar el curso ${this.course.nombre}`,
           confirmButtonText: 'Eliminar',
           cancelButtonText: 'Cancelar'
         }

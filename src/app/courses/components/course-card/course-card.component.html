@@ -1,21 +1,21 @@
 <mat-card class="flex flex-col justify-between h-full bg-white dark:bg-slate-700">
   <div>
     <mat-card-header>
-      <mat-card-title class="text-core-primary dark:text-core-primary-400"> {{course.title}} </mat-card-title>
-      <mat-card-subtitle> {{course.universityProgram}} </mat-card-subtitle>
+      <mat-card-title class="text-core-primary dark:text-core-primary-400"> {{course.nombre}} </mat-card-title>
+      <mat-card-subtitle> {{course.carrera}} </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content class="mt-2">
       <p class="max-h-4rem overflow-auto dark:text-slate-300">
-        {{ course.description }}
+        {{ course.descripcion }}
       </p>
-      <mat-chip-listbox>
+      <!-- <mat-chip-listbox>
         <mat-chip color="primary" *ngIf="!course.students">
           Sin estudiantes
         </mat-chip>
         <mat-chip color="primary" *ngIf="course.students">
           {{ course.students.length | i18nPlural:studentsMap }}
         </mat-chip>
-      </mat-chip-listbox>
+      </mat-chip-listbox> -->
     </mat-card-content>
   </div>
   <mat-card-actions class="border-t-[1px] border-slate-200 dark:border-slate-600">

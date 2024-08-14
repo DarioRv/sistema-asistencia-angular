@@ -1,24 +1,27 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CsvReaderService } from '../../services/csv-reader.service';
-import { Student } from '../../interfaces/student.interface';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { StudentService } from '../../services/student.service';
+import { StudentPost } from '../../interfaces/student-post.interface';
 
 @Component({
-  selector: 'upload-file',
+  selector: 'upload-csv-file',
   templateUrl: './upload-file.component.html',
-  styles: [
-  ]
+  styles: [],
 })
 export class UploadFileComponent {
   acceptedFileType: string = '.csv';
   maxFileSize: number = 1_048_576; // 1MB
   errors: string[] = [];
   selectedFile?: File | null;
+  @Input({ required: true })
+  courseId!: string;
 
-  @Output()
-  onUploadFile: EventEmitter<Student[]> = new EventEmitter();
-
-  constructor(private csvReader: CsvReaderService, private snackbarService: SnackbarService) {}
+  constructor(
+    private csvReader: CsvReaderService,
+    private snackbarService: SnackbarService,
+    private studentService: StudentService
+  ) {}
 
   /**
    * Checks if the file extension is csv
@@ -41,7 +44,9 @@ export class UploadFileComponent {
   checkFileSize(file: File): boolean {
     if (file.size <= this.maxFileSize) return true;
 
-    this.errors.push(`El archivo ${file.name} es demasiado grande (Límite 1MB).`);
+    this.errors.push(
+      `El archivo ${file.name} es demasiado grande (Límite 1MB).`
+    );
     return false;
   }
 
@@ -105,22 +110,49 @@ export class UploadFileComponent {
    */
   onUpload() {
     this.snackbarService.showSnackbar('Procesando el archivo csv...');
-    this.csvReader.read(this.selectedFile!)
-      .then( (studentList) => {
+    this.csvReader
+      .read(this.selectedFile!)
+      .then((studentList) => {
         this.snackbarService.showSnackbar('Subiendo el archivo...');
-        this.emitStudentList(studentList);
+        studentList = this.addCourseIdToStudentList(studentList);
+        this.saveStudentList(studentList);
       })
-      .catch( (error) => {
-        this.snackbarService.showSnackbar('Error al procesar el archivo csv.')
+      .catch((error) => {
+        this.snackbarService.showSnackbar('Error al procesar el archivo csv.');
       });
     this.selectedFile = null;
   }
 
   /**
-   * Emit the student list to the parent component
-   * @param studentList student list
+   * Save the student list
    */
-  emitStudentList(studentList: Student[]) {
-    this.onUploadFile.emit(studentList);
+  saveStudentList(studentList: StudentPost[]) {
+    this.studentService.saveStudents(studentList).subscribe({
+      next: () => {
+        this.snackbarService.showSnackbar(
+          'La lista de estudiantes se ha guardado correctamente.'
+        );
+      },
+      error: (err) => {
+        this.snackbarService.showSnackbar(
+          'Error al guardar la lista de estudiantes.'
+        );
+      },
+    });
+  }
+
+  /**
+   * Add the courseId to the student list
+   * @param studentList student list
+   * @returns student list with the courseId added
+   */
+  addCourseIdToStudentList(studentList: StudentPost[]): StudentPost[] {
+    return studentList.map(
+      (student) =>
+        ({
+          ...student,
+          cursoId: this.courseId,
+        } as StudentPost)
+    );
   }
 }

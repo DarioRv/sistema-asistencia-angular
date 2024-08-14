@@ -13,7 +13,7 @@ import { SnackbarService } from 'src/app/shared/services/snackbar.service';
   ]
 })
 export class DangerZoneOptionsComponent {
-  @Input({required: true}) courseId!: number;
+  @Input({required: true}) courseId!: string;
 
   constructor(private coursesService: CoursesDataService, private snackbarService: SnackbarService, private router: Router, private dialog: MatDialog) { }
 

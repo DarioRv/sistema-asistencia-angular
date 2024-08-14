@@ -1,17 +1,17 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable, computed, signal } from "@angular/core";
-import { Observable, catchError, map, of, throwError } from "rxjs";
-import { CookieService } from "ngx-cookie-service";
-import { User } from "../interfaces/user.interface";
-import { AuthUser } from "../interfaces/auth-user.interface";
-import { environment } from "src/environments/environment";
-import { RegisterUser } from "../interfaces/register-user.interface";
-import { AuthStatus } from "../enums/auth-status.enum";
-import { UserData } from "../interfaces/user-data.interface";
-import { LoginResponse } from "../interfaces/login-response.interface";
+import { HttpClient } from '@angular/common/http';
+import { Injectable, computed, signal } from '@angular/core';
+import { Observable, catchError, map, of, throwError } from 'rxjs';
+import { CookieService } from 'ngx-cookie-service';
+import { User } from '../interfaces/user.interface';
+import { AuthUser } from '../interfaces/auth-user.interface';
+import { environment } from 'src/environments/environment';
+import { RegisterUser } from '../interfaces/register-user.interface';
+import { AuthStatus } from '../enums/auth-status.enum';
+import { UserData } from '../interfaces/user-data.interface';
+import { LoginResponse } from '../interfaces/login-response.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthenticationService {
   private baseUrl: string = environment.API_URL;
@@ -72,12 +72,12 @@ export class AuthenticationService {
     const url = `${this.baseUrl}/auth/login`;
     const body = user;
     return this.http.post<LoginResponse>(url, body).pipe(
-      map( res => {
+      map((res) => {
         const { usuario, token } = res;
         this.setAuthentication(usuario, token);
         return usuario;
       }),
-      catchError( err => throwError( () => err) )
+      catchError((err) => throwError(() => err))
     );
   }
 
@@ -89,8 +89,31 @@ export class AuthenticationService {
   registerUser(user: RegisterUser): Observable<any> {
     const url = `${this.baseUrl}/usuario/registro`;
     const body = user;
-    return this.http.post<any>(url, body).pipe(
-      catchError( err => throwError( () => err) )
+    return this.http
+      .post<any>(url, body)
+      .pipe(catchError((err) => throwError(() => err)));
+  }
+
+  /**
+   * Method to update a user
+   * @param user The user to update
+   * @returns Observable of the updated user or undefined if the user could not be updated
+   */
+  updateUser(user: User): Observable<User | undefined> {
+    return this.http
+      .patch<User>(`${this.baseUrl}/users/${user.id}`, user)
+      .pipe(catchError((err) => of(undefined)));
+  }
+
+  /**
+   * Method to delete a user
+   * @param id The id of the user to delete
+   * @returns Observable of true if the user was deleted, false otherwise
+   */
+  deleteUserById(id: string): Observable<boolean> {
+    return this.http.delete(`${this.baseUrl}/users/${id}`).pipe(
+      map((resp) => true),
+      catchError((err) => of(false))
     );
   }
 
@@ -144,7 +167,9 @@ export class AuthenticationService {
    * @returns True if there is a session of the authenticated user, false otherwise
    */
   checkAuthentication(): Observable<boolean> {
-    return (this._authStatus() === AuthStatus.authenticated) ? of(true) : of(false);
+    return this._authStatus() === AuthStatus.authenticated
+      ? of(true)
+      : of(false);
   }
 
   /**
@@ -154,12 +179,12 @@ export class AuthenticationService {
    */
   get currentSession(): User | undefined {
     if (this.activeSession) return this.activeSession;
-    if (!this.cookieService.check('user') || !this.cookieService.get('user')) return undefined;
+    if (!this.cookieService.check('user') || !this.cookieService.get('user'))
+      return undefined;
     let user: User;
     try {
       user = JSON.parse(this.cookieService.get('user'));
-    }
-    catch(err) {
+    } catch (err) {
       return undefined;
     }
     return user;
@@ -173,8 +198,8 @@ export class AuthenticationService {
   verifyEmail(token: string): Observable<boolean> {
     const url = `${this.baseUrl}/usuario/validar/${token}`;
     return this.http.patch(url, token).pipe(
-      map( () => true ),
-      catchError( (err) => throwError( () => err) )
+      map(() => true),
+      catchError((err) => throwError(() => err))
     );
   }
 
@@ -186,8 +211,8 @@ export class AuthenticationService {
   resendVerificationEmail(email: string): Observable<boolean> {
     const url = `${this.baseUrl}/usuario/reenviar-correo-confirmacion?correo=${email}`;
     return this.http.request('POST', url).pipe(
-      map( () => true ),
-      catchError( (err) => throwError( () => err) )
+      map(() => true),
+      catchError((err) => throwError(() => err))
     );
   }
 
@@ -199,8 +224,8 @@ export class AuthenticationService {
   forgotPassword(email: string): Observable<boolean> {
     const url = `${this.baseUrl}/usuario/olvide-mi-contrasena?correo=${email}`;
     return this.http.request('POST', url).pipe(
-      map( () => true ),
-      catchError( (err) => throwError( () => err) )
+      map(() => true),
+      catchError((err) => throwError(() => err))
     );
   }
 
@@ -208,8 +233,8 @@ export class AuthenticationService {
     const url = `${this.baseUrl}/usuario/cambiar-contrasena/${token}`;
     const body = { contrasena: password };
     return this.http.patch(url, body).pipe(
-      map( () => true ),
-      catchError( (err) => throwError( () => err) )
+      map(() => true),
+      catchError((err) => throwError(() => err))
     );
   }
 }

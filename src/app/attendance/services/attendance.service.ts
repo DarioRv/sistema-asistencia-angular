@@ -58,9 +58,7 @@ export class attendanceService {
    * @returns true if the student is registered in the course, false otherwise
    */
   isStudentRegisteredInCourse(lu: string, course: Course): boolean {
-    if (!course.students) return false;
-
-    return course.students.some( student => student.lu === lu);
+    return false;
   }
 
   /**
@@ -69,9 +67,6 @@ export class attendanceService {
    * @returns course name
    */
   getCourseName(courseId: number): Observable<string> {
-    return this.http.get<Course>(`${this.baseUrl}/courses/${courseId}`).pipe(
-      map( course => course.title ),
-      catchError( err => of('') )
-    );
-    }
+    return of('');
+  }
 }

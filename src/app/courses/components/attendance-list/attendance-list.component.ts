@@ -1,22 +1,23 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AttendanceService } from '../../services/attendance.service';
-import { delay, tap } from 'rxjs';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 
 @Component({
   selector: 'course-attendance-list',
   templateUrl: './attendance-list.component.html',
-  styles: [
-  ]
+  styles: [],
 })
 export class AttendanceListComponent implements OnInit {
   @Input()
-  courseId!: number;
-  attendances: any[] = [];
-  displayedColumns: string[] = ['lu', 'date'];;
+  courseId!: string;
+  attendances: Array<Array<boolean | string>> = [];
+  displayedColumns: string[] = ['fullName', 'status'];
   isLoading: boolean = false;
 
-  constructor(private attendanceService: AttendanceService, private snackbarService: SnackbarService) { }
+  constructor(
+    private attendanceService: AttendanceService,
+    private snackbarService: SnackbarService
+  ) {}
 
   ngOnInit(): void {
     this.getStudentsAttendance();
@@ -24,23 +25,24 @@ export class AttendanceListComponent implements OnInit {
 
   /**
    * Gets the students attendance for a course
-  */
- getStudentsAttendance(): void {
-   this.isLoading = true;
-   this.attendanceService.getStudentsAttendanceByDate(this.courseId, this.getToday())
-   .pipe(
-     delay(500),
-     tap(() => this.isLoading = false)
-     )
-     .subscribe((attendances) => {
-       this.attendances = attendances;
-    });
-  }
-
-  /**
-   * Gets today's date
    */
-  getToday(): Date {
-    return new Date();
+  getStudentsAttendance(): void {
+    this.isLoading = true;
+    this.attendanceService.getStudentsAttendance(this.courseId).subscribe({
+      next: (attendances) => {
+        attendances.shift();
+        attendances.map((attendance) => {
+          attendance[1] = attendance[1] ? '✅' : '❌';
+        });
+        this.attendances = attendances;
+        this.isLoading = false;
+      },
+      error: () => {
+        this.snackbarService.showSnackbar(
+          'No se pudo obtener la lista de asistencias'
+        );
+        this.isLoading = false;
+      },
+    });
   }
 }

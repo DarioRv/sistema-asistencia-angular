@@ -1,92 +1,84 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ClassSchedule } from '../../interfaces/class-schedule.interface';
+import { AfterViewInit, Component, Input } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { ClassScheduleService } from '../../services/class-schedule.service';
 
 @Component({
   selector: 'schedule-form',
   templateUrl: './schedule-form.component.html',
-  styles: [
-  ]
+  styles: [],
 })
-export class ScheduleFormComponent implements OnInit {
-  scheduleForm: FormGroup = new FormGroup({
-    entryTime: new FormControl('', [Validators.required]),
-    departureTime: new FormControl('', [Validators.required]),
+export class ScheduleFormComponent implements AfterViewInit {
+  @Input({ required: true })
+  courseId!: string;
+
+  scheduleForm: FormGroup = this.fb.group({
+    cursoId: ['', Validators.required],
+    entrada: [0, Validators.required],
+    salida: [0, Validators.required],
+    dia: ['', Validators.required],
   });
-  isDisabled: boolean = true;
 
-  @Input()
-  public classSchedule?: ClassSchedule;
+  availableDays = [
+    { label: 'Lunes', value: 'LUNES' },
+    { label: 'Martes', value: 'MARTES' },
+    { label: 'Miércoles', value: 'MIERCOLES' },
+    { label: 'Jueves', value: 'JUEVES' },
+    { label: 'Viernes', value: 'VIERNES' },
+    { label: 'Sábado', value: 'SABADO' },
+    { label: 'Domingo', value: 'DOMINGO' },
+  ];
 
-  @Output()
-  public onEditClassSchedule: EventEmitter<ClassSchedule> = new EventEmitter();
+  isLoading: boolean = false;
 
-  constructor() { }
+  constructor(
+    private fb: FormBuilder,
+    private snackbarService: SnackbarService,
+    private scheduleService: ClassScheduleService
+  ) {}
 
-  ngOnInit(): void {
-    this.setDisabledState();
-    this.setDefaultScheduleClass();
+  get entrada(): FormControl {
+    return this.scheduleForm.get('entrada') as FormControl;
   }
 
-  /**
-   * Get the entryTime value of the form
-   */
-  get entryTime() {
-    return this.scheduleForm.get('entryTime');
+  get salida(): FormControl {
+    return this.scheduleForm.get('salida') as FormControl;
   }
 
-  /**
-   * Get the departureTime value of the form
-   */
-  get departureTime() {
-    return this.scheduleForm.get('departureTime');
+  get dia(): FormControl {
+    return this.scheduleForm.get('dia') as FormControl;
   }
 
-  /**
-   * Set the default values of the form
-   */
-  setDefaultScheduleClass(): void {
-    if (!this.classSchedule) return;
-    this.entryTime?.setValue(this.classSchedule.entryTime);
-    this.departureTime?.setValue(this.classSchedule.departureTime);
+  ngAfterViewInit(): void {
+    this.scheduleForm.patchValue({ cursoId: this.courseId });
   }
 
-  /**
-   * Set the disabled state of the form
-   */
-  setDisabledState(): void {
-    this.scheduleForm.disable();
-    this.isDisabled = true;
-  }
-
-  /**
-   * Toggle the disabled state of the form
-   */
-  toggleMode(): void {
-    this.scheduleForm.enabled ? this.scheduleForm.disable() : this.scheduleForm.enable();
-    this.isDisabled = !this.isDisabled;
-  }
-
-  /**
-   * Toggle the state of the form
-   */
-  onEdit(): void {
-    this.toggleMode();
-  }
-
-  /**
-   * Method to handle the submit event of the form
-   */
   onSubmit(): void {
-    if (this.scheduleForm.invalid) return;
-    this.emitClassSchedule();
-    this.setDisabledState();
-  }
+    this.isLoading = true;
+    if (this.scheduleForm.invalid) {
+      this.snackbarService.showSnackbar('Introduzca un horario válido');
+      this.isLoading = false;
+      return;
+    }
 
-  /**
-   * Emit the class schedule to the parent component
-   */
-  emitClassSchedule(): void {
-    this.onEditClassSchedule.emit(this.scheduleForm.value);
+    this.scheduleService.addClassSchedule(this.scheduleForm.value).subscribe({
+      next: () => {
+        this.snackbarService.showSnackbar('Horario agregado correctamente');
+        this.scheduleForm.reset();
+        this.scheduleForm.patchValue({ cursoId: this.courseId });
+        this.scheduleForm.markAsPristine();
+        this.scheduleForm.markAsUntouched();
+        this.isLoading = false;
+      },
+      error: () => {
+        this.snackbarService.showSnackbar('Error al agregar el horario');
+        this.isLoading = false;
+      },
+    });
   }
 }

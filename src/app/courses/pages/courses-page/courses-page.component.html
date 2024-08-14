@@ -1,10 +1,5 @@
-<div class="loading-layout" *ngIf="isLoading; else coursesList">
-  <card-placeholder></card-placeholder>
-  <card-placeholder></card-placeholder>
-  <card-placeholder></card-placeholder>
-</div>
-<ng-template #coursesList>
-  <div class="courses">
+<section class="grid place-items-center" [ngSwitch]="status">
+  <div class="w-full">
     <course-search-box></course-search-box>
     <div class="actions mb-3">
       <button mat-flat-button color="primary" routerLink="../new-course">
@@ -12,8 +7,62 @@
         <span>Añadir curso</span>
       </button>
     </div>
-    <div class="courses-list">
-      <dashboard-course-card *ngFor="let course of courses" [course]="course"></dashboard-course-card>
+  </div>
+
+  <div class="loading-layout w-full" *ngSwitchCase="'pending'">
+    <card-placeholder></card-placeholder>
+    <card-placeholder></card-placeholder>
+    <card-placeholder></card-placeholder>
+  </div>
+
+  <div class="courses w-full" *ngSwitchCase="'success'">
+    <div class="courses-list w-full">
+      <dashboard-course-card
+        *ngFor="let course of courses"
+        [course]="course"
+      ></dashboard-course-card>
     </div>
   </div>
-</ng-template>
+
+  <div
+    class="w-fit bg-slate-200 p-4 mt-40 rounded dark:bg-slate-700"
+    *ngSwitchCase="'no content'"
+  >
+    <h1
+      class="text-center text-slate-700 text-2xl font-bold md:text-5xl dark:text-slate-300"
+    >
+      No hay cursos
+    </h1>
+    <p class="text-center text-slate-700 dark:text-slate-300">
+      No se encontraron cursos
+    </p>
+  </div>
+
+  <div
+    class="w-fit bg-slate-200 p-4 mt-40 rounded dark:bg-slate-700"
+    *ngSwitchCase="'error'"
+  >
+    <h1
+      class="text-center text-slate-700 text-2xl font-bold md:text-5xl dark:text-slate-300"
+    >
+      Error
+    </h1>
+    <p class="text-center text-slate-700 dark:text-slate-300">
+      Ocurrió un error al cargar los cursos
+    </p>
+  </div>
+
+  <div
+    class="w-fit bg-slate-200 p-4 mt-40 rounded dark:bg-slate-700"
+    *ngSwitchCase="'fail'"
+  >
+    <h1
+      class="text-center text-slate-700 text-2xl font-bold md:text-5xl dark:text-slate-300"
+    >
+      No hay internet
+    </h1>
+    <p class="text-center text-slate-700 dark:text-slate-300">
+      No se pudo cargar los cursos, verifica tu conexión a internet
+    </p>
+  </div>
+</section>

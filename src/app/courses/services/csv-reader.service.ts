@@ -1,24 +1,22 @@
 import { Injectable } from '@angular/core';
-import { Student } from '../interfaces/student.interface';
+import { StudentPost } from '../interfaces/student-post.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CsvReaderService {
-
-  constructor() { }
+  constructor() {}
 
   /**
    * Map the data from the csv file to a Student object
    * @param [lu, name, surname] array with the data from the csv file
    * @returns Student object
    */
-  private mapDataToStudent([lu, name, surname]: string[]): Student {
+  private mapDataToStudent([lu, name]: string[]): StudentPost {
     return {
       lu: lu,
-      name: name,
-      surname: surname
-    } as Student;
+      nombre: name,
+    } as StudentPost;
   }
 
   /**
@@ -31,11 +29,11 @@ export class CsvReaderService {
     let lines = text.replace(/\r/g, '').split('\n');
 
     // skip empty lines
-    lines = lines.filter(line => line.length > 0);
+    lines = lines.filter((line) => line.length > 0);
     // skip header
     lines.shift();
     // skip lines with more than 3 columns
-    lines = lines.filter(line => line.split(',').length === 3);
+    lines = lines.filter((line) => line.split(',').length === 2);
     return lines;
   }
 
@@ -47,9 +45,9 @@ export class CsvReaderService {
   private parseCSV(text: string): string[][] {
     let lines = this.getAllTextLines(text);
 
-    return lines.map(line => {
+    return lines.map((line) => {
       let rowValues = line.split(',');
-      return rowValues
+      return rowValues;
     });
   }
 
@@ -58,21 +56,19 @@ export class CsvReaderService {
    * @param file csv file
    * @returns Promise that resolves to an array of students
    */
-  async read(file: File): Promise<Student[]> {
+  async read(file: File): Promise<StudentPost[]> {
     return new Promise((resolve, reject) => {
-      //with filereader
       let fileReader = new FileReader();
       fileReader.readAsText(file);
       fileReader.onload = () => {
         let text = fileReader.result as string;
         let studentList = this.parseCSV(text).map(this.mapDataToStudent);
         resolve(studentList);
-      }
+      };
 
       fileReader.onerror = () => {
         reject([]);
-      }
+      };
     });
   }
-
 }

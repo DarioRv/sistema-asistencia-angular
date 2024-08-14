@@ -31,9 +31,6 @@ export class AttendanceListComponent implements OnInit {
     this.attendanceService.getStudentsAttendance(this.courseId).subscribe({
       next: (attendances) => {
         attendances.shift();
-        attendances.map((attendance) => {
-          attendance[1] = attendance[1] ? '✅' : '❌';
-        });
         this.attendances = attendances;
         this.isLoading = false;
       },

@@ -11,6 +11,7 @@ import { RequestStatus } from 'src/app/shared/types/request-status.type';
 import { AttendanceService } from '../../services/attendance.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { DataRow } from '../../interfaces/data-row.interface';
+import { Course } from '../../interfaces/course.interface';
 
 @Component({
   selector: 'course-attendance-history',
@@ -19,7 +20,7 @@ import { DataRow } from '../../interfaces/data-row.interface';
 })
 export class AttendanceHistoryComponent {
   @Input({ required: true })
-  courseId!: string;
+  course!: Course;
   historialForm: FormGroup = this.fb.group({
     dateOne: ['', [Validators.required]],
     dateTwo: ['', [Validators.required]],
@@ -54,7 +55,7 @@ export class AttendanceHistoryComponent {
     }
 
     this.getAttendanceHistory(
-      this.courseId,
+      this.course.id,
       this.dateOne.value,
       this.dateTwo.value
     );
@@ -109,7 +110,7 @@ export class AttendanceHistoryComponent {
 
     this.attendanceService
       .downloadAttendaceHistory(
-        this.courseId,
+        this.course.id,
         this.dateOne.value,
         this.dateTwo.value
       )
@@ -119,7 +120,7 @@ export class AttendanceHistoryComponent {
           const link = document.createElement('a');
           link.href = fileUrl;
           link.setAttribute('style', 'display: none');
-          link.download = `asistencia.xlsx`;
+          link.download = `asistencia-${this.course.nombre}.xlsx`;
           link.click();
           window.URL.revokeObjectURL(fileUrl);
           link.remove();

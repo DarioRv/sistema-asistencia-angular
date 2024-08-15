@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map, of, throwError } from 'rxjs';
-import { Course } from 'src/app/courses/interfaces/course.interface';
-import { environment } from 'src/environments/environment';
-import { CoursesDataResponse } from 'src/app/courses/interfaces/courses-data-response.interface';
+import { Observable, catchError, map, throwError } from 'rxjs';
+
+import { Course } from '../.../../../../app/courses/interfaces/course.interface';
+import { environment } from '../.../../../../environments/environment';
+import { CoursesDataResponse } from '../.../../../../app/courses/interfaces/courses-data-response.interface';
 import { RegisterAttendance } from '../interfaces/register-attendance.interface';
 import {
   Attendance,
@@ -60,24 +61,5 @@ export class AttendanceService {
     );
     attendances.push(attendance);
     localStorage.setItem('attendances', JSON.stringify(attendances));
-  }
-
-  /**
-   * Check if the student is registered in the course.
-   * @param lu student's lu
-   * @param course course to check
-   * @returns true if the student is registered in the course, false otherwise
-   */
-  isStudentRegisteredInCourse(lu: string, course: Course): boolean {
-    return false;
-  }
-
-  /**
-   * Gets course name by id
-   * @param courseId course's id
-   * @returns course name
-   */
-  getCourseName(courseId: number): Observable<string> {
-    return of('');
   }
 }

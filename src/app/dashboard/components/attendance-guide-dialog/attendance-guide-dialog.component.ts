@@ -1,12 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'attendance-guide-dialog',
   templateUrl: './attendance-guide-dialog.component.html',
-  styles: [
-  ]
+  styles: [],
 })
 export class AttendanceGuideDialogComponent {
-  @Input({required: true})
-  public attendance: boolean = false;
+  constructor(public dialogRef: MatDialogRef<AttendanceGuideDialogComponent>) {}
 }

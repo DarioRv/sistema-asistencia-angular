@@ -1,8 +1,8 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDrawerMode } from '@angular/material/sidenav';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { filter, map } from 'rxjs';
+import { filter, map, Subscription } from 'rxjs';
 
 import { AuthenticationService } from 'src/app/auth/services/auth.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
@@ -12,7 +12,7 @@ import { SnackbarService } from 'src/app/shared/services/snackbar.service';
   templateUrl: './layout-page.component.html',
   styleUrls: [],
 })
-export class LayoutPageComponent implements OnInit {
+export class LayoutPageComponent implements OnInit, OnDestroy {
   public sidebarItems = [
     [
       { label: 'Guía rapida', icon: 'book_2', url: 'start' },
@@ -23,6 +23,8 @@ export class LayoutPageComponent implements OnInit {
 
   public title: string = 'Dashboard';
   public mode: MatDrawerMode = 'side';
+  private routerSubscription: Subscription = new Subscription();
+  private breakpointSubscription: Subscription = new Subscription();
 
   constructor(
     private authService: AuthenticationService,
@@ -38,11 +40,16 @@ export class LayoutPageComponent implements OnInit {
     this.setMainTitle();
   }
 
+  ngOnDestroy(): void {
+    this.routerSubscription.unsubscribe();
+    this.breakpointSubscription.unsubscribe();
+  }
+
   /**
    * Method to set the title of the page based on the route data title property value
    */
   setMainTitle(): void {
-    this.router.events
+    this.routerSubscription = this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
         map(() => this.activatedRoute),
@@ -54,7 +61,6 @@ export class LayoutPageComponent implements OnInit {
         map((route) => route.snapshot.data)
       )
       .subscribe((event) => {
-        console.log(event['title']);
         this.title = event['title'];
       });
   }
@@ -64,7 +70,7 @@ export class LayoutPageComponent implements OnInit {
    * if the screen is big, the sidebar will be side
    */
   setSidebarMode(): void {
-    this.breakpointObserver
+    this.breakpointSubscription = this.breakpointObserver
       .observe([Breakpoints.Handset])
       .subscribe((result) => {
         this.mode = result.matches ? 'over' : 'side';

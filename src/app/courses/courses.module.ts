@@ -59,7 +59,7 @@ import { AttendanceHistoryComponent } from './components/attendance-history/atte
     MaterialModule,
     PrimeNgModule,
     SharedModule,
-    QrCodeModule
-  ]
+    QrCodeModule,
+  ],
 })
-export class CoursesModule { }
+export class CoursesModule {}

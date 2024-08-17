@@ -48,13 +48,6 @@ export class CoursesPageComponent implements OnInit {
             return;
           }
 
-          const noContentError = 'no tiene cursos registrados';
-          if (error.error.error.includes(noContentError)) {
-            this.courses = [];
-            this.status = 'no content';
-            return;
-          }
-
           this.status = 'error';
         },
       });

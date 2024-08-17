@@ -2,7 +2,7 @@
   <mat-sidenav
     #sidenav
     [mode]="mode"
-    opened="true"
+    [opened]="mode !== 'over' ? true : false"
     class="rounded-r-[2rem] bg-core-primary dark:bg-slate-800"
     [ngStyle]="{ width: '250px', border: 'none' }"
   >

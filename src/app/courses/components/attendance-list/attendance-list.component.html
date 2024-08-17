@@ -1,12 +1,12 @@
+<div class="flex justify-end items-center my-2">
+  <button mat-button (click)="getStudentsAttendance()">
+    <span>Actualizar</span>
+    <mat-icon matTooltip="Actualizar los datos de la tabla de asistencia"
+      >refresh</mat-icon
+    >
+  </button>
+</div>
 <ng-template [ngIf]="attendances.length != 0 && !isLoading">
-  <div class="flex justify-end items-center my-2">
-    <button mat-button (click)="getStudentsAttendance()">
-      <span>Actualizar</span>
-      <mat-icon matTooltip="Actualizar los datos de la tabla de asistencia"
-        >refresh</mat-icon
-      >
-    </button>
-  </div>
   <table mat-table [dataSource]="attendances">
     <ng-container matColumnDef="fullName">
       <th
@@ -41,7 +41,7 @@
 </ng-template>
 
 <ng-template [ngIf]="attendances.length == 0 && !isLoading">
-  <p>Aún no hay registros de asistencia</p>
+  <p class="text-center">Aún no hay registros de asistencia</p>
 </ng-template>
 
 <shared-loader class="my-3" size="16px" *ngIf="isLoading"></shared-loader>

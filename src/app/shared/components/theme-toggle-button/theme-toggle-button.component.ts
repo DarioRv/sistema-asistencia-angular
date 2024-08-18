@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-
 type Theme = 'light' | 'dark';
 
 const themeMode = {
@@ -11,8 +10,7 @@ const themeMode = {
 @Component({
   selector: 'shared-theme-toggle-button',
   templateUrl: './theme-toggle-button.component.html',
-  styles: [
-  ]
+  styles: [],
 })
 export class ThemeToggleButtonComponent implements OnInit {
   @Input()
@@ -20,8 +18,7 @@ export class ThemeToggleButtonComponent implements OnInit {
   @Input()
   iconColor = 'text-slate-800 dark:text-slate-200';
   @Input()
-  selectedIconColor = 'bg-slate-700 dark:bg-slate-500';
-
+  selectedIconColor = 'bg-slate-400 dark:bg-slate-500';
 
   currentTheme: Theme = themeMode.light;
 
@@ -57,25 +54,30 @@ export class ThemeToggleButtonComponent implements OnInit {
    * Get the system theme preference
    */
   get systemThemePreference(): boolean {
-    return (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    return (
+      !('theme' in localStorage) &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches
+    );
   }
 
   /**
    * Set the theme based on the user's preference or the system preference
    */
   setThemePreference(): void {
-    if (this.userThemePreference === themeMode.dark || this.systemThemePreference)
+    if (
+      this.userThemePreference === themeMode.dark ||
+      this.systemThemePreference
+    )
       this.setdarkMode();
-    else
-      this.setlightMode();
+    else this.setlightMode();
   }
 
   /**
    * Set the theme to dark
    */
   setdarkMode(): void {
-    document.documentElement.classList.add(themeMode.dark)
-    document.documentElement.classList.remove(themeMode.light)
+    document.documentElement.classList.add(themeMode.dark);
+    document.documentElement.classList.remove(themeMode.light);
     this.currentTheme = themeMode.dark;
   }
 
@@ -83,8 +85,8 @@ export class ThemeToggleButtonComponent implements OnInit {
    * Set the theme to light
    */
   setlightMode(): void {
-    document.documentElement.classList.add(themeMode.light)
-    document.documentElement.classList.remove(themeMode.dark)
+    document.documentElement.classList.add(themeMode.light);
+    document.documentElement.classList.remove(themeMode.dark);
     this.currentTheme = themeMode.light;
   }
 }

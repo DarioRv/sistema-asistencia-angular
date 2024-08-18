@@ -15,6 +15,7 @@ import { AlertTitleDirective } from './directives/alert-title.directive';
 import { AlertSuccessTitleDirective } from './directives/alert-success-title.directive';
 import { AlertWarningTitleDirective } from './directives/alert-warning-title.directive';
 import { AlertDescriptionDirective } from './directives/alert-description.directive';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,7 @@ import { AlertDescriptionDirective } from './directives/alert-description.direct
     AlertWarningTitleDirective,
     AlertDescriptionDirective,
   ],
-  imports: [CommonModule, PrimeNgModule, MaterialModule],
+  imports: [CommonModule, PrimeNgModule, MaterialModule, RouterModule],
   exports: [
     MenubarComponent,
     BasicCardPlaceholderComponent,

@@ -11,21 +11,26 @@ import { AuthUser } from '../../interfaces/auth-user.interface';
   templateUrl: './sign-in-page.component.html',
   styles: [
     `
-    .sign-in {
-      min-height: calc(100vh - 64px);
-    }
-    `
-  ]
+      .sign-in {
+        min-height: calc(100vh - 64px);
+      }
+    `,
+  ],
 })
 export class SignInPageComponent {
   signInForm: FormGroup;
   hide = true;
   isSubmitting: boolean = false;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthenticationService, private snackbarService: SnackbarService) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private authService: AuthenticationService,
+    private snackbarService: SnackbarService
+  ) {
     this.signInForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]]
+      password: ['', [Validators.required]],
     });
   }
 
@@ -40,7 +45,7 @@ export class SignInPageComponent {
   getFormData() {
     return {
       correo: this.email?.value,
-      contrasena: this.password?.value
+      contrasena: this.password?.value,
     } as AuthUser;
   }
 
@@ -51,9 +56,8 @@ export class SignInPageComponent {
     if (this.signInForm.valid) {
       this.isSubmitting = true;
       this.login();
-    }
-    else {
-      this.snackbarService.showSnackbar('Por favor, rellene los campos')
+    } else {
+      this.snackbarService.showSnackbar('Por favor, rellene los campos');
       this.signInForm.markAllAsTouched();
     }
   }
@@ -69,19 +73,17 @@ export class SignInPageComponent {
         this.router.navigate(['/dashboard']);
       },
       error: (err) => {
-        if ( err.status == 0) {
-          this.snackbarService.showSnackbar('No se pudo conectar con el servidor', 'OK', 8000);
-        }
-        else {
+        if (err.status == 0) {
+          this.snackbarService.showSnackbar(
+            'No se pudo conectar con el servidor',
+            'OK',
+            8000
+          );
+        } else {
           this.snackbarService.showSnackbar(err.error.mensaje, 'OK', 8000);
         }
         this.isSubmitting = false;
-        this.signInForm.reset();
       },
-      complete: () => {
-        this.signInForm.reset();
-      }
     });
   }
-
 }

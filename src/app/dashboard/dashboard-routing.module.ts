@@ -1,10 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutPageComponent } from './pages/layout-page/layout-page.component';
-import { CoursesPageComponent } from './pages/courses-page/courses-page.component';
-import { AccountPageComponent } from './pages/account-page/account-page.component';
-import { CourseDetailsPageComponent } from './pages/course-details-page/course-details-page.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
+import { checkAuthentication } from '../auth/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -13,26 +11,27 @@ const routes: Routes = [
     children: [
       {
         path: 'start',
-        component: HomePageComponent
+        component: HomePageComponent,
+        data: { title: 'Guía rápida' }
       },
       {
         path: 'courses',
-        component: CoursesPageComponent,
-      },
-      {
-        path: 'course/:id',
-        component: CourseDetailsPageComponent
+        loadChildren: () => import('../courses/courses.module').then( (m) => m.CoursesModule ),
+        data: { title: 'Materias' }
       },
       {
         path: 'account',
-        component: AccountPageComponent
+        loadChildren: () => import('../user/user.module').then( (m) => m.UserModule ),
+        data: { title: 'Mi perfil' }
       },
       {
         path: '**',
         pathMatch: 'full',
         redirectTo: 'start'
       }
-    ]
+    ],
+    canActivate: [checkAuthentication],
+    canActivateChild: [checkAuthentication]
   }
 ];
 

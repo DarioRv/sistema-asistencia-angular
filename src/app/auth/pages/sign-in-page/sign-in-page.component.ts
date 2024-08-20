@@ -1,57 +1,87 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserService } from '../../services/auth.service';
-import { User } from '../../../shared/interfaces/user.interface';
-import { CookieService } from 'ngx-cookie-service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import { AuthenticationService } from '../../services/auth.service';
+import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { AuthUser } from '../../interfaces/auth-user.interface';
 
 @Component({
   selector: 'auth-sign-in',
   templateUrl: './sign-in-page.component.html',
   styles: [
+    `
+    .sign-in {
+      min-height: calc(100vh - 64px);
+    }
+    `
   ]
 })
 export class SignInPageComponent {
   signInForm: FormGroup;
   hide = true;
+  isSubmitting: boolean = false;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private userService: UserService, private cookieService: CookieService) {
+  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthenticationService, private snackbarService: SnackbarService) {
     this.signInForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
     });
   }
 
-  get Email() {
+  get email() {
     return this.signInForm.get('email');
   }
 
-  get Password() {
+  get password() {
     return this.signInForm.get('password');
   }
 
+  getFormData() {
+    return {
+      correo: this.email?.value,
+      contrasena: this.password?.value
+    } as AuthUser;
+  }
 
-  login(): void {
-    // TODO verificar datos de acceso
+  /**
+   * Method to submit the form and login the user
+   */
+  onSubmit(): void {
     if (this.signInForm.valid) {
-      console.log('Form valido', this.signInForm.value);
-      this.authUser() || console.log('Usuario no encontrado');
+      this.isSubmitting = true;
+      this.login();
     }
     else {
-      console.log('Formulario inválido. Revisa los campos.');
+      this.snackbarService.showSnackbar('Por favor, rellene los campos')
       this.signInForm.markAllAsTouched();
     }
   }
 
-  authUser(): boolean {
-    let success: boolean = false;
-    this.userService.authUser(this.signInForm.value).subscribe((user: User) => {
-      if (user) {
+  /**
+   * Method to login and redirect to the dashboard if the user is authenticated successfully
+   * or show a snackbar if the user could not be authenticated
+   */
+  login(): void {
+    this.authService.authenticateUser(this.getFormData()).subscribe({
+      next: () => {
+        this.isSubmitting = false;
         this.router.navigate(['/dashboard']);
-        this.cookieService.set('user', JSON.stringify(user));
-        success = true;
+      },
+      error: (err) => {
+        if ( err.status == 0) {
+          this.snackbarService.showSnackbar('No se pudo conectar con el servidor', 'OK', 8000);
+        }
+        else {
+          this.snackbarService.showSnackbar(err.error.mensaje, 'OK', 8000);
+        }
+        this.isSubmitting = false;
+        this.signInForm.reset();
+      },
+      complete: () => {
+        this.signInForm.reset();
       }
     });
-    return success;
   }
+
 }

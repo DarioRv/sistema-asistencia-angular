@@ -1,8 +1,5 @@
-<p-menubar [model]="items">
-  <ng-template pTemplate="start">
-    <img src="https://primefaces.org/cdn/primeng/images/primeng.svg" height="40" class="mr-2" />
-  </ng-template>
+<p-menubar [model]="items" styleClass="max-w-[1400px] mt-12 mx-auto dark:bg-transparent dark:border-none dark:text-white">
   <ng-template pTemplate="end">
-      <input type="text" pInputText placeholder="Search" class="w-full" />
+      <shared-theme-toggle-button selectedIconColor="bg-slate-400" iconColor="text-slate-600"></shared-theme-toggle-button>
   </ng-template>
 </p-menubar>

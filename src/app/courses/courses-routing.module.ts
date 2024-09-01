@@ -8,31 +8,35 @@ const routes: Routes = [
   {
     path: 'list',
     component: CoursesPageComponent,
-    data: { title: 'Materias' }
+    data: { title: 'Materias' },
+    title: 'Materias | ASIST.IO',
   },
   {
     path: 'view/:id',
     component: CourseDetailsPageComponent,
-    data: { title: 'Detalles de la materia' }
+    data: { title: 'Detalles de la materia' },
+    title: 'Vista previa | ASIST.IO',
   },
   {
     path: 'new-course',
     component: CourseFormPageComponent,
-    data: { title: 'Nueva materia' }
+    data: { title: 'Nueva materia' },
+    title: 'Crear materia | ASIST.IO',
   },
   {
     path: 'edit/:id',
     component: CourseFormPageComponent,
-    data: { title: 'Editar materia' }
+    data: { title: 'Editar materia' },
+    title: 'Editar materia | ASIST.IO',
   },
   {
     path: '**',
-    redirectTo: 'list'
-  }
+    redirectTo: 'list',
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class CoursesRoutingModule { }
+export class CoursesRoutingModule {}

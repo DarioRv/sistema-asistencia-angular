@@ -5,14 +5,22 @@ import { PasswordUpdatePageComponent } from './pages/password-update-page/passwo
 import { UpdateUserDataPageComponent } from './pages/update-user-data-page/update-user-data-page.component';
 
 const routes: Routes = [
-  { path: '', component: AccountPageComponent },
-  { path: 'update-password', component: PasswordUpdatePageComponent },
-  { path: 'edit-my-profile', component: UpdateUserDataPageComponent },
-  { path: '**', redirectTo: '' }
+  { path: '', component: AccountPageComponent, title: 'Mi perfil | ASIST.IO' },
+  {
+    path: 'update-password',
+    component: PasswordUpdatePageComponent,
+    title: 'Actualizar contraseña | ASIST.IO',
+  },
+  {
+    path: 'edit-my-profile',
+    component: UpdateUserDataPageComponent,
+    title: 'Editar mi perfil | ASIST.IO',
+  },
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class UserRoutingModule { }
+export class UserRoutingModule {}

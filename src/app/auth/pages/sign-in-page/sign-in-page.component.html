@@ -63,13 +63,15 @@
         <button
           type="submit"
           mat-flat-button
-          class="w-full mt-2 text-white rounded-lg"
-          color="primary"
+          class="w-full mt-2 text-white rounded-lg bg-core-primary-500"
           [disabled]="isSubmitting"
         >
           <mat-icon *ngIf="!isSubmitting">login</mat-icon>
           {{ isSubmitting ? "Autenticando" : "Iniciar sesión" }}
-          <mat-spinner class="inline-block size-4"></mat-spinner>
+          <mat-spinner
+            class="inline-block size-4"
+            *ngIf="isSubmitting"
+          ></mat-spinner>
         </button>
       </form>
 

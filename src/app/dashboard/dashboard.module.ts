@@ -13,8 +13,7 @@ import { SharedModule } from '../shared/shared.module';
 import { GettingStartedGuideDialogComponent } from './components/getting-started-guide-dialog/getting-started-guide-dialog.component';
 import { StudentsListGuideDialogComponent } from './components/students-list-guide-dialog/students-list-guide-dialog.component';
 import { AttendanceGuideDialogComponent } from './components/attendance-guide-dialog/attendance-guide-dialog.component';
-
-
+import { UserModule } from '../user/user.module';
 
 @NgModule({
   declarations: [
@@ -23,7 +22,6 @@ import { AttendanceGuideDialogComponent } from './components/attendance-guide-di
     GettingStartedGuideDialogComponent,
     StudentsListGuideDialogComponent,
     AttendanceGuideDialogComponent,
-
   ],
   imports: [
     CommonModule,
@@ -31,8 +29,9 @@ import { AttendanceGuideDialogComponent } from './components/attendance-guide-di
     MaterialModule,
     PrimeNgModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    UserModule,
   ],
-  providers: [CookieService]
+  providers: [CookieService],
 })
-export class DashboardModule { }
+export class DashboardModule {}

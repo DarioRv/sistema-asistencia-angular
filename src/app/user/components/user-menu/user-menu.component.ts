@@ -30,6 +30,6 @@ export class UserMenuComponent {
   signOut(): void {
     this.authService.signOut();
     this.snackbarService.showSnackbar('Has cerrado sesión correctamente');
-    this.router.navigate(['/auth/login']);
+    this.router.navigate(['/auth/sign-in']);
   }
 }

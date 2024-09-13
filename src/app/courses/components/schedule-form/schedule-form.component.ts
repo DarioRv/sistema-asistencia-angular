@@ -75,8 +75,8 @@ export class ScheduleFormComponent implements AfterViewInit {
         this.scheduleForm.markAsUntouched();
         this.isLoading = false;
       },
-      error: () => {
-        this.snackbarService.showSnackbar('Error al agregar el horario');
+      error: (error) => {
+        this.snackbarService.showSnackbar(error.error.message);
         this.isLoading = false;
       },
     });

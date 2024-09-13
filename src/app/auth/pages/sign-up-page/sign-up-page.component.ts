@@ -10,11 +10,11 @@ import { PasswordValidators } from '../../validators/password-validators';
   templateUrl: './sign-up-page.component.html',
   styles: [
     `
-    .sign-up {
-      min-height: calc(100vh - 64px);
-    }
-    `
-  ]
+      .sign-up {
+        min-height: calc(100vh - 64px);
+      }
+    `,
+  ],
 })
 export class SignUpPageComponent implements AfterViewInit {
   hide = true;
@@ -24,19 +24,25 @@ export class SignUpPageComponent implements AfterViewInit {
 
   public signUpForm: FormGroup = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required,
-                    PasswordValidators.containsLetters,
-                    PasswordValidators.containsCapitalLetter,
-                    PasswordValidators.containsSpecialCharacters,
-                    Validators.minLength(6),
-                  ]
-              ],
+    password: [
+      '',
+      [
+        Validators.required,
+        PasswordValidators.containsLetters,
+        PasswordValidators.containsCapitalLetter,
+        PasswordValidators.containsSpecialCharacters,
+        Validators.minLength(6),
+      ],
+    ],
     lastname: ['', [Validators.required]],
-    name: ['', [Validators.required]]
+    name: ['', [Validators.required]],
   });
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthenticationService, private snackbarService: SnackbarService) {
-  }
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthenticationService,
+    private snackbarService: SnackbarService
+  ) {}
 
   ngAfterViewInit(): void {
     this.hideVerifyEmailAlert();
@@ -65,8 +71,8 @@ export class SignUpPageComponent implements AfterViewInit {
     const user = {
       correo: this.email?.value,
       contrasena: this.password?.value,
-      nombre: `${this.lastname?.value} ${this.name?.value}`
-    } as RegisterUser
+      nombre: `${this.lastname?.value} ${this.name?.value}`,
+    } as RegisterUser;
     return user;
   }
 
@@ -77,8 +83,7 @@ export class SignUpPageComponent implements AfterViewInit {
     if (this.signUpForm.valid) {
       this.isSubmitting = true;
       this.register();
-    }
-    else {
+    } else {
       this.snackbarService.showSnackbar('Por favor, rellene los campos');
       this.hideVerifyEmailAlert();
       this.signUpForm.markAllAsTouched();
@@ -88,7 +93,7 @@ export class SignUpPageComponent implements AfterViewInit {
   /**
    * Method to register the user and redirect to the dashboard if the user is registered successfully
    */
-  register():void {
+  register(): void {
     this.authService.registerUser(this.userData).subscribe({
       next: () => {
         this.isSubmitting = false;
@@ -96,18 +101,22 @@ export class SignUpPageComponent implements AfterViewInit {
         this.showVerifyEmailAlert();
       },
       error: (err) => {
-        if ( err.status == 0) {
-          this.snackbarService.showSnackbar('No se pudo conectar con el servidor', 'OK', 8000);
+        if (err.status == 0) {
+          this.snackbarService.showSnackbar(
+            'No se pudo conectar con el servidor',
+            'OK',
+            8000
+          );
           this.isSubmitting = false;
           return;
         }
-        this.snackbarService.showSnackbar(err.error.error, 'OK', 10000);
+        this.snackbarService.showSnackbar(err.error.message, 'OK', 10000);
         this.isSubmitting = false;
         if (this.emailIsAlreadyTaken(err.error.error)) {
           this.setEmailError();
         }
         this.hideVerifyEmailAlert();
-      }
+      },
     });
   }
 
@@ -125,7 +134,7 @@ export class SignUpPageComponent implements AfterViewInit {
    * Sets the email error in the form control
    */
   setEmailError(): void {
-    this.email?.setErrors({emailTaken: true});
+    this.email?.setErrors({ emailTaken: true });
   }
 
   /**

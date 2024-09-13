@@ -12,32 +12,35 @@ const routes: Routes = [
     children: [
       {
         path: 'home',
-        component: HomePageComponent
+        component: HomePageComponent,
+        title: 'Inicio | ASIST.IO',
       },
       {
         path: 'manual',
-        component: ManualPageComponent
+        component: ManualPageComponent,
+        title: 'Manual de usuario | ASIST.IO',
       },
       {
         path: 'change-log',
-        component: ChangeLogPageComponent
+        component: ChangeLogPageComponent,
+        title: 'Actualizaciones | ASIST.IO',
       },
       {
         path: '**',
         redirectTo: 'home',
-        pathMatch: 'full'
-      }
-    ]
+        pathMatch: 'full',
+      },
+    ],
   },
   {
     path: '**',
     redirectTo: '',
-    pathMatch: 'full'
-  }
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class HomeRoutingModule { }
+export class HomeRoutingModule {}

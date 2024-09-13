@@ -2,11 +2,11 @@
   <mat-sidenav
     #sidenav
     [mode]="mode"
-    opened="true"
-    class="rounded-r-[2rem] bg-core-primary dark:bg-slate-700"
+    [opened]="mode !== 'over' ? true : false"
+    class="rounded-r-[2rem] bg-core-primary dark:bg-slate-800"
     [ngStyle]="{ width: '250px', border: 'none' }"
   >
-    <mat-toolbar ngClass="bg-core-primary dark:bg-slate-700">
+    <mat-toolbar ngClass="bg-core-primary dark:bg-slate-800">
       <span class="text-3xl text-white">Menú</span>
     </mat-toolbar>
     <mat-nav-list
@@ -25,7 +25,7 @@
     </mat-nav-list>
   </mat-sidenav>
 
-  <mat-toolbar class="m-3 rounded-2xl w-auto dark:bg-slate-700">
+  <mat-toolbar class="m-3 rounded-2xl w-auto dark:bg-slate-800">
     <nav class="flex justify-between w-full items-center">
       <div class="flex items-center gap-3">
         <button mat-icon-button color="primary" (click)="sidenav.toggle()">

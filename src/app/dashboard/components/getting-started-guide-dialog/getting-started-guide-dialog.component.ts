@@ -1,12 +1,13 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'getting-started-guide-dialog',
   templateUrl: './getting-started-guide-dialog.component.html',
-  styles: [
-  ]
+  styles: [],
 })
 export class GettingStartedGuideDialogComponent {
-  @Input({required: true})
-  public introduction: boolean = false;
+  constructor(
+    public dialogRef: MatDialogRef<GettingStartedGuideDialogComponent>
+  ) {}
 }

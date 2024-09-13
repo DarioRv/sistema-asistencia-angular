@@ -12,31 +12,34 @@ const routes: Routes = [
       {
         path: 'start',
         component: HomePageComponent,
-        data: { title: 'Guía rápida' }
+        data: { title: 'Guía rápida' },
+        title: 'Guías | ASIST.IO',
       },
       {
         path: 'courses',
-        loadChildren: () => import('../courses/courses.module').then( (m) => m.CoursesModule ),
-        data: { title: 'Materias' }
+        loadChildren: () =>
+          import('../courses/courses.module').then((m) => m.CoursesModule),
+        data: { title: 'Materias' },
       },
       {
         path: 'account',
-        loadChildren: () => import('../user/user.module').then( (m) => m.UserModule ),
-        data: { title: 'Mi perfil' }
+        loadChildren: () =>
+          import('../user/user.module').then((m) => m.UserModule),
+        data: { title: 'Mi perfil' },
       },
       {
         path: '**',
         pathMatch: 'full',
-        redirectTo: 'start'
-      }
+        redirectTo: 'start',
+      },
     ],
     canActivate: [checkAuthentication],
-    canActivateChild: [checkAuthentication]
-  }
+    canActivateChild: [checkAuthentication],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class DashboardRoutingModule { }
+export class DashboardRoutingModule {}

@@ -8,33 +8,22 @@ import { PasswordValidators } from 'src/app/auth/validators/password-validators'
 @Component({
   selector: 'password-update-form',
   templateUrl: './password-update-form.component.html',
-  styles: [
-  ]
+  styles: [],
 })
 export class PasswordUpdateFormComponent {
   updatePasswordForm = this.formBuilder.group({
-    currentPassword: [
-      '',
-      [
-        Validators.required,
-      ]
-    ],
+    currentPassword: ['', [Validators.required]],
     newPassword: [
       '',
       [
         Validators.required,
         Validators.minLength(6),
         PasswordValidators.containsCapitalLetter,
-        PasswordValidators.containsLetters,PasswordValidators.containsSpecialCharacters
-      ]
+        PasswordValidators.containsLetters,
+        PasswordValidators.containsSpecialCharacters,
+      ],
     ],
-    confirmPassword: [
-      '',
-      [
-        Validators.required,
-        Validators.minLength(6)
-      ]
-    ]
+    confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
   });
 
   isSubmitting = false;
@@ -46,7 +35,11 @@ export class PasswordUpdateFormComponent {
   @Output()
   statusEvent = new EventEmitter<'pending' | 'success' | 'fail' | 'error'>();
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthenticationService, private userService: UserService) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthenticationService,
+    private userService: UserService
+  ) {}
 
   get currentPassword(): FormControl {
     return this.updatePasswordForm.get('currentPassword') as FormControl;
@@ -59,7 +52,6 @@ export class PasswordUpdateFormComponent {
   get confirmPassword(): FormControl {
     return this.updatePasswordForm.get('confirmPassword') as FormControl;
   }
-
 
   /**
    * Submit the form
@@ -81,14 +73,23 @@ export class PasswordUpdateFormComponent {
   }
 
   /**
-   * Update the user password
+   * Get the form value and build the request body
    */
-  updatePassword(): void {
+  get formValue(): UpdatePasswordRequest {
     const requestBody: UpdatePasswordRequest = {
       correo: this.authService.currentUser()!.correo,
       contrasenaActual: this.currentPassword.value,
       contrasenaNueva: this.newPassword.value,
     };
+
+    return requestBody;
+  }
+
+  /**
+   * Update the user password
+   */
+  updatePassword(): void {
+    const requestBody = this.formValue;
 
     this.userService.updatePassword(requestBody).subscribe({
       next: () => {
@@ -98,20 +99,24 @@ export class PasswordUpdateFormComponent {
       },
       error: (err) => {
         if (err.status === 0) {
-          this.statusEvent.emit('error')
+          this.statusEvent.emit('error');
           this.isSubmitting = false;
           return;
         }
 
-        if (err.error.error === 'La contraseña actual no coincide con la contraseña ingresada') {
-          this.currentPassword.setErrors({incorrectPassword: true});
+        if (
+          (err.error.message as string).includes(
+            'La contraseña actual no coincide con la contraseña ingresada'
+          )
+        ) {
+          this.currentPassword.setErrors({ incorrectPassword: true });
           this.isSubmitting = false;
           return;
         }
 
         this.statusEvent.emit('fail');
         this.isSubmitting = false;
-      }
+      },
     });
   }
 
@@ -120,7 +125,6 @@ export class PasswordUpdateFormComponent {
   }
 
   setFieldEqualityError(): void {
-    this.confirmPassword.setErrors({notEqual: true});
+    this.confirmPassword.setErrors({ notEqual: true });
   }
-
 }

@@ -1,12 +1,13 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'students-list-guide-dialog',
   templateUrl: './students-list-guide-dialog.component.html',
-  styles: [
-  ]
+  styles: [],
 })
 export class StudentsListGuideDialogComponent {
-  @Input({required: true})
-  public students: boolean = false;
+  constructor(
+    public dialogRef: MatDialogRef<StudentsListGuideDialogComponent>
+  ) {}
 }

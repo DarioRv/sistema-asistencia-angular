@@ -10,7 +10,7 @@ import { SnackbarService } from 'src/app/shared/services/snackbar.service';
   styles: [
     `
       .menu-item {
-        @apply px-2 hover:bg-slate-200 dark:hover:bg-slate-600 py-2 flex items-center gap-2 cursor-pointer;
+        @apply px-2 md:hover:bg-slate-200 md:dark:hover:bg-slate-600 py-2 flex items-center gap-2 cursor-pointer;
       }
     `,
   ],

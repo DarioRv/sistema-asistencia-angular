@@ -11,6 +11,7 @@ import { PasswordUpdatePageComponent } from './pages/password-update-page/passwo
 import { ConfirmDeleteAccountDialogComponent } from './components/confirm-delete-account-dialog/confirm-delete-account-dialog.component';
 import { UserDataUpdateFormComponent } from './components/user-data-update-form/user-data-update-form.component';
 import { UpdateUserDataPageComponent } from './pages/update-user-data-page/update-user-data-page.component';
+import { UserMenuComponent } from './components/user-menu/user-menu.component';
 
 @NgModule({
   declarations: [
@@ -20,13 +21,15 @@ import { UpdateUserDataPageComponent } from './pages/update-user-data-page/updat
     ConfirmDeleteAccountDialogComponent,
     UserDataUpdateFormComponent,
     UpdateUserDataPageComponent,
+    UserMenuComponent,
   ],
   imports: [
     CommonModule,
     UserRoutingModule,
     ReactiveFormsModule,
     MaterialModule,
-    SharedModule
-  ]
+    SharedModule,
+  ],
+  exports: [UserMenuComponent],
 })
-export class UserModule { }
+export class UserModule {}

@@ -6,9 +6,9 @@
   </div>
   <div class="group relative">
     <button class="hidden md:block" mat-icon-button>
-      <mat-icon class="hidden">keyboard_arrow_down</mat-icon>
+      <mat-icon>keyboard_arrow_down</mat-icon>
     </button>
-    <button class="block md:hidden" mat-mini-fab color="primary">
+    <button class="block md:hidden font-bold" mat-mini-fab color="primary">
       {{ user.nombre.split(" ")[1].charAt(0) }}
     </button>
     <div
@@ -20,7 +20,7 @@
           <shared-theme-toggle-button
             backgroundColor="bg-slate-300 dark:bg-slate-800"
             iconColor="text-slate-500 dark:text-slate-400"
-            selectedIconColor="text-slate-500 dark:text-slate-400"
+            selectedIconColor="bg-slate-400 dark:bg-slate-500"
           ></shared-theme-toggle-button>
         </li>
         <li class="menu-item" (click)="signOut()">

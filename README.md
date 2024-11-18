@@ -1,7 +1,6 @@
 ![repo size](https://img.shields.io/github/repo-size/DarioRv/sistema-asistencia-angular?style=for-the-badge)
 ![last commit](https://img.shields.io/github/last-commit/DarioRv/sistema-asistencia-angular?style=for-the-badge)
 
-
 ---
 
 # SistemaAsistencia
@@ -10,7 +9,7 @@ Aplicación web para el control de asistencia de estudiantes. El sistema permite
 
 ## Objetivo del proyecto
 
-El objetivo del proyecto es diseñar e implementar una aplicación web para simplificar el proceso de registro de asistencia de los estudiantes a las clases y ahorra tiempo a los docentes. 
+El objetivo del proyecto es diseñar e implementar una aplicación web para simplificar el proceso de registro de asistencia de los estudiantes a las clases y ahorra tiempo a los docentes.
 
 ## Tecnologías utilizadas
 
@@ -22,7 +21,6 @@ El objetivo del proyecto es diseñar e implementar una aplicación web para simp
 ![Angular Material](https://img.shields.io/badge/Angular_Material-F79114?style=for-the-badge&logo=angular-material&logoColor=white)
 ![PrimeNG](https://img.shields.io/badge/PrimeNG-DD0031?style=for-the-badge&logo=prime-ng&logoColor=white)
 
-
 ## Instalación
 
 1. Clonar el repositorio
@@ -32,10 +30,8 @@ El objetivo del proyecto es diseñar e implementar una aplicación web para simp
 
 ## Roadmap
 
-- Desarrolar e implementar funcionalidad para registrar la asistencia de los estudiantes a las clases.
-- Desarrollar e implementar funcionalidad para generar reportes de asistencia de los estudiantes.
-- Mejorar el diseño de la aplicación en modo oscuro.
+El roadmap está cerrado por el momento.
 
 ## Estado
 
-En desarrollo. Próximamente se publicará una versión demo.
+El proyecto está completado. Se encuentra en mantenimiento y actualización.

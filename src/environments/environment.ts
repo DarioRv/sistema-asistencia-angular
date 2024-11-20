@@ -1,3 +1,3 @@
 export const environment = {
-  API_URL: 'https://asist-io.onrender.com',
+  API_URL: 'https://asist-io.onrender.com/api/v1',
 };

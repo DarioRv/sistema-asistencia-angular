@@ -1,8 +1,10 @@
 <section class="home">
   <main
-    class="flex justify-between items-center min-h-screen container-limited"
+    class="grid grid-cols-1 md:grid-cols-2 justify-between items-center min-h-screen container-limited"
   >
-    <div class="space-y-6">
+    <div
+      class="space-y-6 flex flex-col items-center md:items-start text-center md:text-left"
+    >
       <div
         class="inline-block bg-core-primary/10 text-core-primary px-4 py-2 rounded-full text-sm font-medium"
       >
@@ -22,16 +24,16 @@
       >
         Empezar a usar
       </button>
-      <div class="flex items-center space-x-8 pt-4">
-        <div class="flex items-center space-x-2">
+      <div class="flex flex-col md:flex-row gap-3 p-4 mb-4">
+        <div class="flex items-center gap-1">
           <mat-icon class="text-core-primary">check_circle</mat-icon>
           <span class="text-sm">Fácil de usar</span>
         </div>
-        <div class="flex items-center space-x-2">
+        <div class="flex items-center gap-1">
           <mat-icon class="text-core-primary">check_circle</mat-icon>
           <span class="text-sm">Sin instalación</span>
         </div>
-        <div class="flex items-center space-x-2">
+        <div class="flex items-center gap-1">
           <mat-icon class="text-core-primary">check_circle</mat-icon>
           <span class="text-sm">Accesible desde cualquier lugar</span>
         </div>

@@ -4,11 +4,38 @@ import { Step } from '../../interfaces/step.interface';
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
-  styleUrls: [
-    './home-page.component.css'
-  ]
+  styleUrls: ['./home-page.component.css'],
 })
 export class HomePageComponent {
+  studentList = [
+    { name: 'Ana García', present: true },
+    { name: 'Carlos Rodríguez', present: true },
+    { name: 'Elena Martínez', present: false },
+    { name: 'David López', present: true },
+    { name: 'Sofía Pérez', present: false },
+    { name: 'Javier Torres', present: true },
+    { name: 'Diego Gómez', present: false },
+  ];
+  features = [
+    {
+      icon: 'schedule',
+      title: 'Ahorra tiempo',
+      description:
+        'Reduce el tiempo dedicado a tareas administrativas y enfócate en lo que realmente importa: enseñar.',
+    },
+    {
+      icon: 'group',
+      title: 'Gestión simplificada',
+      description:
+        'Administra múltiples clases y grupos de estudiantes desde una interfaz intuitiva y fácil de usar.',
+    },
+    {
+      icon: 'insert_chart',
+      title: 'Reportes detallados',
+      description:
+        'Obtén estadísticas y reportes detallados sobre la asistencia de tus alumnos para mejorar el seguimiento.',
+    },
+  ];
   benefitsItems = [
     { icon: 'check_circle', label: 'Mejora la asistencia' },
     { icon: 'check_circle', label: 'Todo esta organizado' },
@@ -29,11 +56,30 @@ export class HomePageComponent {
     { icon: 'front_hand', label: 'Asistencia ágil' },
     { icon: 'paid', label: 'Plan gratis' },
     { icon: 'credit_card_off', label: 'Registro sin TC' },
-  ]
+  ];
   stepCardItems: Step[] = [
-    { id: 1, title: 'Creá tu curso', description: 'Creá tu curso y cargá la lista de estudiantes.' },
-    { id: 2, title: 'Cargá la lista de estudiantes', description: 'Podés cargar la lista de estudiantes de manera manual o importarla desde un archivo CSV.' },
-    { id: 3, title: 'Generá el link de asistencia', description: 'Una vez que tengas la lista de estudiantes cargada, generá el link para que tus alumnos registren la asistencia.' },
-    { id: 4, title: 'Pedí el informe', description: 'Una vez que finalice la clase, podés pedir el informe de asistencia en formato CSV.' }
+    {
+      id: 1,
+      title: 'Creá tu curso',
+      description: 'Creá tu curso y cargá la lista de estudiantes.',
+    },
+    {
+      id: 2,
+      title: 'Cargá la lista de estudiantes',
+      description:
+        'Podés cargar la lista de estudiantes de manera manual o importarla desde un archivo CSV.',
+    },
+    {
+      id: 3,
+      title: 'Generá el link de asistencia',
+      description:
+        'Una vez que tengas la lista de estudiantes cargada, generá el link para que tus alumnos registren la asistencia.',
+    },
+    {
+      id: 4,
+      title: 'Pedí el informe',
+      description:
+        'Una vez que finalice la clase, podés pedir el informe de asistencia en formato CSV.',
+    },
   ];
 }

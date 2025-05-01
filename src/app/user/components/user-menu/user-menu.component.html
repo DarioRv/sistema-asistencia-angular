@@ -16,6 +16,15 @@
     >
       <ul class="text-sm">
         <li class="menu-item">
+          <div class="flex flex-col">
+            <h5 class="font-semibold text-sm">{{ user.nombre }}</h5>
+            <span class="text-xs text-slate-500 dark:text-slate-400">
+              {{ user.correo }}
+            </span>
+          </div>
+        </li>
+        <mat-divider class="bg-slate-300 dark:bg-slate-600 my-2"></mat-divider>
+        <li class="menu-item menu-item-interactive">
           Tema
           <shared-theme-toggle-button
             backgroundColor="bg-slate-300 dark:bg-slate-800"
@@ -23,7 +32,7 @@
             selectedIconColor="bg-slate-400 dark:bg-slate-500"
           ></shared-theme-toggle-button>
         </li>
-        <li class="menu-item" (click)="signOut()">
+        <li class="menu-item menu-item-interactive" (click)="signOut()">
           <mat-icon>logout</mat-icon>
           Cerrar Sesión
         </li>

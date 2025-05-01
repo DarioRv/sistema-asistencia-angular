@@ -11,10 +11,12 @@
     </mat-toolbar>
     <mat-nav-list
       *ngFor="let itemGroup of sidebarItems"
-      class="rounded-r-[2rem]"
+      class="rounded-r-[2rem] px-4"
     >
       <mat-list-item
+        class="rounded-lg hover:bg-core-primary-600 dark:hover:bg-slate-700 my-2"
         *ngFor="let item of itemGroup"
+        routerLinkActive="bg-core-primary-600 focus:bg-core-primary-600 dark:bg-slate-700 dark:focus:bg-slate-700"
         [routerLink]="item.url"
         (click)="mode == 'over' ? sidenav.toggle() : null"
       >

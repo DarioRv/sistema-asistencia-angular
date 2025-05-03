@@ -1,23 +1,86 @@
 <div class="flex flex-col gap-3 p-2 overflow-hidden">
-  <div class="general-settings">
-    <class-schedule [courseId]="course.id"></class-schedule>
-  </div>
-  <mat-divider></mat-divider>
-  <div class="student-list">
-    <h3 class="font-bold text-core-primary dark:text-core-primary-400">
-      Listado
-    </h3>
-    <upload-csv-file [courseId]="course.id"></upload-csv-file>
-  </div>
-  <mat-divider></mat-divider>
-  <div class="danger-zone">
-    <h3 class="text-red-600 font-bold mb-1 dark:text-red-300">
-      Zona de peligro
-    </h3>
-    <div
-      class="border-[1px] rounded border-red-600 p-2 dark:text-red-300 dark:border-red-300"
-    >
-      <danger-zone-options [courseId]="course.id"></danger-zone-options>
-    </div>
-  </div>
+  <mat-accordion class="*:before:border-slate-600">
+    <!-- Horarios -->
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title
+          class="font-semibold text-core-primary dark:text-core-primary-400"
+        >
+          Horarios de asistencia
+        </mat-panel-title>
+        <mat-panel-description
+          class="hidden md:flex md:justify-between md:items-center"
+        >
+          Gestiona los horarios de las clases del curso
+          <mat-icon>schedule</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="general-settings">
+        <class-schedule [courseId]="course.id"></class-schedule>
+      </div>
+    </mat-expansion-panel>
+
+    <!-- Horarios -->
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title
+          class="font-semibold text-core-primary dark:text-core-primary-400"
+        >
+          Agregar horario de asistencia
+        </mat-panel-title>
+        <mat-panel-description
+          class="hidden md:flex md:justify-between md:items-center"
+        >
+          Gestiona los horarios de las clases del curso
+          <mat-icon>more_time</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <schedule-form [courseId]="course.id"></schedule-form>
+    </mat-expansion-panel>
+
+    <!-- Listado de alumnos -->
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title
+          class="font-semibold text-core-primary dark:text-core-primary-400"
+        >
+          Listado de alumnos
+        </mat-panel-title>
+        <mat-panel-description
+          class="hidden md:flex md:justify-between md:items-center"
+        >
+          Gestiona los alumnos del curso
+          <mat-icon>people</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="student-list">
+        <upload-csv-file [courseId]="course.id"></upload-csv-file>
+      </div>
+    </mat-expansion-panel>
+
+    <!-- Zona de peligro -->
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title
+          class="font-semibold text-core-primary dark:text-core-primary-400"
+        >
+          Zona de peligro
+        </mat-panel-title>
+        <mat-panel-description
+          class="hidden md:flex md:justify-between md:items-center"
+        >
+          Acciones que pueden afectar el curso
+          <mat-icon>warning</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <div class="danger-zone">
+        <div
+          class="border-[1px] rounded border-red-600 p-2 dark:text-red-300 dark:border-red-300"
+        >
+          <danger-zone-options [courseId]="course.id"></danger-zone-options>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
 </div>

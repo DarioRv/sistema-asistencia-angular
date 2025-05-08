@@ -8,10 +8,10 @@ import { filter, switchMap } from 'rxjs';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 
 @Component({
-  selector: 'dashboard-course-card',
-  templateUrl: './course-card.component.html',
-  styles: [
-  ]
+    selector: 'dashboard-course-card',
+    templateUrl: './course-card.component.html',
+    styles: [],
+    standalone: false
 })
 export class CourseCardComponent {
 

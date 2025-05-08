@@ -7,10 +7,10 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/auth/services/auth.service';
 
 @Component({
-  selector: 'app-confirm-delete-account-dialog',
-  templateUrl: './confirm-delete-account-dialog.component.html',
-  styles: [
-  ]
+    selector: 'app-confirm-delete-account-dialog',
+    templateUrl: './confirm-delete-account-dialog.component.html',
+    styles: [],
+    standalone: false
 })
 export class ConfirmDeleteAccountDialogComponent {
   password: FormControl = new FormControl('', [Validators.required]);

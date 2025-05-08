@@ -14,9 +14,10 @@ import { DataRow } from '../../interfaces/data-row.interface';
 import { Course } from '../../interfaces/course.interface';
 
 @Component({
-  selector: 'course-attendance-history',
-  templateUrl: './attendance-history.component.html',
-  styleUrls: ['./attendance-history.component.css'],
+    selector: 'course-attendance-history',
+    templateUrl: './attendance-history.component.html',
+    styleUrls: ['./attendance-history.component.css'],
+    standalone: false
 })
 export class AttendanceHistoryComponent {
   @Input({ required: true })

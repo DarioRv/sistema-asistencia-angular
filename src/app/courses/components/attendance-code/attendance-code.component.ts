@@ -6,9 +6,10 @@ import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { switchMap } from 'rxjs';
 
 @Component({
-  selector: 'course-attendance-code',
-  templateUrl: './attendance-code.component.html',
-  styles: [],
+    selector: 'course-attendance-code',
+    templateUrl: './attendance-code.component.html',
+    styles: [],
+    standalone: false
 })
 export class AttendanceCodeComponent {
   @Input({ required: true })

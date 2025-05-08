@@ -5,9 +5,10 @@ import { StudentService } from '../../services/student.service';
 import { StudentPost } from '../../interfaces/student-post.interface';
 
 @Component({
-  selector: 'upload-csv-file',
-  templateUrl: './upload-file.component.html',
-  styles: [],
+    selector: 'upload-csv-file',
+    templateUrl: './upload-file.component.html',
+    styles: [],
+    standalone: false
 })
 export class UploadFileComponent {
   acceptedFileType: string = '.csv';

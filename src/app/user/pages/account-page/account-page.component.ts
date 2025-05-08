@@ -5,10 +5,10 @@ import { AuthenticationService } from 'src/app/auth/services/auth.service';
 import { ConfirmDeleteAccountDialogComponent } from '../../components/confirm-delete-account-dialog/confirm-delete-account-dialog.component';
 
 @Component({
-  selector: 'app-account-page',
-  templateUrl: './account-page.component.html',
-  styles: [
-  ]
+    selector: 'app-account-page',
+    templateUrl: './account-page.component.html',
+    styles: [],
+    standalone: false
 })
 export class AccountPageComponent {
   currentUser = computed(() => this.authService.currentUser());

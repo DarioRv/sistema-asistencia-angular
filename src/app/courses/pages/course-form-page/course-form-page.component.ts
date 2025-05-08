@@ -9,10 +9,10 @@ import { CreateCourse } from '../../interfaces/create-course.interface';
 import { AuthenticationService } from 'src/app/auth/services/auth.service';
 
 @Component({
-  selector: 'app-course-form-page',
-  templateUrl: './course-form-page.component.html',
-  styles: [
-  ]
+    selector: 'app-course-form-page',
+    templateUrl: './course-form-page.component.html',
+    styles: [],
+    standalone: false
 })
 export class CourseFormPageComponent {
   courseForm: FormGroup = new FormGroup({

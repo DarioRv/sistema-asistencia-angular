@@ -3,9 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '../../services/auth.service';
 
 @Component({
-  templateUrl: './verify-email-page.component.html',
-  styles: [
-  ]
+    templateUrl: './verify-email-page.component.html',
+    styles: [],
+    standalone: false
 })
 export class VerifyEmailPageComponent implements OnInit {
 

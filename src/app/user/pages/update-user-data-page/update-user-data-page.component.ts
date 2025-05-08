@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 
 @Component({
-  templateUrl: './update-user-data-page.component.html',
-  styles: [
-  ]
+    templateUrl: './update-user-data-page.component.html',
+    styles: [],
+    standalone: false
 })
 export class UpdateUserDataPageComponent {
   status: 'pending' | 'success' | 'fail' | 'error' = 'pending';

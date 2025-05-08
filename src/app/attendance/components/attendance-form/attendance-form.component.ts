@@ -7,9 +7,10 @@ import { PlainAttendance } from '../../interfaces/plain-attendance.interface';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 
 @Component({
-  selector: 'attendance-form',
-  templateUrl: './attendance-form.component.html',
-  styleUrls: ['./attendance-form.component.css'],
+    selector: 'attendance-form',
+    templateUrl: './attendance-form.component.html',
+    styleUrls: ['./attendance-form.component.css'],
+    standalone: false
 })
 export class AttendanceFormComponent {
   @Input({ required: true }) attendanceCode!: string;

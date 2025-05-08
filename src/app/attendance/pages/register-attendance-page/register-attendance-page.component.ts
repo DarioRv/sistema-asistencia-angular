@@ -10,9 +10,10 @@ import { SnackbarService } from '../../../../app/shared/services/snackbar.servic
 import moment from 'moment';
 
 @Component({
-  selector: 'register-attendance-page',
-  templateUrl: './register-attendance-page.component.html',
-  styles: [],
+    selector: 'register-attendance-page',
+    templateUrl: './register-attendance-page.component.html',
+    styles: [],
+    standalone: false
 })
 export class RegisterAttendancePageComponent implements OnInit {
   course: Course | undefined = undefined;

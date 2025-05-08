@@ -4,9 +4,10 @@ import { AuthenticationService } from '../../services/auth.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 
 @Component({
-  selector: 'email-resend-form',
-  templateUrl: './email-resend-form.component.html',
-  styles: [],
+    selector: 'email-resend-form',
+    templateUrl: './email-resend-form.component.html',
+    styles: [],
+    standalone: false
 })
 export class EmailResendFormComponent {
   form: FormGroup = new FormGroup({

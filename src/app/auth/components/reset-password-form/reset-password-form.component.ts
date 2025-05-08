@@ -6,10 +6,10 @@ import { ActivatedRoute } from '@angular/router';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 
 @Component({
-  selector: 'reset-password-form',
-  templateUrl: './reset-password-form.component.html',
-  styles: [
-  ]
+    selector: 'reset-password-form',
+    templateUrl: './reset-password-form.component.html',
+    styles: [],
+    standalone: false
 })
 export class ResetPasswordFormComponent implements OnInit {
   token: string = '';

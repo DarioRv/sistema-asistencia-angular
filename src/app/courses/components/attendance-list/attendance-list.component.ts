@@ -3,9 +3,10 @@ import { AttendanceService } from '../../services/attendance.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 
 @Component({
-  selector: 'course-attendance-list',
-  templateUrl: './attendance-list.component.html',
-  styles: [],
+    selector: 'course-attendance-list',
+    templateUrl: './attendance-list.component.html',
+    styles: [],
+    standalone: false
 })
 export class AttendanceListComponent implements OnInit {
   @Input()

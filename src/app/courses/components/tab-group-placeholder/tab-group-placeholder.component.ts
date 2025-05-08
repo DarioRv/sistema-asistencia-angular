@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'tab-group-placeholder',
-  templateUrl: './tab-group-placeholder.component.html',
-  styles: [
-  ]
+    selector: 'tab-group-placeholder',
+    templateUrl: './tab-group-placeholder.component.html',
+    styles: [],
+    standalone: false
 })
 export class TabGroupPlaceholderComponent {
 

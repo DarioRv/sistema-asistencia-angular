@@ -7,10 +7,10 @@ import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 
 @Component({
-  selector: 'danger-zone-options',
-  templateUrl: './danger-zone-options.component.html',
-  styles: [
-  ]
+    selector: 'danger-zone-options',
+    templateUrl: './danger-zone-options.component.html',
+    styles: [],
+    standalone: false
 })
 export class DangerZoneOptionsComponent {
   @Input({required: true}) courseId!: string;

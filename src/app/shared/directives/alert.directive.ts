@@ -1,7 +1,8 @@
 import { Directive, ElementRef } from '@angular/core';
 
 @Directive({
-  selector: '[asistAlert]',
+    selector: '[asistAlert]',
+    standalone: false
 })
 export class AlertDirective {
   constructor(private element: ElementRef) {

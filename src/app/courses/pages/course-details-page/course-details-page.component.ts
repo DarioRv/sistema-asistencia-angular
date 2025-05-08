@@ -6,9 +6,10 @@ import { Course } from '../../interfaces/course.interface';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-course-details-page',
-  templateUrl: './course-details-page.component.html',
-  styles: [],
+    selector: 'app-course-details-page',
+    templateUrl: './course-details-page.component.html',
+    styles: [],
+    standalone: false
 })
 export class CourseDetailsPageComponent implements OnInit, OnDestroy {
   public course!: Course;

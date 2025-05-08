@@ -7,15 +7,16 @@ import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { AuthUser } from '../../interfaces/auth-user.interface';
 
 @Component({
-  selector: 'auth-sign-in',
-  templateUrl: './sign-in-page.component.html',
-  styles: [
-    `
+    selector: 'auth-sign-in',
+    templateUrl: './sign-in-page.component.html',
+    styles: [
+        `
       .sign-in {
         min-height: calc(100vh - 64px);
       }
     `,
-  ],
+    ],
+    standalone: false
 })
 export class SignInPageComponent {
   signInForm: FormGroup;

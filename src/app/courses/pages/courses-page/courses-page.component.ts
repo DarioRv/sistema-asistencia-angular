@@ -5,10 +5,10 @@ import { AuthenticationService } from 'src/app/auth/services/auth.service';
 import { RequestStatus } from 'src/app/shared/types/request-status.type';
 
 @Component({
-  selector: 'app-courses-page',
-  templateUrl: './courses-page.component.html',
-  styles: [
-    `
+    selector: 'app-courses-page',
+    templateUrl: './courses-page.component.html',
+    styles: [
+        `
       .courses-list,
       .loading-layout {
         display: grid;
@@ -16,7 +16,8 @@ import { RequestStatus } from 'src/app/shared/types/request-status.type';
         grid-gap: 1rem;
       }
     `,
-  ],
+    ],
+    standalone: false
 })
 export class CoursesPageComponent implements OnInit {
   public courses: Course[] = [];

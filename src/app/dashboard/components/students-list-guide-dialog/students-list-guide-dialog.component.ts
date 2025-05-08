@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  selector: 'students-list-guide-dialog',
-  templateUrl: './students-list-guide-dialog.component.html',
-  styles: [],
+    selector: 'students-list-guide-dialog',
+    templateUrl: './students-list-guide-dialog.component.html',
+    styles: [],
+    standalone: false
 })
 export class StudentsListGuideDialogComponent {
   constructor(

@@ -5,9 +5,10 @@ import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'class-schedule-list',
-  templateUrl: './class-schedule-list.component.html',
-  styles: [],
+    selector: 'class-schedule-list',
+    templateUrl: './class-schedule-list.component.html',
+    styles: [],
+    standalone: false
 })
 export class ClassScheduleListComponent implements OnInit, OnDestroy {
   @Input({ required: true })

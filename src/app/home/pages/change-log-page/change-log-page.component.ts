@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { ChangeLogItem } from '../../interfaces/change-log-item.interface';
 
 @Component({
-  selector: 'app-change-log-page',
-  templateUrl: './change-log-page.component.html',
-  styles: [
-  ]
+    selector: 'app-change-log-page',
+    templateUrl: './change-log-page.component.html',
+    styles: [],
+    standalone: false
 })
 export class ChangeLogPageComponent {
   changeLogItems: ChangeLogItem[] = [

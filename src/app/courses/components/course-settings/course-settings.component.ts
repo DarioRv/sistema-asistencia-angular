@@ -4,10 +4,11 @@ import { MessageService } from 'primeng/api';
 import { Course } from '../../interfaces/course.interface';
 
 @Component({
-  selector: 'course-settings',
-  templateUrl: './course-settings.component.html',
-  styles: [],
-  providers: [[MessageService]],
+    selector: 'course-settings',
+    templateUrl: './course-settings.component.html',
+    styles: [],
+    providers: [[MessageService]],
+    standalone: false
 })
 export class CourseSettingsComponent {
   @Input({ alias: 'courseData', required: true })

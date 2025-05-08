@@ -9,9 +9,10 @@ import { debounceTime, Subject, Subscription } from 'rxjs';
 import { RequestStatus } from 'src/app/shared/types/request-status.type';
 
 @Component({
-  selector: 'course-search-box',
-  templateUrl: './search-box.component.html',
-  styles: [],
+    selector: 'course-search-box',
+    templateUrl: './search-box.component.html',
+    styles: [],
+    standalone: false
 })
 export class SearchBoxComponent implements OnInit, OnDestroy {
   private debouncer: Subject<string> = new Subject<string>();

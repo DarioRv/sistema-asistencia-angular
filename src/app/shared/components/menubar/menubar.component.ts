@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { MenuItem } from '../../interfaces/menu-item.interface';
 
 @Component({
-  selector: 'shared-menubar',
-  templateUrl: './menubar.component.html',
-  styles: [],
+    selector: 'shared-menubar',
+    templateUrl: './menubar.component.html',
+    styles: [],
+    standalone: false
 })
 export class MenubarComponent implements OnInit {
   public items?: MenuItem[];

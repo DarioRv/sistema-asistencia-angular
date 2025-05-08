@@ -9,9 +9,10 @@ import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { ClassScheduleService } from '../../services/class-schedule.service';
 
 @Component({
-  selector: 'schedule-form',
-  templateUrl: './schedule-form.component.html',
-  styles: [],
+    selector: 'schedule-form',
+    templateUrl: './schedule-form.component.html',
+    styles: [],
+    standalone: false
 })
 export class ScheduleFormComponent implements AfterViewInit {
   @Input({ required: true })

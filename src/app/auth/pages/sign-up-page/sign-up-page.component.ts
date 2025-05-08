@@ -6,15 +6,16 @@ import { RegisterUser } from '../../interfaces/register-user.interface';
 import { PasswordValidators } from '../../validators/password-validators';
 
 @Component({
-  selector: 'auth-sign-up',
-  templateUrl: './sign-up-page.component.html',
-  styles: [
-    `
+    selector: 'auth-sign-up',
+    templateUrl: './sign-up-page.component.html',
+    styles: [
+        `
       .sign-up {
         min-height: calc(100vh - 64px);
       }
     `,
-  ],
+    ],
+    standalone: false
 })
 export class SignUpPageComponent implements AfterViewInit {
   hide = true;

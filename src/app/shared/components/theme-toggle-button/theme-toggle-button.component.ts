@@ -8,9 +8,10 @@ const themeMode = {
 };
 
 @Component({
-  selector: 'shared-theme-toggle-button',
-  templateUrl: './theme-toggle-button.component.html',
-  styles: [],
+    selector: 'shared-theme-toggle-button',
+    templateUrl: './theme-toggle-button.component.html',
+    styles: [],
+    standalone: false
 })
 export class ThemeToggleButtonComponent implements OnInit {
   @Input()

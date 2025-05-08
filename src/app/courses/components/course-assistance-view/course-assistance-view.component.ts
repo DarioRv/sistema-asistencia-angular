@@ -4,9 +4,10 @@ import { AttendanceService } from '../../services/attendance.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 
 @Component({
-  selector: 'course-assistance-view',
-  templateUrl: './course-assistance-view.component.html',
-  styles: [],
+    selector: 'course-assistance-view',
+    templateUrl: './course-assistance-view.component.html',
+    styles: [],
+    standalone: false
 })
 export class CourseAssistanceViewComponent {
   @Input({ required: true, alias: 'courseData' })

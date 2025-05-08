@@ -6,9 +6,10 @@ import { UpdatePasswordRequest } from '../../interfaces/update-password-request.
 import { PasswordValidators } from 'src/app/auth/validators/password-validators';
 
 @Component({
-  selector: 'password-update-form',
-  templateUrl: './password-update-form.component.html',
-  styles: [],
+    selector: 'password-update-form',
+    templateUrl: './password-update-form.component.html',
+    styles: [],
+    standalone: false
 })
 export class PasswordUpdateFormComponent {
   updatePasswordForm = this.formBuilder.group({

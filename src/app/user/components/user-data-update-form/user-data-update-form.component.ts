@@ -6,10 +6,10 @@ import { AuthenticationService } from 'src/app/auth/services/auth.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 
 @Component({
-  selector: 'user-data-update-form',
-  templateUrl: './user-data-update-form.component.html',
-  styles: [
-  ]
+    selector: 'user-data-update-form',
+    templateUrl: './user-data-update-form.component.html',
+    styles: [],
+    standalone: false
 })
 export class UserDataUpdateFormComponent implements OnInit {
   userData = this.formBuilder.group({

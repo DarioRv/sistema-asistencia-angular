@@ -4,9 +4,9 @@ import { AuthenticationService } from '../../services/auth.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 
 @Component({
-  templateUrl: './forgot-password-page.component.html',
-  styles: [
-  ]
+    templateUrl: './forgot-password-page.component.html',
+    styles: [],
+    standalone: false
 })
 export class ForgotPasswordPageComponent {
   email: FormControl = new FormControl('', [Validators.required, Validators.email]);

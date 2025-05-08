@@ -16,9 +16,10 @@ import { RequestStatus } from 'src/app/shared/types/request-status.type';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'course-student-list',
-  templateUrl: './student-list.component.html',
-  styles: [],
+    selector: 'course-student-list',
+    templateUrl: './student-list.component.html',
+    styles: [],
+    standalone: false
 })
 export class StudentListComponent
   implements AfterViewInit, OnInit, OnChanges, OnDestroy

@@ -5,10 +5,10 @@ import { AttendanceGuideDialogComponent } from '../../components/attendance-guid
 import { StudentsListGuideDialogComponent } from '../../components/students-list-guide-dialog/students-list-guide-dialog.component';
 
 @Component({
-  selector: 'dashboard-home-page',
-  templateUrl: './home-page.component.html',
-  styles: [
-    `
+    selector: 'dashboard-home-page',
+    templateUrl: './home-page.component.html',
+    styles: [
+        `
       .guias {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -29,7 +29,8 @@ import { StudentsListGuideDialogComponent } from '../../components/students-list
         border: 1px solid #5457cd;
       }
     `,
-  ],
+    ],
+    standalone: false
 })
 export class HomePageComponent {
   public introduction: boolean = false;

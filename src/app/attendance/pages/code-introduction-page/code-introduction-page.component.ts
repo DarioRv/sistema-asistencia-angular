@@ -6,9 +6,10 @@ import { AttendanceService } from '../../services/attendance.service';
 import { SnackbarService } from '../../../../app/shared/services/snackbar.service';
 
 @Component({
-  selector: 'code-introduction-page',
-  templateUrl: './code-introduction-page.component.html',
-  styles: [],
+    selector: 'code-introduction-page',
+    templateUrl: './code-introduction-page.component.html',
+    styles: [],
+    standalone: false
 })
 export class CodeIntroductionPageComponent {
   form = this.formBuilder.group({

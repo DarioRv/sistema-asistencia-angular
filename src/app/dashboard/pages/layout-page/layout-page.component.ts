@@ -8,9 +8,10 @@ import { AuthenticationService } from 'src/app/auth/services/auth.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 
 @Component({
-  selector: 'dashboard-layout-page',
-  templateUrl: './layout-page.component.html',
-  styleUrls: [],
+    selector: 'dashboard-layout-page',
+    templateUrl: './layout-page.component.html',
+    styleUrls: [],
+    standalone: false
 })
 export class LayoutPageComponent implements OnInit, OnDestroy {
   public sidebarItems = [

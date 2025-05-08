@@ -3,9 +3,10 @@ import { AttendanceService } from '../../services/attendance.service';
 import { PlainAttendance } from '../../interfaces/plain-attendance.interface';
 
 @Component({
-  selector: 'app-attendance-history-page',
-  templateUrl: './attendance-history-page.component.html',
-  styles: [],
+    selector: 'app-attendance-history-page',
+    templateUrl: './attendance-history-page.component.html',
+    styles: [],
+    standalone: false
 })
 export class AttendanceHistoryPageComponent implements OnInit {
   attendanceHistory: PlainAttendance[] = [];

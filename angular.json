@@ -59,17 +59,17 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "sistema-asistencia:build"
+            "buildTarget": "sistema-asistencia:build"
           }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "development": {
-              "browserTarget": "sistema-asistencia:build:development"
+              "buildTarget": "sistema-asistencia:build:development"
             },
             "production": {
-              "browserTarget": "sistema-asistencia:build:production"
+              "buildTarget": "sistema-asistencia:build:production"
             }
           },
           "defaultConfiguration": "development"

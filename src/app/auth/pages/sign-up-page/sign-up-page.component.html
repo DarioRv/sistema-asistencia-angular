@@ -36,7 +36,7 @@
             <mat-error *ngIf="password?.hasError('required')">Es necesaria la contraseña</mat-error>
             <mat-error *ngIf="password?.hasError('containsLetters')">La contraseña debe incluir letras</mat-error>
             <mat-error *ngIf="password?.hasError('containsCapitalLetter')">La contraseña debe incluir una letra mayúscula</mat-error>
-            <mat-error *ngIf="password?.hasError('containsSpecialCharacters')">La contraseña debe incluir caracteres especiales: @#!$&</mat-error>
+            <mat-error *ngIf="password?.hasError('containsSpecialCharacters')">La contraseña debe incluir caracteres especiales: &#64;#!$&</mat-error>
             <mat-error *ngIf="password?.hasError('minlength')">La contraseña debe 6 caracteres o más</mat-error>
           </mat-form-field>
         </div>

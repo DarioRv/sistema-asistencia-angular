@@ -5,12 +5,14 @@ import { environment } from 'src/environments/environment';
 import { AttendanceDataResponse } from '../interfaces/attendance-data-response.interface';
 import * as moment from 'moment';
 import { AttendanceHistoryResponse } from '../interfaces/attendance-history-response.interface';
+import { ApiResponse } from '../../core/api-response.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AttendanceService {
-  private baseUrl: string = environment.API_URL;
+  private readonly baseUrl: string = environment.API_URL;
+  private readonly attendancePaths = environment.apiEndpoints.attendance;
 
   constructor(private htpp: HttpClient) {}
 
@@ -22,27 +24,30 @@ export class AttendanceService {
   getStudentsAttendance(
     courseId: string
   ): Observable<Array<Array<boolean | string>>> {
-    const url = `${this.baseUrl}/asistencias/obtenerAsistenciasPorCursoYPeriodo`;
+    const url = `${this.baseUrl}/${this.attendancePaths.getManyByCourseIdAndDate}`;
     const params = {
       idCurso: courseId,
       fechaInicio: moment().format('DD/MM/YYYY'),
       fechaFin: moment().format('DD/MM/YYYY'),
     };
 
-    return this.htpp.get<AttendanceDataResponse>(url, { params: params }).pipe(
-      map(({ asistencias }) => asistencias),
-      catchError((err) => throwError(() => err))
-    );
+    return this.htpp
+      .get<ApiResponse<AttendanceDataResponse>>(url, { params: params })
+      .pipe(
+        map(({ data }) => data.asistencias),
+        catchError((err) => throwError(() => err))
+      );
   }
 
   downloadStudentsAttendance(courseId: string): Observable<Blob> {
-    const url = `${this.baseUrl}/asistencias/obtenerAsistenciasPorCursoYPeriodo/excel`;
+    const url = `${this.baseUrl}/${this.attendancePaths.generateAttendanceExcelByCourseIdAndDate}`;
     const params = {
       idCurso: courseId,
       fechaInicio: moment().format('DD/MM/YYYY'),
       fechaFin: moment().format('DD/MM/YYYY'),
     };
     return this.htpp.request('get', url, { params, responseType: 'blob' }).pipe(
+      // TODO: REVISAR RESPONSE
       map((resp) => resp),
       catchError((err) => throwError(() => err))
     );
@@ -53,7 +58,7 @@ export class AttendanceService {
     dateOne: string,
     dateTwo: string
   ): Observable<Array<string[]>> {
-    const url = `${this.baseUrl}/asistencias/obtenerAsistenciasPorCursoYPeriodo`;
+    const url = `${this.baseUrl}/${this.attendancePaths.getManyByCourseIdAndDate}`;
     const params = {
       idCurso: courseId,
       fechaInicio: moment(dateOne).format('DD/MM/YYYY'),
@@ -61,8 +66,8 @@ export class AttendanceService {
     };
 
     return this.htpp
-      .get<AttendanceHistoryResponse>(url, { params })
-      .pipe(map((resp) => resp.asistencias));
+      .get<ApiResponse<AttendanceHistoryResponse>>(url, { params })
+      .pipe(map((resp) => resp.data.asistencias));
   }
 
   downloadAttendaceHistory(
@@ -70,7 +75,7 @@ export class AttendanceService {
     dateOne: string,
     dateTwo: string
   ): Observable<Blob> {
-    const url = `${this.baseUrl}/asistencias/obtenerAsistenciasPorCursoYPeriodo/excel`;
+    const url = `${this.baseUrl}/${this.attendancePaths.generateAttendanceExcelByCourseIdAndDate}`;
     const params = {
       idCurso: courseId,
       fechaInicio: moment(dateOne).format('DD/MM/YYYY'),
@@ -78,6 +83,7 @@ export class AttendanceService {
     };
 
     return this.htpp.request('get', url, { params, responseType: 'blob' }).pipe(
+      // TODO: REVISAR RESPONSE
       map((resp) => resp),
       catchError((err) => throwError(() => err))
     );

@@ -11,12 +11,15 @@ import {
   RegisterAttendanceResponse,
 } from '../interfaces/register-attendance-response.interface';
 import { PlainAttendance } from '../interfaces/plain-attendance.interface';
+import { ApiResponse } from '../../core/api-response.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AttendanceService {
-  public baseUrl: string = `${environment.API_URL}`;
+  private readonly baseUrl: string = `${environment.API_URL}`;
+  private readonly attendancePaths = environment.apiEndpoints.attendance;
+  private readonly coursesPaths = environment.apiEndpoints.course;
 
   constructor(private http: HttpClient) {}
 
@@ -27,11 +30,11 @@ export class AttendanceService {
    */
   findCourseByCode(code: string): Observable<Course> {
     return this.http
-      .get<CoursesDataResponse>(
-        `${this.baseUrl}/cursos/codigo-asistencia/${code}`
+      .get<ApiResponse<CoursesDataResponse>>(
+        `${this.baseUrl}/${this.coursesPaths.getOneByAttendanceCode}/${code}`
       )
       .pipe(
-        map((resp) => resp.curso),
+        map((resp) => resp.data.curso),
         catchError((err) => throwError(() => err))
       );
   }
@@ -42,12 +45,12 @@ export class AttendanceService {
    */
   registerAttendance(attendance: RegisterAttendance): Observable<Attendance> {
     return this.http
-      .post<RegisterAttendanceResponse>(
-        `${this.baseUrl}/asistencias/registrar`,
+      .post<ApiResponse<RegisterAttendanceResponse>>(
+        `${this.baseUrl}/${this.attendancePaths.createOne}`,
         attendance
       )
       .pipe(
-        map((resp) => resp.asistencia),
+        map((resp) => resp.data.asistencia),
         catchError((err) => throwError(() => err))
       );
   }

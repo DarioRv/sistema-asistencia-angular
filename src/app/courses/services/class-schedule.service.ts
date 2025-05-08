@@ -13,12 +13,14 @@ import {
   throwError,
 } from 'rxjs';
 import { ClassScheduleGet } from '../interfaces/class-schedule-get.interface';
+import { ApiResponse } from 'src/app/core/api-response.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ClassScheduleService {
-  private baseUrl = `${environment.API_URL}/horarios`;
+  private readonly baseUrl = `${environment.API_URL}`;
+  private readonly schedulePaths = environment.apiEndpoints.schedule;
   private _currentClassSchedules$: BehaviorSubject<ClassScheduleGet[] | null> =
     new BehaviorSubject<ClassScheduleGet[] | null>(null);
   private _currentCourseId: string = '';
@@ -65,15 +67,17 @@ export class ClassScheduleService {
    * @returns The added class schedule
    */
   addClassSchedule(classSchedule: ClassSchedule): Observable<ClassScheduleGet> {
-    const url = `${this.baseUrl}/registrar`;
+    const url = `${this.baseUrl}/${this.schedulePaths.createOne}`;
 
-    return this.http.post<ScheduleDataResponse>(url, classSchedule).pipe(
-      map(({ horario }) => horario),
-      tap((horario) => {
-        this.updateCurrentClassSchedules();
-      }),
-      catchError((err) => throwError(() => err))
-    );
+    return this.http
+      .post<ApiResponse<ScheduleDataResponse>>(url, classSchedule)
+      .pipe(
+        map(({ data }) => data.horario),
+        tap((horario) => {
+          this.updateCurrentClassSchedules();
+        }),
+        catchError((err) => throwError(() => err))
+      );
   }
 
   /**
@@ -82,9 +86,9 @@ export class ClassScheduleService {
    * @returns The updated class schedule
    */
   deleteClassSchedule(classScheduleId: string): Observable<boolean> {
-    const url = `${this.baseUrl}/eliminar/${classScheduleId}`;
+    const url = `${this.baseUrl}/${this.schedulePaths.deleteOneById}/${classScheduleId}`;
 
-    return this.http.delete<ScheduleDataResponse>(url).pipe(
+    return this.http.delete<ApiResponse<ScheduleDataResponse>>(url).pipe(
       map(() => true),
       catchError(() => of(false))
     );
@@ -98,10 +102,10 @@ export class ClassScheduleService {
   getClassSchedulesByCourseId(
     courseId: string
   ): Observable<ClassScheduleGet[]> {
-    const url = `${this.baseUrl}/obtenerHorarios/${courseId}`;
+    const url = `${this.baseUrl}/${this.schedulePaths.getManyByCourseId}/${courseId}`;
 
-    return this.http.get<ScheduleDataResponse>(url).pipe(
-      map(({ horarios }) => horarios),
+    return this.http.get<ApiResponse<ScheduleDataResponse>>(url).pipe(
+      map(({ data }) => data.horarios),
       catchError(() => of([]))
     );
   }
@@ -112,10 +116,10 @@ export class ClassScheduleService {
    * @returns The class schedule obtained by id
    */
   getClassScheduleById(classScheduleId: string): Observable<ClassScheduleGet> {
-    const url = `${this.baseUrl}/obtenerHorario/${classScheduleId}`;
+    const url = `${this.baseUrl}/${this.schedulePaths.getOneById}/${classScheduleId}`;
 
-    return this.http.get<ScheduleDataResponse>(url).pipe(
-      map(({ horario }) => horario),
+    return this.http.get<ApiResponse<ScheduleDataResponse>>(url).pipe(
+      map(({ data }) => data.horario),
       catchError((err) => throwError(() => err))
     );
   }

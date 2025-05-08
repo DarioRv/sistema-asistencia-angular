@@ -9,12 +9,15 @@ import { RegisterUser } from '../interfaces/register-user.interface';
 import { AuthStatus } from '../enums/auth-status.enum';
 import { UserData } from '../interfaces/user-data.interface';
 import { LoginResponse } from '../interfaces/login-response.interface';
+import { ApiResponse } from '../../core/api-response.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
-  private baseUrl: string = environment.API_URL;
+  private readonly baseUrl: string = environment.API_URL;
+  private readonly authPaths = environment.apiEndpoints.auth;
+  private readonly userPaths = environment.apiEndpoints.user;
   private _currentUser = signal<UserData | null>(null);
   private _authStatus = signal<AuthStatus>(AuthStatus.notAuthenticated);
 
@@ -69,11 +72,11 @@ export class AuthenticationService {
    * @returns Observable of the authenticated user
    */
   authenticateUser(user: AuthUser): Observable<UserData> {
-    const url = `${this.baseUrl}/auth/login`;
+    const url = `${this.baseUrl}/${this.authPaths.login}`;
     const body = user;
-    return this.http.post<LoginResponse>(url, body).pipe(
+    return this.http.post<ApiResponse<LoginResponse>>(url, body).pipe(
       map((res) => {
-        const { usuario, token } = res;
+        const { usuario, token } = res.data;
         this.setAuthentication(usuario, token);
         return usuario;
       }),
@@ -87,7 +90,7 @@ export class AuthenticationService {
    * @returns Observable of the registered user or undefined if the user could not be registered
    */
   registerUser(user: RegisterUser): Observable<any> {
-    const url = `${this.baseUrl}/usuario/registro`;
+    const url = `${this.baseUrl}/${this.userPaths.register}`;
     const body = user;
     return this.http
       .post<any>(url, body)
@@ -101,8 +104,14 @@ export class AuthenticationService {
    */
   updateUser(user: User): Observable<User | undefined> {
     return this.http
-      .patch<User>(`${this.baseUrl}/users/${user.id}`, user)
-      .pipe(catchError((err) => of(undefined)));
+      .patch<ApiResponse<User>>(
+        `${this.baseUrl}/${this.userPaths.update}/${user.id}`,
+        user
+      ) //!TODO: revisar endpoint
+      .pipe(
+        map((res) => res.data),
+        catchError((err) => of(undefined))
+      );
   }
 
   /**
@@ -111,10 +120,13 @@ export class AuthenticationService {
    * @returns Observable of true if the user was deleted, false otherwise
    */
   deleteUserById(id: string): Observable<boolean> {
-    return this.http.delete(`${this.baseUrl}/users/${id}`).pipe(
-      map((resp) => true),
-      catchError((err) => of(false))
-    );
+    return this.http
+      .delete(`${this.baseUrl}/${this.userPaths.deleteWithCredentials}/${id}`)
+      .pipe(
+        //!TODO: revisar endpoint
+        map((resp) => true),
+        catchError((err) => of(false))
+      );
   }
 
   /**
@@ -196,7 +208,7 @@ export class AuthenticationService {
    * @returns Observable of true if the email was verified, error otherwise
    */
   verifyEmail(token: string): Observable<boolean> {
-    const url = `${this.baseUrl}/usuario/validar/${token}`;
+    const url = `${this.baseUrl}/${this.userPaths.validateEmail}/${token}`;
     return this.http.patch(url, token).pipe(
       map(() => true),
       catchError((err) => throwError(() => err))
@@ -209,8 +221,9 @@ export class AuthenticationService {
    * @returns Observable of true if the email was resent, error otherwise
    */
   resendVerificationEmail(email: string): Observable<boolean> {
-    const url = `${this.baseUrl}/usuario/reenviar-correo-confirmacion?correo=${email}`;
-    return this.http.request('POST', url).pipe(
+    const url = `${this.baseUrl}/${this.userPaths.resendVerificationEmail}`;
+    const params = { correo: email };
+    return this.http.request('POST', url, { params }).pipe(
       map(() => true),
       catchError((err) => throwError(() => err))
     );
@@ -222,15 +235,16 @@ export class AuthenticationService {
    * @returns Observable of true if the email was sent, error otherwise
    */
   forgotPassword(email: string): Observable<boolean> {
-    const url = `${this.baseUrl}/usuario/olvide-mi-contrasena?correo=${email}`;
-    return this.http.request('POST', url).pipe(
+    const url = `${this.baseUrl}/${this.userPaths.forgotPassword}`;
+    const params = { correo: email };
+    return this.http.request('POST', url, { params }).pipe(
       map(() => true),
       catchError((err) => throwError(() => err))
     );
   }
 
   resetPassword(token: string, password: string): Observable<boolean> {
-    const url = `${this.baseUrl}/usuario/cambiar-contrasena/${token}`;
+    const url = `${this.baseUrl}/${this.userPaths.resetPassword}/${token}`;
     const body = { contrasena: password };
     return this.http.patch(url, body).pipe(
       map(() => true),

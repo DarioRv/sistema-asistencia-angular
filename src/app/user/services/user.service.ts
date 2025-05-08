@@ -1,30 +1,33 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { catchError, map, Observable, throwError } from "rxjs";
-import { UpdatePasswordRequest } from "../interfaces/update-password-request.interface";
-import { environment } from "src/environments/environment";
-import { UpdateUserRequest } from "../interfaces/update-user-request.interface";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { catchError, map, Observable, throwError } from 'rxjs';
+import { UpdatePasswordRequest } from '../interfaces/update-password-request.interface';
+import { environment } from 'src/environments/environment';
+import { UpdateUserRequest } from '../interfaces/update-user-request.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
-  private baseUrl: string = environment.API_URL;
+  private readonly baseUrl: string = environment.API_URL;
+  private readonly userPaths = environment.apiEndpoints.user;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   /**
    * Method to change the user password
    * @param updatePasswordRequest The change password request
    * @returns Observable of true if the password was changed, false otherwise
    */
-  updatePassword(updatePasswordRequest: UpdatePasswordRequest): Observable<boolean> {
-    const url = `${this.baseUrl}/usuario/cambiar-contrasena-logueado`;
+  updatePassword(
+    updatePasswordRequest: UpdatePasswordRequest
+  ): Observable<boolean> {
+    const url = `${this.baseUrl}/${this.userPaths.changePassword}`;
     const body = updatePasswordRequest;
 
     return this.http.patch(url, body).pipe(
-      map( () => true ),
-      catchError( (err) => throwError( () => err) )
+      map(() => true),
+      catchError((err) => throwError(() => err))
     );
   }
 
@@ -35,12 +38,12 @@ export class UserService {
    * @returns Observable of true if the account was deleted, throws an error otherwise
    */
   deleteAccount(email: string, password: string): Observable<boolean> {
-    const url = `${this.baseUrl}/usuario/eliminar`;
+    const url = `${this.baseUrl}/${this.userPaths.deleteWithCredentials}`;
     const params = { correo: email, contrasena: password };
 
     return this.http.delete(url, { params }).pipe(
-      map( () => true ),
-      catchError( (err) => throwError( () => err) )
+      map(() => true),
+      catchError((err) => throwError(() => err))
     );
   }
 
@@ -50,12 +53,12 @@ export class UserService {
    * @returns Observable of true if the user was updated, throws an error otherwise
    */
   updateUser(userData: UpdateUserRequest): Observable<boolean> {
-    const url = `${this.baseUrl}/usuario/actualizar`;
+    const url = `${this.baseUrl}/${this.userPaths.update}`;
     const body = userData;
 
     return this.http.patch(url, body).pipe(
-      map( () => true ),
-      catchError( (err) => throwError( () => err) )
+      map(() => true),
+      catchError((err) => throwError(() => err))
     );
   }
 }

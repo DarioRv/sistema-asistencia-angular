@@ -12,12 +12,14 @@ import {
 import { StudentPost } from '../interfaces/student-post.interface';
 import { StudentDataResponse } from '../interfaces/student-data-response.interface';
 import { Student } from '../interfaces/student.interface';
+import { ApiResponse } from '../../core/api-response.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StudentService {
-  private baseUrl = environment.API_URL;
+  private readonly baseUrl = environment.API_URL;
+  private readonly studentPaths = environment.apiEndpoints.student;
   private _currentStudents$: BehaviorSubject<Student[]> = new BehaviorSubject<
     Student[]
   >([]);
@@ -45,9 +47,9 @@ export class StudentService {
    * @returns the students
    */
   getStudents(courseId: string): Observable<Student[]> {
-    const url = `${this.baseUrl}/estudiantes/curso/${courseId}`;
-    return this.htpp.get<StudentDataResponse>(url).pipe(
-      map(({ estudiantes }) => estudiantes),
+    const url = `${this.baseUrl}/${this.studentPaths.getManyByCourseId}/${courseId}`;
+    return this.htpp.get<ApiResponse<StudentDataResponse>>(url).pipe(
+      map(({ data }) => data.estudiantes),
       catchError((error) => throwError(() => error))
     );
   }
@@ -57,9 +59,9 @@ export class StudentService {
    * @param student the student
    */
   saveStudent(student: StudentPost): Observable<Student> {
-    const url = `${this.baseUrl}/estudiantes`;
-    return this.htpp.post<StudentDataResponse>(url, student).pipe(
-      map(({ estudiante }) => estudiante),
+    const url = `${this.baseUrl}/${this.studentPaths.createOne}`;
+    return this.htpp.post<ApiResponse<StudentDataResponse>>(url, student).pipe(
+      map(({ data }) => data.estudiante),
       catchError((error) => throwError(() => error))
     );
   }
@@ -69,9 +71,9 @@ export class StudentService {
    * @param students the students
    */
   saveStudents(students: StudentPost[]): Observable<Student[]> {
-    const url = `${this.baseUrl}/estudiantes/lista`;
-    return this.htpp.post<StudentDataResponse>(url, students).pipe(
-      map(({ estudiantes }) => estudiantes),
+    const url = `${this.baseUrl}/${this.studentPaths.createMany}`;
+    return this.htpp.post<ApiResponse<StudentDataResponse>>(url, students).pipe(
+      map(({ data }) => data.estudiantes),
       tap((students) => (this.currentStudents = students)),
       catchError((error) => throwError(() => error))
     );
@@ -83,9 +85,9 @@ export class StudentService {
    * @returns the student if found, throws an error otherwise
    */
   getStudentById(id: string): Observable<Student> {
-    const url = `${this.baseUrl}/estudiantes/id/${id}`;
-    return this.htpp.get<StudentDataResponse>(url).pipe(
-      map(({ estudiante }) => estudiante),
+    const url = `${this.baseUrl}/${this.studentPaths.getOneById}/${id}`;
+    return this.htpp.get<ApiResponse<StudentDataResponse>>(url).pipe(
+      map(({ data }) => data.estudiante),
       catchError((error) => throwError(() => error))
     );
   }
@@ -96,9 +98,9 @@ export class StudentService {
    * @returns the student if found, throws an error otherwise
    */
   getStudentByLu(lu: string): Observable<Student> {
-    const url = `${this.baseUrl}/estudiantes/lu/${lu}`;
-    return this.htpp.get<StudentDataResponse>(url).pipe(
-      map(({ estudiante }) => estudiante),
+    const url = `${this.baseUrl}/${this.studentPaths.getOneByLu}/${lu}`;
+    return this.htpp.get<ApiResponse<StudentDataResponse>>(url).pipe(
+      map(({ data }) => data.estudiante),
       catchError((error) => throwError(() => error))
     );
   }
@@ -110,9 +112,9 @@ export class StudentService {
    * @returns the student if found, throws an error otherwise
    */
   getStudentByLuAndCourseId(lu: string, courseId: string): Observable<Student> {
-    const url = `${this.baseUrl}/estudiantes/lu/${lu}?cursoId=${courseId}`;
-    return this.htpp.get<StudentDataResponse>(url).pipe(
-      map(({ estudiante }) => estudiante),
+    const url = `${this.baseUrl}/${this.studentPaths.getOneByLu}/${lu}?cursoId=${courseId}`;
+    return this.htpp.get<ApiResponse<StudentDataResponse>>(url).pipe(
+      map(({ data }) => data.estudiante),
       catchError((error) => throwError(() => error))
     );
   }
@@ -123,8 +125,8 @@ export class StudentService {
    * @returns true if the student was deleted, throws an error otherwise
    */
   deleteStudent(id: string): Observable<boolean> {
-    const url = `${this.baseUrl}/estudiantes/${id}`;
-    return this.htpp.delete<StudentDataResponse>(url).pipe(
+    const url = `${this.baseUrl}/${this.studentPaths.deleteOneById}/${id}`;
+    return this.htpp.delete<ApiResponse<StudentDataResponse>>(url).pipe(
       map(() => true),
       catchError((error) => throwError(() => error))
     );
@@ -136,9 +138,9 @@ export class StudentService {
    * @returns true if the students were deleted, throws an error otherwise
    */
   deleteStudents(ids: string[]): Observable<boolean> {
-    const url = `${this.baseUrl}/estudiantes`;
+    const url = `${this.baseUrl}/${this.studentPaths.deleteManyByIds}`;
     return this.htpp
-      .request<StudentDataResponse>('delete', url, { body: ids })
+      .request<ApiResponse<StudentDataResponse>>('delete', url, { body: ids })
       .pipe(
         map(({ success }) => success),
         catchError((error) => throwError(() => error))

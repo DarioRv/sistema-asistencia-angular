@@ -14,12 +14,14 @@ import { Course } from '../interfaces/course.interface';
 import { CreateCourse } from '../interfaces/create-course.interface';
 import { CoursesDataResponse } from '../interfaces/courses-data-response.interface';
 import { attendanceCodeResponse } from '../interfaces/attendance-code-response.interface';
+import { ApiResponse } from '../../core/api-response.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CoursesDataService {
-  private baseUrl: string = environment.API_URL;
+  private readonly baseUrl: string = environment.API_URL;
+  private readonly coursePaths = environment.apiEndpoints.course;
   private _currentCourse: BehaviorSubject<Course | null> =
     new BehaviorSubject<Course | null>(null);
   public currentCourse$: Observable<Course | null> =
@@ -50,10 +52,10 @@ export class CoursesDataService {
    * @returns Observable of courses array, throws error if there is no data
    */
   getCourses(userId: string): Observable<Course[]> {
-    const url = `${this.baseUrl}/cursos/usuario/${userId}`;
+    const url = `${this.baseUrl}/${this.coursePaths.getManyByUserId}/${userId}`;
 
-    return this.http.get<CoursesDataResponse>(url).pipe(
-      map(({ cursos }) => cursos),
+    return this.http.get<ApiResponse<CoursesDataResponse>>(url).pipe(
+      map(({ data }) => data.cursos),
       catchError((err) => throwError(() => err))
     );
   }
@@ -64,12 +66,13 @@ export class CoursesDataService {
    * @returns Observable of course created if successful, throws error if there is an error
    */
   addCourse(course: CreateCourse): Observable<Course> {
-    const url = `${this.baseUrl}/cursos`;
+    const url = `${this.baseUrl}/${this.coursePaths.create}`;
     const body = course;
 
-    return this.http
-      .post<Course>(url, body)
-      .pipe(catchError((err) => throwError(() => err)));
+    return this.http.post<ApiResponse<Course>>(url, body).pipe(
+      map(({ data }) => data),
+      catchError((err) => throwError(() => err))
+    );
   }
 
   /**
@@ -78,11 +81,11 @@ export class CoursesDataService {
    * @returns Observable of course or undefined
    */
   updateCourse(course: Course): Observable<Course> {
-    const url = `${this.baseUrl}/cursos`;
+    const url = `${this.baseUrl}/${this.coursePaths.update}`;
     const body = course;
 
-    return this.http.patch<CoursesDataResponse>(url, body).pipe(
-      map(({ curso }) => curso),
+    return this.http.patch<ApiResponse<CoursesDataResponse>>(url, body).pipe(
+      map(({ data }) => data.curso),
       tap((curso) => this.setCurrentCourse(curso)),
       catchError((err) => throwError(() => err))
     );
@@ -94,10 +97,12 @@ export class CoursesDataService {
    * @returns Observable of true if the course was deleted, false otherwise
    */
   deleteCourseById(id: string): Observable<boolean> {
-    return this.http.delete(`${this.baseUrl}/cursos/${id}`).pipe(
-      map((resp) => true),
-      catchError((err) => of(false))
-    );
+    return this.http
+      .delete(`${this.baseUrl}/${this.coursePaths.deleteById}/${id}`)
+      .pipe(
+        map((resp) => true),
+        catchError((err) => of(false))
+      );
   }
 
   /**
@@ -106,10 +111,10 @@ export class CoursesDataService {
    * @returns Observable of course or undefined
    */
   findCourseById(id: string): Observable<Course> {
-    const url = `${this.baseUrl}/cursos/id/${id}`;
+    const url = `${this.baseUrl}/${this.coursePaths.getOneById}/${id}`;
 
-    return this.http.get<CoursesDataResponse>(url).pipe(
-      map(({ curso }) => curso),
+    return this.http.get<ApiResponse<CoursesDataResponse>>(url).pipe(
+      map(({ data }) => data.curso),
       catchError((err) => throwError(() => err))
     );
   }
@@ -120,16 +125,16 @@ export class CoursesDataService {
    * @returns Observable of courses array
    */
   getSuggestions(searchTerm: string, userId: string): Observable<Course[]> {
-    const url = `${this.baseUrl}/cursos/termino/${searchTerm}`;
+    const url = `${this.baseUrl}/${this.coursePaths.getManyByName}/${searchTerm}`;
 
     const queryParams = {
       usuarioId: userId,
     };
 
     return this.http
-      .get<CoursesDataResponse>(url, { params: queryParams })
+      .get<ApiResponse<CoursesDataResponse>>(url, { params: queryParams })
       .pipe(
-        map(({ cursos }) => cursos),
+        map(({ data }) => data.cursos),
         catchError((err) => throwError(() => err))
       );
   }
@@ -140,11 +145,12 @@ export class CoursesDataService {
    * @returns Observable of the new attendance code
    */
   findCourseByAttendanceCode(attendanceCode: string): Observable<Course> {
-    const url = `${this.baseUrl}/cursos/codigo-asistencia/${attendanceCode}`;
+    const url = `${this.baseUrl}/${this.coursePaths.getOneByAttendanceCode}/${attendanceCode}`;
 
-    return this.http
-      .get<Course>(url)
-      .pipe(catchError((err) => throwError(() => err)));
+    return this.http.get<ApiResponse<Course>>(url).pipe(
+      map(({ data }) => data),
+      catchError((err) => throwError(() => err))
+    );
   }
 
   /**
@@ -152,10 +158,10 @@ export class CoursesDataService {
    * @returns Observable of the new attendance code
    */
   generateAttendanceCode(): Observable<string> {
-    const url = `${this.baseUrl}/cursos/codigo-asistencia`;
+    const url = `${this.baseUrl}/${this.coursePaths.generateAttendanceCode}`;
 
-    return this.http.get<attendanceCodeResponse>(url).pipe(
-      map(({ codigoAsistencia }) => codigoAsistencia),
+    return this.http.get<ApiResponse<attendanceCodeResponse>>(url).pipe(
+      map(({ data }) => data.codigoAsistencia),
       catchError((err) => throwError(() => err))
     );
   }

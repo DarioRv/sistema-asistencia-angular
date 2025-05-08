@@ -5,15 +5,13 @@
     "sistema-asistencia": {
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "configurations": {
             "development": {
-              "buildOptimizer": false,
               "extractLicenses": false,
               "namedChunks": true,
               "optimization": false,
               "sourceMap": true,
-              "vendorChunk": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -41,8 +39,9 @@
           "options": {
             "assets": ["src/favicon.ico", "src/assets"],
             "index": "src/index.html",
-            "main": "src/main.ts",
-            "outputPath": "dist/sistema-asistencia",
+            "outputPath": {
+              "base": "dist/sistema-asistencia"
+            },
             "polyfills": ["zone.js"],
             "scripts": [],
             "styles": [
@@ -53,7 +52,11 @@
               "src/styles.css"
             ],
             "tsConfig": "tsconfig.app.json",
-            "allowedCommonJsDependencies": ["qrcode", "moment"]
+            "allowedCommonJsDependencies": [
+              "qrcode",
+              "moment"
+            ],
+            "browser": "src/main.ts"
           }
         },
         "extract-i18n": {

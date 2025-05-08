@@ -7,7 +7,7 @@ import { ClassScheduleService } from '../../../courses/services/class-schedule.s
 import { ClassScheduleGet } from '../../../../app/courses/interfaces/class-schedule-get.interface';
 import { SnackbarService } from '../../../../app/shared/services/snackbar.service';
 
-import * as moment from 'moment';
+import moment from 'moment';
 
 @Component({
   selector: 'register-attendance-page',

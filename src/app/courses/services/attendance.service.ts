@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, catchError, map, of, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AttendanceDataResponse } from '../interfaces/attendance-data-response.interface';
-import * as moment from 'moment';
+import moment from 'moment';
 import { AttendanceHistoryResponse } from '../interfaces/attendance-history-response.interface';
 
 @Injectable({

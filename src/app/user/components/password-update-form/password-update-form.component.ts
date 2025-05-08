@@ -1,15 +1,21 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Component, output } from '@angular/core';
+import { FormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationService } from 'src/app/auth/services/auth.service';
 import { UserService } from '../../services/user.service';
 import { UpdatePasswordRequest } from '../../interfaces/update-password-request.interface';
 import { PasswordValidators } from 'src/app/auth/validators/password-validators';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
     selector: 'password-update-form',
     templateUrl: './password-update-form.component.html',
     styles: [],
-    standalone: false
+    imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatIconButton, MatSuffix, MatIcon, MatError, MatButton, MatProgressSpinner]
 })
 export class PasswordUpdateFormComponent {
   updatePasswordForm = this.formBuilder.group({
@@ -33,8 +39,7 @@ export class PasswordUpdateFormComponent {
   hideNewPassword = true;
   hideConfirmPassword = true;
 
-  @Output()
-  statusEvent = new EventEmitter<'pending' | 'success' | 'fail' | 'error'>();
+  readonly statusEvent = output<'pending' | 'success' | 'fail' | 'error'>();
 
   constructor(
     private formBuilder: FormBuilder,

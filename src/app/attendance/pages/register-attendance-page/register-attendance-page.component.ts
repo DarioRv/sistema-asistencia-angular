@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 import { Course } from '../../../courses/interfaces/course.interface';
 import { AttendanceService } from '../../services/attendance.service';
@@ -9,11 +9,16 @@ import { SnackbarService } from '../../../../app/shared/services/snackbar.servic
 
 import moment from 'moment';
 
+import { LoaderComponent } from '../../../shared/components/loader/loader.component';
+import { MatIcon } from '@angular/material/icon';
+import { MatTooltip } from '@angular/material/tooltip';
+import { AttendanceFormComponent } from '../../components/attendance-form/attendance-form.component';
+
 @Component({
     selector: 'register-attendance-page',
     templateUrl: './register-attendance-page.component.html',
     styles: [],
-    standalone: false
+    imports: [LoaderComponent, MatIcon, MatTooltip, AttendanceFormComponent, RouterLink]
 })
 export class RegisterAttendancePageComponent implements OnInit {
   course: Course | undefined = undefined;

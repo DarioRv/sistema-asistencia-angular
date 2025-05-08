@@ -1,27 +1,28 @@
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Inject, input } from '@angular/core';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 import { RequestStatus } from 'src/app/shared/types/request-status.type';
 import { AttendanceService } from '../../services/attendance.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { DataRow } from '../../interfaces/data-row.interface';
 import { Course } from '../../interfaces/course.interface';
+import { MatFormField, MatLabel, MatHint, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+
+import { MatButton } from '@angular/material/button';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
     selector: 'course-attendance-history',
     templateUrl: './attendance-history.component.html',
     styleUrls: ['./attendance-history.component.css'],
-    standalone: false
+    imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatDatepickerInput, MatHint, MatDatepickerToggle, MatSuffix, MatDatepicker, MatError, MatButton, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow]
 })
 export class AttendanceHistoryComponent {
-  @Input({ required: true })
-  course!: Course;
+  readonly course = input.required<Course>();
   historialForm: FormGroup = this.fb.group({
     dateOne: ['', [Validators.required]],
     dateTwo: ['', [Validators.required]],
@@ -56,7 +57,7 @@ export class AttendanceHistoryComponent {
     }
 
     this.getAttendanceHistory(
-      this.course.id,
+      this.course().id,
       this.dateOne.value,
       this.dateTwo.value
     );
@@ -111,7 +112,7 @@ export class AttendanceHistoryComponent {
 
     this.attendanceService
       .downloadAttendaceHistory(
-        this.course.id,
+        this.course().id,
         this.dateOne.value,
         this.dateTwo.value
       )
@@ -121,7 +122,7 @@ export class AttendanceHistoryComponent {
           const link = document.createElement('a');
           link.href = fileUrl;
           link.setAttribute('style', 'display: none');
-          link.download = `asistencia-${this.course.nombre}.xlsx`;
+          link.download = `asistencia-${this.course().nombre}.xlsx`;
           link.click();
           window.URL.revokeObjectURL(fileUrl);
           link.remove();

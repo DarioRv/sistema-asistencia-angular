@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
+import { MenubarComponent } from '../../../shared/components/menubar/menubar.component';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
     selector: 'home-layout-page',
     templateUrl: './layout-page.component.html',
     styles: [],
-    standalone: false
+    imports: [MenubarComponent, RouterOutlet]
 })
 export class LayoutPageComponent {
 

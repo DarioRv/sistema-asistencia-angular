@@ -1,12 +1,13 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
+import { ClassScheduleListComponent } from '../class-schedule-list/class-schedule-list.component';
+import { ScheduleFormComponent } from '../schedule-form/schedule-form.component';
 
 @Component({
     selector: 'class-schedule',
     templateUrl: './class-schedule.component.html',
     styles: [],
-    standalone: false
+    imports: [ClassScheduleListComponent, ScheduleFormComponent]
 })
 export class ClassScheduleComponent {
-  @Input({ required: true })
-  courseId!: string;
+  readonly courseId = input.required<string>();
 }

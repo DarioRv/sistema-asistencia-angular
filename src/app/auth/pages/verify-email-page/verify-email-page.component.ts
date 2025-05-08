@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AuthenticationService } from '../../services/auth.service';
+
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { EmailResendFormComponent } from '../../components/email-resend-form/email-resend-form.component';
 
 @Component({
     templateUrl: './verify-email-page.component.html',
     styles: [],
-    standalone: false
+    imports: [RouterLink, MatProgressSpinner, EmailResendFormComponent]
 })
 export class VerifyEmailPageComponent implements OnInit {
 

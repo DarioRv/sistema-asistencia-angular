@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CoursesDataService } from '../../services/courses-data.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs';
@@ -7,12 +7,17 @@ import { Course } from '../../interfaces/course.interface';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { CreateCourse } from '../../interfaces/create-course.interface';
 import { AuthenticationService } from 'src/app/auth/services/auth.service';
+import { MatFormField, MatLabel, MatHint, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+
+import { MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
     selector: 'app-course-form-page',
     templateUrl: './course-form-page.component.html',
     styles: [],
-    standalone: false
+    imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatHint, MatError, MatButton, MatIcon]
 })
 export class CourseFormPageComponent {
   courseForm: FormGroup = new FormGroup({

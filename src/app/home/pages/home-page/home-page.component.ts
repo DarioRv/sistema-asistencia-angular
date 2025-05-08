@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { Step } from '../../interfaces/step.interface';
+import { RouterLink } from '@angular/router';
+
+import { StepCardComponent } from '../../components/step-card/step-card.component';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
     selector: 'app-home-page',
@@ -7,7 +11,7 @@ import { Step } from '../../interfaces/step.interface';
     styleUrls: [
         './home-page.component.css'
     ],
-    standalone: false
+    imports: [RouterLink, StepCardComponent, MatIcon]
 })
 export class HomePageComponent {
   benefitsItems = [

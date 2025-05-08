@@ -1,11 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
     selector: 'shared-loader',
     templateUrl: './loader.component.html',
-    styleUrls: ['./loader.component.css'],
-    standalone: false
+    styleUrls: ['./loader.component.css']
 })
 export class LoaderComponent {
-  @Input() size: string = '30px';
+  readonly size = input<string>('30px');
 }

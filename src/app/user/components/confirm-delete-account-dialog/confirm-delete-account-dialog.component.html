@@ -9,13 +9,21 @@
       <button type="button" mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
         <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
       </button>
-      <mat-error *ngIf="password.hasError('required')">La contraseña es requerida</mat-error>
-      <mat-error *ngIf="password.hasError('incorrect')">La contraseña es incorrecta</mat-error>
+      @if (password.hasError('required')) {
+        <mat-error>La contraseña es requerida</mat-error>
+      }
+      @if (password.hasError('incorrect')) {
+        <mat-error>La contraseña es incorrecta</mat-error>
+      }
     </mat-form-field>
-    <div class="flex gap-3" *ngIf="!loading">
-      <button type="button" mat-button color="warn" (click)="onConfirm()">Estoy seguro de eliminar mi cuenta</button>
-      <button type="button" mat-flat-button color="primary" cdkFocusInitial (click)="onNoClick()">Conservar mi cuenta</button>
-    </div>
-    <mat-spinner class="block size-6 mx-auto" *ngIf="loading"></mat-spinner>
+    @if (!loading) {
+      <div class="flex gap-3">
+        <button type="button" mat-button color="warn" (click)="onConfirm()">Estoy seguro de eliminar mi cuenta</button>
+        <button type="button" mat-flat-button color="primary" cdkFocusInitial (click)="onNoClick()">Conservar mi cuenta</button>
+      </div>
+    }
+    @if (loading) {
+      <mat-spinner class="block size-6 mx-auto"></mat-spinner>
+    }
   </form>
 </mat-dialog-content>

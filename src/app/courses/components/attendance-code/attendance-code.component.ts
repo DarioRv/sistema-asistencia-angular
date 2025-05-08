@@ -1,19 +1,21 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { Course } from '../../interfaces/course.interface';
 import { environment } from 'src/environments/environment';
 import { CoursesDataService } from '../../services/courses-data.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { switchMap } from 'rxjs';
 
+import { MatButton } from '@angular/material/button';
+import { QrCodeComponent } from 'ng-qrcode';
+
 @Component({
     selector: 'course-attendance-code',
     templateUrl: './attendance-code.component.html',
     styles: [],
-    standalone: false
+    imports: [MatButton, QrCodeComponent]
 })
 export class AttendanceCodeComponent {
-  @Input({ required: true })
-  course!: Course;
+  readonly course = input.required<Course>();
 
   qrCodeUrl: string = '';
   seeQRCode: boolean = false;
@@ -32,7 +34,7 @@ export class AttendanceCodeComponent {
       .pipe(
         switchMap((attendanceCode) => {
           return this.courseDataService.updateCourse({
-            ...this.course,
+            ...this.course(),
             codigoAsistencia: attendanceCode,
           });
         })
@@ -53,7 +55,7 @@ export class AttendanceCodeComponent {
    * Shows the QR code
    */
   showQRCode(): void {
-    this.qrCodeUrl = `${environment.API_URL}/attendance/code/${this.course.codigoAsistencia}`;
+    this.qrCodeUrl = `${environment.API_URL}/attendance/code/${this.course().codigoAsistencia}`;
     this.seeQRCode = !this.seeQRCode;
   }
 }

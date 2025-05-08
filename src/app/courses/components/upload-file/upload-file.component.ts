@@ -1,22 +1,26 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { CsvReaderService } from '../../services/csv-reader.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { StudentService } from '../../services/student.service';
 import { StudentPost } from '../../interfaces/student-post.interface';
+import { DragAndDropDirective } from '../../directives/drag-and-drop.directive';
+import { NgClass } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
     selector: 'upload-csv-file',
     templateUrl: './upload-file.component.html',
     styles: [],
-    standalone: false
+    imports: [DragAndDropDirective, NgClass, MatIcon, MatIconButton, MatTooltip, MatButton]
 })
 export class UploadFileComponent {
   acceptedFileType: string = '.csv';
   maxFileSize: number = 1_048_576; // 1MB
   errors: string[] = [];
   selectedFile?: File | null;
-  @Input({ required: true })
-  courseId!: string;
+  readonly courseId = input.required<string>();
 
   constructor(
     private csvReader: CsvReaderService,
@@ -152,7 +156,7 @@ export class UploadFileComponent {
       (student) =>
         ({
           ...student,
-          cursoId: this.courseId,
+          cursoId: this.courseId(),
         } as StudentPost)
     );
   }

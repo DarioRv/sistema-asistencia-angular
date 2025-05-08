@@ -1,9 +1,15 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AfterViewInit, Component, ElementRef, viewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationService } from '../../services/auth.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { RegisterUser } from '../../interfaces/register-user.interface';
 import { PasswordValidators } from '../../validators/password-validators';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'auth-sign-up',
@@ -15,13 +21,12 @@ import { PasswordValidators } from '../../validators/password-validators';
       }
     `,
     ],
-    standalone: false
+    imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatError, MatIconButton, MatSuffix, MatIcon, MatButton, RouterLink]
 })
 export class SignUpPageComponent implements AfterViewInit {
   hide = true;
   isSubmitting: boolean = false;
-  @ViewChild('alert')
-  verifyEmailAlert?: ElementRef;
+  readonly verifyEmailAlert = viewChild<ElementRef>('alert');
 
   public signUpForm: FormGroup = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
@@ -142,13 +147,13 @@ export class SignUpPageComponent implements AfterViewInit {
    * Shows the verify email alert
    */
   showVerifyEmailAlert(): void {
-    this.verifyEmailAlert?.nativeElement.classList.remove('hidden');
+    this.verifyEmailAlert()?.nativeElement.classList.remove('hidden');
   }
 
   /**
    * Hides the verify email alert
    */
   hideVerifyEmailAlert(): void {
-    this.verifyEmailAlert?.nativeElement.classList.add('hidden');
+    this.verifyEmailAlert()?.nativeElement.classList.add('hidden');
   }
 }

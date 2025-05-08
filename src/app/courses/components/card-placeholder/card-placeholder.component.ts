@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
+import { Skeleton } from 'primeng/skeleton';
 
 @Component({
     selector: 'card-placeholder',
     templateUrl: './card-placeholder.component.html',
     styles: [],
-    standalone: false
+    imports: [Skeleton]
 })
 export class CardPlaceholderComponent {
 

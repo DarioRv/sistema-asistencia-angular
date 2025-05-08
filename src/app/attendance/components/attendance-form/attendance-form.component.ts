@@ -1,20 +1,22 @@
-import { Component, Input } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Component, input } from '@angular/core';
+import { FormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { RegisterAttendance } from '../../interfaces/register-attendance.interface';
 import { AttendanceService } from '../../services/attendance.service';
 import { Attendance } from '../../interfaces/register-attendance-response.interface';
 import { PlainAttendance } from '../../interfaces/plain-attendance.interface';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
 
 @Component({
     selector: 'attendance-form',
     templateUrl: './attendance-form.component.html',
     styleUrls: ['./attendance-form.component.css'],
-    standalone: false
+    imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatError]
 })
 export class AttendanceFormComponent {
-  @Input({ required: true }) attendanceCode!: string;
-  @Input({ required: true }) courseName!: string;
+  readonly attendanceCode = input.required<string>();
+  readonly courseName = input.required<string>();
   attendanceForm = this.fb.group({
     lu: new FormControl('', Validators.required),
   });
@@ -37,7 +39,7 @@ export class AttendanceFormComponent {
 
     const attendance: RegisterAttendance = {
       lu: this.lu.value,
-      codigoAsistencia: this.attendanceCode,
+      codigoAsistencia: this.attendanceCode(),
     };
     this.registerAttendance(attendance);
   }
@@ -61,7 +63,7 @@ export class AttendanceFormComponent {
   saveAttendanceToLocalStorage(attendance: Attendance): void {
     const plainAttendance: PlainAttendance = {
       lu: attendance.estudiante.lu,
-      courseName: this.courseName,
+      courseName: this.courseName(),
       date: attendance.fecha,
     };
 

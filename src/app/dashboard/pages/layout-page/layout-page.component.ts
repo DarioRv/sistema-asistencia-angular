@@ -1,17 +1,23 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatDrawerMode } from '@angular/material/sidenav';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { MatDrawerMode, MatSidenavContainer, MatSidenav } from '@angular/material/sidenav';
+import { ActivatedRoute, NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { filter, map, Subscription } from 'rxjs';
 
 import { AuthenticationService } from 'src/app/auth/services/auth.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { NgStyle, NgClass } from '@angular/common';
+import { MatToolbar } from '@angular/material/toolbar';
+import { MatNavList, MatListItem, MatListItemIcon, MatDivider } from '@angular/material/list';
+import { MatIcon } from '@angular/material/icon';
+import { MatIconButton } from '@angular/material/button';
+import { UserMenuComponent } from '../../../user/components/user-menu/user-menu.component';
 
 @Component({
     selector: 'dashboard-layout-page',
     templateUrl: './layout-page.component.html',
     styleUrls: [],
-    standalone: false
+    imports: [MatSidenavContainer, MatSidenav, NgStyle, MatToolbar, NgClass, MatNavList, MatListItem, RouterLink, MatIcon, MatListItemIcon, MatDivider, MatIconButton, UserMenuComponent, RouterOutlet]
 })
 export class LayoutPageComponent implements OnInit, OnDestroy {
   public sidebarItems = [

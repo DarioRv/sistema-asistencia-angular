@@ -1,31 +1,36 @@
 import {
   AfterViewInit,
   Component,
-  Input,
   OnChanges,
   OnDestroy,
   OnInit,
-  ViewChild,
+  input,
+  viewChild
 } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatNoDataRow } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { Student } from '../../interfaces/student.interface';
 import { StudentService } from '../../services/student.service';
 import { RequestStatus } from 'src/app/shared/types/request-status.type';
 import { Subscription } from 'rxjs';
+import { NgSwitch, NgSwitchCase, NgIf } from '@angular/common';
+import { MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
 
 @Component({
     selector: 'course-student-list',
     templateUrl: './student-list.component.html',
     styles: [],
-    standalone: false
+    imports: [NgSwitch, MatButton, MatIcon, NgSwitchCase, MatProgressSpinner, MatFormField, MatLabel, MatInput, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatNoDataRow, NgIf, MatPaginator]
 })
 export class StudentListComponent
   implements AfterViewInit, OnInit, OnChanges, OnDestroy
 {
-  @Input({ required: true })
-  public courseId: string = '';
+  public readonly courseId = input.required<string>();
   public students: Student[] = [];
 
   displayedColumns: string[] = ['lu', 'fullname'];
@@ -33,8 +38,8 @@ export class StudentListComponent
 
   private subscription$: Subscription = new Subscription();
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  readonly paginator = viewChild.required(MatPaginator);
+  readonly sort = viewChild.required(MatSort);
 
   public status: RequestStatus = 'pending';
 
@@ -47,8 +52,8 @@ export class StudentListComponent
 
   setDataSource(students: Student[]) {
     this.dataSource = new MatTableDataSource(students);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator();
+    this.dataSource.sort = this.sort();
   }
 
   ngAfterViewInit() {
@@ -77,7 +82,7 @@ export class StudentListComponent
    * Method to get the students for the course
    */
   getStudents() {
-    this.studentService.getStudents(this.courseId).subscribe({
+    this.studentService.getStudents(this.courseId()).subscribe({
       next: (students) => {
         this.students = students;
         this.setDataSource(students);

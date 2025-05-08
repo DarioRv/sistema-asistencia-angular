@@ -16,8 +16,8 @@ import { CardPlaceholderComponent } from './components/card-placeholder/card-pla
 import { TablePlaceholderComponent } from './components/table-placeholder/table-placeholder.component';
 import { TabGroupPlaceholderComponent } from './components/tab-group-placeholder/tab-group-placeholder.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule } from '../material/material.module';
-import { PrimeNgModule } from '../prime-ng/prime-ng.module';
+
+
 import { SharedModule } from '../shared/shared.module';
 import { CourseFormPageComponent } from './pages/course-form-page/course-form-page.component';
 import { UploadFileComponent } from './components/upload-file/upload-file.component';
@@ -30,7 +30,12 @@ import { AttendanceCodeComponent } from './components/attendance-code/attendance
 import { AttendanceHistoryComponent } from './components/attendance-history/attendance-history.component';
 
 @NgModule({
-  declarations: [
+    imports: [
+    CommonModule,
+    CoursesRoutingModule,
+    ReactiveFormsModule,
+    SharedModule,
+    QrCodeModule,
     CoursesPageComponent,
     CourseCardComponent,
     CourseDetailsPageComponent,
@@ -51,15 +56,6 @@ import { AttendanceHistoryComponent } from './components/attendance-history/atte
     ClassScheduleListComponent,
     AttendanceCodeComponent,
     AttendanceHistoryComponent,
-  ],
-  imports: [
-    CommonModule,
-    CoursesRoutingModule,
-    ReactiveFormsModule,
-    MaterialModule,
-    PrimeNgModule,
-    SharedModule,
-    QrCodeModule,
-  ],
+],
 })
 export class CoursesModule {}

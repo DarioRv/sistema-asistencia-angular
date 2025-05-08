@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 import { UserData } from 'src/app/auth/interfaces/user-data.interface';
 import { AuthenticationService } from 'src/app/auth/services/auth.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { MatIconButton, MatMiniFabButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { ThemeToggleButtonComponent } from '../../../shared/components/theme-toggle-button/theme-toggle-button.component';
 
 @Component({
     selector: 'user-menu',
@@ -14,7 +17,7 @@ import { SnackbarService } from 'src/app/shared/services/snackbar.service';
       }
     `,
     ],
-    standalone: false
+    imports: [MatIconButton, MatIcon, MatMiniFabButton, ThemeToggleButtonComponent]
 })
 export class UserMenuComponent {
   user: UserData = this.authService.currentUser()!;

@@ -1,15 +1,21 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Component, OnInit, output } from '@angular/core';
+import { FormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { UpdateUserRequest } from '../../interfaces/update-user-request.interface';
 import { AuthenticationService } from 'src/app/auth/services/auth.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { MatFormField, MatLabel, MatHint, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+
+import { MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
     selector: 'user-data-update-form',
     templateUrl: './user-data-update-form.component.html',
     styles: [],
-    standalone: false
+    imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatHint, MatError, MatButton, MatIcon, MatProgressSpinner]
 })
 export class UserDataUpdateFormComponent implements OnInit {
   userData = this.formBuilder.group({
@@ -18,8 +24,7 @@ export class UserDataUpdateFormComponent implements OnInit {
   });
   isLoading: boolean = false;
 
-  @Output()
-  requestFinishedEvent = new EventEmitter<'success' | 'fail' | 'error'>();
+  readonly requestFinishedEvent = output<'success' | 'fail' | 'error'>();
 
   constructor(
     private formBuilder: FormBuilder,

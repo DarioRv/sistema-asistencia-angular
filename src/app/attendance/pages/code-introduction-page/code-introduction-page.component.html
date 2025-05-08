@@ -6,7 +6,9 @@
       <mat-form-field class="mt-5 w-full">
         <mat-label>Código de asistencia</mat-label>
         <input matInput type="text" placeholder="Ej: 03951A5j" formControlName="code">
-        <mat-error *ngIf="code.touched && code.hasError('required')">El campo es obligatorio.</mat-error>
+        @if (code.touched && code.hasError('required')) {
+          <mat-error>El campo es obligatorio.</mat-error>
+        }
       </mat-form-field>
       <div class="w-fit mx-auto">
         <button class="bg-core-primary text-white rounded px-3 py-2 transition-all hover:bg-core-primary-600 dark:bg-core-primary-400 dark:hover:bg-core-primary-200 dark:text-slate-900" type="submit" [disabled]="isLoading">
@@ -16,9 +18,11 @@
     </form>
   </div>
 
-  <div class="p-2 bg-core-secondary-100 text-core-secondary rounded w-fit mx-auto mb-5" *ngIf="courseNotFound">
-    <p class="font-bold text-center m-0">Lo sentimos, el código que has proporcionado es inválido.</p>
-  </div>
+  @if (courseNotFound) {
+    <div class="p-2 bg-core-secondary-100 text-core-secondary rounded w-fit mx-auto mb-5">
+      <p class="font-bold text-center m-0">Lo sentimos, el código que has proporcionado es inválido.</p>
+    </div>
+  }
 
   <a class="underline text-slate-400 block" routerLink="/attendance">Regresar al inicio</a>
 </section>

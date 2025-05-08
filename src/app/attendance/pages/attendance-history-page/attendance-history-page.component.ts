@@ -2,11 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { AttendanceService } from '../../services/attendance.service';
 import { PlainAttendance } from '../../interfaces/plain-attendance.interface';
 
+import { MatIcon } from '@angular/material/icon';
+import { RouterLink } from '@angular/router';
+
 @Component({
     selector: 'app-attendance-history-page',
     templateUrl: './attendance-history-page.component.html',
     styles: [],
-    standalone: false
+    imports: [MatIcon, RouterLink]
 })
 export class AttendanceHistoryPageComponent implements OnInit {
   attendanceHistory: PlainAttendance[] = [];

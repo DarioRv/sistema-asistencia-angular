@@ -7,42 +7,52 @@
         matInput
         placeholder="Ej: 10:00"
         formControlName="entrada"
-      />
-      <mat-error *ngIf="entrada.hasError('required')">
-        Seleccione un horario de entrada
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Horario salida</mat-label>
-      <input
-        type="time"
-        matInput
-        placeholder="Ej: 12:30"
-        formControlName="salida"
-      />
-      <mat-error *ngIf="salida.hasError('required')">
-        Seleccione un horario de salida
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Día</mat-label>
-      <mat-select formControlName="dia">
-        <mat-option [value]="day.value" *ngFor="let day of availableDays">
-          {{ day.label }}
-        </mat-option>
-      </mat-select>
-      <mat-error *ngIf="dia.hasError('required')">Seleccione un día</mat-error>
-    </mat-form-field>
-  </div>
-  <button
-    mat-flat-button
-    type="submit"
-    color="primary"
-    [disabled]="isLoading"
-    (click)="onSubmit()"
-  >
-    <mat-icon>save</mat-icon>
-    {{ isLoading ? "Guardando" : "Guardar" }}
-    <mat-spinner class="inline-block size-3" *ngIf="isLoading"></mat-spinner>
-  </button>
-</form>
+        />
+        @if (entrada.hasError('required')) {
+          <mat-error>
+            Seleccione un horario de entrada
+          </mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Horario salida</mat-label>
+        <input
+          type="time"
+          matInput
+          placeholder="Ej: 12:30"
+          formControlName="salida"
+          />
+          @if (salida.hasError('required')) {
+            <mat-error>
+              Seleccione un horario de salida
+            </mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Día</mat-label>
+          <mat-select formControlName="dia">
+            @for (day of availableDays; track day) {
+              <mat-option [value]="day.value">
+                {{ day.label }}
+              </mat-option>
+            }
+          </mat-select>
+          @if (dia.hasError('required')) {
+            <mat-error>Seleccione un día</mat-error>
+          }
+        </mat-form-field>
+      </div>
+      <button
+        mat-flat-button
+        type="submit"
+        color="primary"
+        [disabled]="isLoading"
+        (click)="onSubmit()"
+        >
+        <mat-icon>save</mat-icon>
+        {{ isLoading ? "Guardando" : "Guardar" }}
+        @if (isLoading) {
+          <mat-spinner class="inline-block size-3"></mat-spinner>
+        }
+      </button>
+    </form>

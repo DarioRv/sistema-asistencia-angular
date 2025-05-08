@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { Step } from '../../interfaces/step.interface';
 
 @Component({
@@ -10,9 +10,8 @@ import { Step } from '../../interfaces/step.interface';
       background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(30,50,100,1) 0%, rgba(104,53,123,1) 72%, rgba(201,57,154,1) 100%);
     }
     `
-    ],
-    standalone: false
+    ]
 })
 export class StepCardComponent {
-  @Input({required: true}) step!: Step;
+  readonly step = input.required<Step>();
 }

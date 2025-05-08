@@ -2,12 +2,12 @@
   <h2>Historial de asistencias</h2>
   <div
     class="bg-white rounded border-slate-400 shadow-xl p-3 dark:bg-slate-800"
-  >
+    >
     <form
       [formGroup]="historialForm"
       class="flex gap-3 items-center"
       (ngSubmit)="onSubmit()"
-    >
+      >
       <mat-form-field>
         <mat-label>Fecha inicial</mat-label>
         <input matInput [matDatepicker]="pickerOne" formControlName="dateOne" />
@@ -17,12 +17,16 @@
           [for]="pickerOne"
         ></mat-datepicker-toggle>
         <mat-datepicker #pickerOne></mat-datepicker>
-        <mat-error *ngIf="dateOne.hasError('required')">
-          Seleccione un día
-        </mat-error>
-        <mat-error *ngIf="dateOne.hasError('isbeforethan') && dateTwo.touched">
-          Debe ser una fecha anterior a la fecha final
-        </mat-error>
+        @if (dateOne.hasError('required')) {
+          <mat-error>
+            Seleccione un día
+          </mat-error>
+        }
+        @if (dateOne.hasError('isbeforethan') && dateTwo.touched) {
+          <mat-error>
+            Debe ser una fecha anterior a la fecha final
+          </mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>
@@ -34,12 +38,16 @@
           [for]="pickerTwo"
         ></mat-datepicker-toggle>
         <mat-datepicker #pickerTwo></mat-datepicker>
-        <mat-error *ngIf="dateTwo.hasError('required')">
-          Seleccione un día
-        </mat-error>
-        <mat-error *ngIf="dateTwo.hasError('isafterthan') && dateTwo.touched">
-          Debe ser una fecha posterior a la fecha inicial
-        </mat-error>
+        @if (dateTwo.hasError('required')) {
+          <mat-error>
+            Seleccione un día
+          </mat-error>
+        }
+        @if (dateTwo.hasError('isafterthan') && dateTwo.touched) {
+          <mat-error>
+            Debe ser una fecha posterior a la fecha inicial
+          </mat-error>
+        }
       </mat-form-field>
 
       <button mat-flat-button type="submit" color="primary">Buscar</button>
@@ -52,51 +60,55 @@
       matSort
       matSortActive="date"
       matSortDirection="desc"
-    >
-      <ng-container
-        *ngFor="let header of displayedColumns"
-        [matColumnDef]="header"
       >
-        <th
-          class="text-core-primary dark:text-core-primary-200 font-bold text-nowrap"
-          mat-header-cell
-          *matHeaderCellDef
-        >
-          {{ header }}
-        </th>
-        <td class="text-center" mat-cell *matCellDef="let element">
-          <mat-icon
-            class="text-green-500 dark:text-green-400"
-            *ngIf="isAnAttendance(element[header])"
-            >check_circle</mat-icon
+      @for (header of displayedColumns; track header) {
+        <ng-container
+          [matColumnDef]="header"
           >
-          <mat-icon
-            class="text-red-500 dark:text-red-400"
-            *ngIf="isAnAbsence(element[header])"
-            >cancel</mat-icon
-          >
-          <span
-            class="block text-start text-nowrap"
-            *ngIf="
-              !isAnAttendance(element[header]) && !isAnAbsence(element[header])
-            "
-          >
-            {{ element[header] }}
-          </span>
-        </td>
-      </ng-container>
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-    </table>
+          <th
+            class="text-core-primary dark:text-core-primary-200 font-bold text-nowrap"
+            mat-header-cell
+            *matHeaderCellDef
+            >
+            {{ header }}
+          </th>
+          <td class="text-center" mat-cell *matCellDef="let element">
+            @if (isAnAttendance(element[header])) {
+              <mat-icon
+                class="text-green-500 dark:text-green-400"
+                >check_circle</mat-icon
+                >
+              }
+              @if (isAnAbsence(element[header])) {
+                <mat-icon
+                  class="text-red-500 dark:text-red-400"
+                  >cancel</mat-icon
+                  >
+                }
+                @if (
+                  !isAnAttendance(element[header]) && !isAnAbsence(element[header])
+                  ) {
+                  <span
+                    class="block text-start text-nowrap"
+                    >
+                    {{ element[header] }}
+                  </span>
+                }
+              </td>
+            </ng-container>
+          }
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
 
-    <button
-      class="mt-4"
-      mat-button
-      color="primary"
-      (click)="downloadAttendaceHistory()"
-    >
-      <mat-icon>download_2</mat-icon>
-      Descargar planilla Excel
-    </button>
-  </div>
-</div>
+        <button
+          class="mt-4"
+          mat-button
+          color="primary"
+          (click)="downloadAttendaceHistory()"
+          >
+          <mat-icon>download_2</mat-icon>
+          Descargar planilla Excel
+        </button>
+      </div>
+    </div>

@@ -1,22 +1,24 @@
-import { AfterViewInit, Component, Input } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { AfterViewInit, Component, input } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { ClassScheduleService } from '../../services/class-schedule.service';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
     selector: 'schedule-form',
     templateUrl: './schedule-form.component.html',
     styles: [],
-    standalone: false
+    imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatError, MatSelect, MatOption, MatButton, MatIcon, MatProgressSpinner]
 })
 export class ScheduleFormComponent implements AfterViewInit {
-  @Input({ required: true })
-  courseId!: string;
+  readonly courseId = input.required<string>();
 
   scheduleForm: FormGroup = this.fb.group({
     cursoId: ['', Validators.required],
@@ -56,7 +58,7 @@ export class ScheduleFormComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.scheduleForm.patchValue({ cursoId: this.courseId });
+    this.scheduleForm.patchValue({ cursoId: this.courseId() });
   }
 
   onSubmit(): void {
@@ -71,7 +73,7 @@ export class ScheduleFormComponent implements AfterViewInit {
       next: () => {
         this.snackbarService.showSnackbar('Horario agregado correctamente');
         this.scheduleForm.reset();
-        this.scheduleForm.patchValue({ cursoId: this.courseId });
+        this.scheduleForm.patchValue({ cursoId: this.courseId() });
         this.scheduleForm.markAsPristine();
         this.scheduleForm.markAsUntouched();
         this.isLoading = false;

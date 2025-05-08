@@ -2,17 +2,21 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Course } from '../../interfaces/course.interface';
 import { CoursesDataService } from '../../services/courses-data.service';
 import { Router } from '@angular/router';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { FormControl } from '@angular/forms';
+import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger, MatAutocomplete, MatOption } from '@angular/material/autocomplete';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationService } from 'src/app/auth/services/auth.service';
 import { debounceTime, Subject, Subscription } from 'rxjs';
 import { RequestStatus } from 'src/app/shared/types/request-status.type';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
     selector: 'course-search-box',
     templateUrl: './search-box.component.html',
     styles: [],
-    standalone: false
+    imports: [MatFormField, MatLabel, MatInput, ReactiveFormsModule, MatAutocompleteTrigger, MatAutocomplete, MatOption, MatProgressSpinner]
 })
 export class SearchBoxComponent implements OnInit, OnDestroy {
   private debouncer: Subject<string> = new Subject<string>();

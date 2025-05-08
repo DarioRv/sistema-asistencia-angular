@@ -1,15 +1,18 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 
 import { AttendanceService } from '../../services/attendance.service';
 import { SnackbarService } from '../../../../app/shared/services/snackbar.service';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+
 
 @Component({
     selector: 'code-introduction-page',
     templateUrl: './code-introduction-page.component.html',
     styles: [],
-    standalone: false
+    imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatError, RouterLink]
 })
 export class CodeIntroductionPageComponent {
   form = this.formBuilder.group({

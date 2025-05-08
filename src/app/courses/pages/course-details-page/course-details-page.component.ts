@@ -5,11 +5,18 @@ import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { Course } from '../../interfaces/course.interface';
 import { Subscription } from 'rxjs';
 
+import { TabGroupPlaceholderComponent } from '../../components/tab-group-placeholder/tab-group-placeholder.component';
+import { MatTabGroup, MatTab } from '@angular/material/tabs';
+import { StudentListComponent } from '../../components/student-list/student-list.component';
+import { CourseAssistanceViewComponent } from '../../components/course-assistance-view/course-assistance-view.component';
+import { CourseSettingsComponent } from '../../components/course-settings/course-settings.component';
+import { AttendanceHistoryComponent } from '../../components/attendance-history/attendance-history.component';
+
 @Component({
     selector: 'app-course-details-page',
     templateUrl: './course-details-page.component.html',
     styles: [],
-    standalone: false
+    imports: [TabGroupPlaceholderComponent, MatTabGroup, MatTab, StudentListComponent, CourseAssistanceViewComponent, CourseSettingsComponent, AttendanceHistoryComponent]
 })
 export class CourseDetailsPageComponent implements OnInit, OnDestroy {
   public course!: Course;

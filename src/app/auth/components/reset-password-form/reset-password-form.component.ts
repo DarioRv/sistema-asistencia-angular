@@ -1,23 +1,28 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, output } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { PasswordValidators } from '../../validators/password-validators';
 import { AuthenticationService } from '../../services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
     selector: 'reset-password-form',
     templateUrl: './reset-password-form.component.html',
     styles: [],
-    standalone: false
+    imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatIconButton, MatSuffix, MatIcon, MatError, MatButton, MatProgressSpinner]
 })
 export class ResetPasswordFormComponent implements OnInit {
   token: string = '';
   hidePasswordFieldOne = true;
   hidePasswordFieldTwo = true;
   isSubmitting: boolean = false;
-  @Output()
-  statusEvent = new EventEmitter<'success' | 'error' | 'fail' | 'pending'>();
+  readonly statusEvent = output<'success' | 'error' | 'fail' | 'pending'>();
 
   resetPasswordForm: FormGroup = this.formBuilder.group({
     passwordOne: ['', [Validators.required,

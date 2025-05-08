@@ -1,22 +1,25 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { Course } from '../../interfaces/course.interface';
 import { CoursesDataService } from '../../services/courses-data.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { filter, switchMap } from 'rxjs';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardContent, MatCardActions } from '@angular/material/card';
+import { MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 
 @Component({
     selector: 'dashboard-course-card',
     templateUrl: './course-card.component.html',
     styles: [],
-    standalone: false
+    imports: [MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardContent, MatCardActions, MatButton, RouterLink, MatIcon, MatMenuTrigger, MatMenu, MatMenuItem]
 })
 export class CourseCardComponent {
 
-  @Input({required: true})
-  public course!: Course;
+  public readonly course = input.required<Course>();
   public studentsMap = {
     '=0': 'Sin estudiantes',
     '=1': '1 estudiante',
@@ -35,7 +38,7 @@ export class CourseCardComponent {
       {
         data: {
           title: '¿Esta seguro?',
-          description: `Esta a punto de eliminar el curso ${this.course.nombre}`,
+          description: `Esta a punto de eliminar el curso ${this.course().nombre}`,
           confirmButtonText: 'Eliminar',
           cancelButtonText: 'Cancelar'
         }

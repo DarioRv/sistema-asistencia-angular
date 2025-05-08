@@ -1,13 +1,14 @@
 <section class="course-details flex flex-col">
-  <article class="loading-layout" *ngIf="isLoading; else courseDetails">
-    <tab-group-placeholder></tab-group-placeholder>
-  </article>
-  <ng-template #courseDetails>
+  @if (isLoading) {
+    <article class="loading-layout">
+      <tab-group-placeholder></tab-group-placeholder>
+    </article>
+  } @else {
     <h2>{{ course.nombre }}</h2>
     <article class="about">
       <div
         class="bg-white rounded border-slate-400 shadow-xl p-3 dark:bg-slate-800"
-      >
+        >
         <mat-tab-group>
           <mat-tab label="Alumnos">
             <course-student-list [courseId]="course.id"></course-student-list>
@@ -26,5 +27,5 @@
     <article>
       <course-attendance-history [course]="course"></course-attendance-history>
     </article>
-  </ng-template>
+  }
 </section>

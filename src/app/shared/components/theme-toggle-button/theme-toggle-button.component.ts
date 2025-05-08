@@ -1,4 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit, input } from '@angular/core';
+import { MatIcon } from '@angular/material/icon';
+import { NgClass } from '@angular/common';
 
 type Theme = 'light' | 'dark';
 
@@ -11,15 +13,12 @@ const themeMode = {
     selector: 'shared-theme-toggle-button',
     templateUrl: './theme-toggle-button.component.html',
     styles: [],
-    standalone: false
+    imports: [MatIcon, NgClass]
 })
 export class ThemeToggleButtonComponent implements OnInit {
-  @Input()
-  backgroundColor = 'bg-slate-200 dark:bg-slate-800';
-  @Input()
-  iconColor = 'text-slate-800 dark:text-slate-200';
-  @Input()
-  selectedIconColor = 'bg-slate-400 dark:bg-slate-500';
+  readonly backgroundColor = input('bg-slate-200 dark:bg-slate-800');
+  readonly iconColor = input('text-slate-800 dark:text-slate-200');
+  readonly selectedIconColor = input('bg-slate-400 dark:bg-slate-500');
 
   currentTheme: Theme = themeMode.light;
 

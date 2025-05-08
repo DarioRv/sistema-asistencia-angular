@@ -1,18 +1,19 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, input } from '@angular/core';
 import { ClassScheduleService } from '../../services/class-schedule.service';
 import { ClassScheduleGet } from '../../interfaces/class-schedule-get.interface';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { Subscription } from 'rxjs';
 
+import { MatTooltip } from '@angular/material/tooltip';
+
 @Component({
     selector: 'class-schedule-list',
     templateUrl: './class-schedule-list.component.html',
     styles: [],
-    standalone: false
+    imports: [MatTooltip]
 })
 export class ClassScheduleListComponent implements OnInit, OnDestroy {
-  @Input({ required: true })
-  courseId!: string;
+  readonly courseId = input.required<string>();
   schedules: ClassScheduleGet[] = [];
   subscription$: Subscription = new Subscription();
 
@@ -22,7 +23,7 @@ export class ClassScheduleListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.scheduleService.currentCourseId = this.courseId;
+    this.scheduleService.currentCourseId = this.courseId();
     this.getSchedules();
     this.subscribeToClassScheduleUpdates();
   }
@@ -31,7 +32,7 @@ export class ClassScheduleListComponent implements OnInit, OnDestroy {
    * Gets the class schedules
    */
   getSchedules(): void {
-    this.scheduleService.getClassSchedulesByCourseId(this.courseId).subscribe({
+    this.scheduleService.getClassSchedulesByCourseId(this.courseId()).subscribe({
       next: (schedules) => {
         this.schedules = schedules;
       },

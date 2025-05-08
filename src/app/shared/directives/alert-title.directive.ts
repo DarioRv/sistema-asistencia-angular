@@ -1,9 +1,6 @@
 import { Directive, ElementRef } from '@angular/core';
 
-@Directive({
-    selector: '[asistAlertTitle]',
-    standalone: false
-})
+@Directive({ selector: '[asistAlertTitle]' })
 export class AlertTitleDirective {
   constructor(private element: ElementRef) {
     const classes = this.element.nativeElement.getAttribute('class') || '';

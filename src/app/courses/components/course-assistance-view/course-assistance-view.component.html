@@ -1,8 +1,8 @@
 <div class="p-2">
-  <course-attendance-code [course]="course"></course-attendance-code>
+  <course-attendance-code [course]="course()"></course-attendance-code>
   <mat-divider></mat-divider>
   <div class="assistance-report my-3">
-    <course-attendance-list [courseId]="course.id"></course-attendance-list>
+    <course-attendance-list [courseId]="course().id"></course-attendance-list>
   </div>
   <mat-divider></mat-divider>
   <div class="actions my-3">

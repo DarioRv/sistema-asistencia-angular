@@ -3,6 +3,7 @@ import { GettingStartedGuideDialogComponent } from '../../components/getting-sta
 import { MatDialog } from '@angular/material/dialog';
 import { AttendanceGuideDialogComponent } from '../../components/attendance-guide-dialog/attendance-guide-dialog.component';
 import { StudentsListGuideDialogComponent } from '../../components/students-list-guide-dialog/students-list-guide-dialog.component';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
     selector: 'dashboard-home-page',
@@ -30,7 +31,7 @@ import { StudentsListGuideDialogComponent } from '../../components/students-list
       }
     `,
     ],
-    standalone: false
+    imports: [MatIcon]
 })
 export class HomePageComponent {
   public introduction: boolean = false;

@@ -38,8 +38,8 @@ export class StudentListComponent
 
   private subscription$: Subscription = new Subscription();
 
-  readonly paginator = viewChild.required(MatPaginator);
-  readonly sort = viewChild.required(MatSort);
+  readonly paginator = viewChild(MatPaginator);
+  readonly sort = viewChild(MatSort);
 
   public status: RequestStatus = 'pending';
 
@@ -52,8 +52,8 @@ export class StudentListComponent
 
   setDataSource(students: Student[]) {
     this.dataSource = new MatTableDataSource(students);
-    this.dataSource.paginator = this.paginator();
-    this.dataSource.sort = this.sort();
+    this.dataSource.paginator = this.paginator() || null;
+    this.dataSource.sort = this.sort() || null;
   }
 
   ngAfterViewInit() {

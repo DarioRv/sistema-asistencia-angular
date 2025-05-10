@@ -4,15 +4,14 @@ import { Router, RouterLink } from '@angular/router';
 
 import { AttendanceService } from '../../services/attendance.service';
 import { SnackbarService } from '../../../../app/shared/services/snackbar.service';
-import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
+import { MaterialModule } from '../../../material/material.module';
 
 
 @Component({
     selector: 'code-introduction-page',
     templateUrl: './code-introduction-page.component.html',
     styles: [],
-    imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatError, RouterLink]
+    imports: [ReactiveFormsModule, MaterialModule, RouterLink]
 })
 export class CodeIntroductionPageComponent {
   form = this.formBuilder.group({

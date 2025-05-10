@@ -7,19 +7,13 @@ import { AttendanceService } from '../../services/attendance.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { DataRow } from '../../interfaces/data-row.interface';
 import { Course } from '../../interfaces/course.interface';
-import { MatFormField, MatLabel, MatHint, MatSuffix, MatError } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
-
-import { MatButton } from '@angular/material/button';
-import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
-import { MatIcon } from '@angular/material/icon';
+import { MaterialModule } from '../../../material/material.module';
 
 @Component({
     selector: 'course-attendance-history',
     templateUrl: './attendance-history.component.html',
     styleUrls: ['./attendance-history.component.css'],
-    imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatDatepickerInput, MatHint, MatDatepickerToggle, MatSuffix, MatDatepicker, MatError, MatButton, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow]
+    imports: [ReactiveFormsModule, MaterialModule]
 })
 export class AttendanceHistoryComponent {
   readonly course = input.required<Course>();

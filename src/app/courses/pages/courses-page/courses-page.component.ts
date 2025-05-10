@@ -3,23 +3,22 @@ import { Course } from '../../interfaces/course.interface';
 import { CoursesDataService } from '../../services/courses-data.service';
 import { AuthenticationService } from 'src/app/auth/services/auth.service';
 import { RequestStatus } from 'src/app/shared/types/request-status.type';
-import { NgSwitch, NgSwitchCase, NgIf, NgFor } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { SearchBoxComponent } from '../../components/search-box/search-box.component';
-import { MatButton } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
-import { MatIcon } from '@angular/material/icon';
 import { CardPlaceholderComponent } from '../../components/card-placeholder/card-placeholder.component';
 import { AlertDirective } from '../../../shared/directives/alert.directive';
 import { AlertTitleDirective } from '../../../shared/directives/alert-title.directive';
 import { AlertDescriptionDirective } from '../../../shared/directives/alert-description.directive';
 import { CourseCardComponent } from '../../components/course-card/course-card.component';
 import { AlertErrorTitleDirective } from '../../../shared/directives/alert-error-title.directive';
+import { MaterialModule } from '../../../material/material.module';
 
 @Component({
-    selector: 'app-courses-page',
-    templateUrl: './courses-page.component.html',
-    styles: [
-        `
+  selector: 'app-courses-page',
+  templateUrl: './courses-page.component.html',
+  styles: [
+    `
       .courses-list,
       .loading-layout {
         display: grid;
@@ -27,8 +26,19 @@ import { AlertErrorTitleDirective } from '../../../shared/directives/alert-error
         grid-gap: 1rem;
       }
     `,
-    ],
-    imports: [NgSwitch, SearchBoxComponent, MatButton, RouterLink, MatIcon, NgSwitchCase, CardPlaceholderComponent, NgIf, AlertDirective, AlertTitleDirective, AlertDescriptionDirective, NgFor, CourseCardComponent, AlertErrorTitleDirective]
+  ],
+  imports: [
+    CommonModule,
+    SearchBoxComponent,
+    RouterLink,
+    CardPlaceholderComponent,
+    AlertDirective,
+    AlertTitleDirective,
+    AlertDescriptionDirective,
+    CourseCardComponent,
+    AlertErrorTitleDirective,
+    MaterialModule,
+  ],
 })
 export class CoursesPageComponent implements OnInit {
   public courses: Course[] = [];

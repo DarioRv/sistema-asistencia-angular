@@ -5,12 +5,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { AuthenticationService } from '../../services/auth.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { AuthUser } from '../../interfaces/auth-user.interface';
-import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-
-import { MatIconButton, MatButton } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
-import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MaterialModule } from '../../../material/material.module';
 
 @Component({
     selector: 'auth-sign-in',
@@ -22,7 +17,7 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
       }
     `,
     ],
-    imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatError, MatIconButton, MatSuffix, MatIcon, MatButton, MatProgressSpinner, RouterLink]
+    imports: [ReactiveFormsModule, MaterialModule, RouterLink]
 })
 export class SignInPageComponent {
   signInForm: FormGroup;

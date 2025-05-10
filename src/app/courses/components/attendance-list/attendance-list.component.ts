@@ -1,18 +1,14 @@
 import { Component, OnInit, input } from '@angular/core';
 import { AttendanceService } from '../../services/attendance.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
-import { MatButton } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
-import { MatTooltip } from '@angular/material/tooltip';
-
-import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { LoaderComponent } from '../../../shared/components/loader/loader.component';
+import { MaterialModule } from '../../../material/material.module';
 
 @Component({
     selector: 'course-attendance-list',
     templateUrl: './attendance-list.component.html',
     styles: [],
-    imports: [MatButton, MatIcon, MatTooltip, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, LoaderComponent]
+    imports: [LoaderComponent, MaterialModule]
 })
 export class AttendanceListComponent implements OnInit {
   readonly courseId = input.required<string>();

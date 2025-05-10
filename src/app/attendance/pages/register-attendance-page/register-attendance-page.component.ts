@@ -10,15 +10,14 @@ import { SnackbarService } from '../../../../app/shared/services/snackbar.servic
 import moment from 'moment';
 
 import { LoaderComponent } from '../../../shared/components/loader/loader.component';
-import { MatIcon } from '@angular/material/icon';
-import { MatTooltip } from '@angular/material/tooltip';
 import { AttendanceFormComponent } from '../../components/attendance-form/attendance-form.component';
+import { MaterialModule } from '../../../material/material.module';
 
 @Component({
     selector: 'register-attendance-page',
     templateUrl: './register-attendance-page.component.html',
     styles: [],
-    imports: [LoaderComponent, MatIcon, MatTooltip, AttendanceFormComponent, RouterLink]
+    imports: [LoaderComponent, MaterialModule, AttendanceFormComponent, RouterLink]
 })
 export class RegisterAttendancePageComponent implements OnInit {
   course: Course | undefined = undefined;

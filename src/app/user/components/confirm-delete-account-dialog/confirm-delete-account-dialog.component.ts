@@ -1,23 +1,17 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { UserService } from '../../services/user.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/auth/services/auth.service';
-import { CdkScrollable } from '@angular/cdk/scrolling';
-import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { MatIconButton, MatButton } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
-
-import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MaterialModule } from '../../../material/material.module';
 
 @Component({
     selector: 'app-confirm-delete-account-dialog',
     templateUrl: './confirm-delete-account-dialog.component.html',
     styles: [],
-    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatIconButton, MatSuffix, MatIcon, MatError, MatButton, MatProgressSpinner]
+    imports: [ReactiveFormsModule, MaterialModule]
 })
 export class ConfirmDeleteAccountDialogComponent {
   password: FormControl = new FormControl('', [Validators.required]);

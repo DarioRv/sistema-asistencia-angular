@@ -4,12 +4,8 @@ import { AuthenticationService } from '../../services/auth.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { RegisterUser } from '../../interfaces/register-user.interface';
 import { PasswordValidators } from '../../validators/password-validators';
-import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-
-import { MatIconButton, MatButton } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
+import { MaterialModule } from '../../../material/material.module';
 
 @Component({
     selector: 'auth-sign-up',
@@ -21,7 +17,7 @@ import { RouterLink } from '@angular/router';
       }
     `,
     ],
-    imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatError, MatIconButton, MatSuffix, MatIcon, MatButton, RouterLink]
+    imports: [ReactiveFormsModule, MaterialModule, RouterLink]
 })
 export class SignUpPageComponent implements AfterViewInit {
   hide = true;

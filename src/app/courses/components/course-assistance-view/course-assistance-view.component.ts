@@ -3,16 +3,14 @@ import { Course } from '../../interfaces/course.interface';
 import { AttendanceService } from '../../services/attendance.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { AttendanceCodeComponent } from '../attendance-code/attendance-code.component';
-import { MatDivider } from '@angular/material/list';
 import { AttendanceListComponent } from '../attendance-list/attendance-list.component';
-import { MatButton } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
+import { MaterialModule } from '../../../material/material.module';
 
 @Component({
     selector: 'course-assistance-view',
     templateUrl: './course-assistance-view.component.html',
     styles: [],
-    imports: [AttendanceCodeComponent, MatDivider, AttendanceListComponent, MatButton, MatIcon]
+    imports: [AttendanceCodeComponent, AttendanceListComponent, MaterialModule]
 })
 export class CourseAssistanceViewComponent {
   readonly course = input.required<Course>({ alias: "courseData" });

@@ -7,17 +7,13 @@ import { Course } from '../../interfaces/course.interface';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { CreateCourse } from '../../interfaces/create-course.interface';
 import { AuthenticationService } from 'src/app/auth/services/auth.service';
-import { MatFormField, MatLabel, MatHint, MatError } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-
-import { MatButton } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
+import { MaterialModule } from '../../../material/material.module';
 
 @Component({
     selector: 'app-course-form-page',
     templateUrl: './course-form-page.component.html',
     styles: [],
-    imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatHint, MatError, MatButton, MatIcon]
+    imports: [ReactiveFormsModule, MaterialModule]
 })
 export class CourseFormPageComponent {
   courseForm: FormGroup = new FormGroup({

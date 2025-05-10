@@ -6,11 +6,11 @@ import { Course } from '../../interfaces/course.interface';
 import { Subscription } from 'rxjs';
 
 import { TabGroupPlaceholderComponent } from '../../components/tab-group-placeholder/tab-group-placeholder.component';
-import { MatTabGroup, MatTab } from '@angular/material/tabs';
 import { StudentListComponent } from '../../components/student-list/student-list.component';
 import { CourseAssistanceViewComponent } from '../../components/course-assistance-view/course-assistance-view.component';
 import { CourseSettingsComponent } from '../../components/course-settings/course-settings.component';
 import { AttendanceHistoryComponent } from '../../components/attendance-history/attendance-history.component';
+import { MaterialModule } from '../../../material/material.module';
 
 @Component({
   selector: 'app-course-details-page',
@@ -18,12 +18,11 @@ import { AttendanceHistoryComponent } from '../../components/attendance-history/
   styles: [],
   imports: [
     TabGroupPlaceholderComponent,
-    MatTabGroup,
-    MatTab,
     StudentListComponent,
     CourseAssistanceViewComponent,
     CourseSettingsComponent,
     AttendanceHistoryComponent,
+    MaterialModule,
   ],
 })
 export class CourseDetailsPageComponent implements OnInit, OnDestroy {

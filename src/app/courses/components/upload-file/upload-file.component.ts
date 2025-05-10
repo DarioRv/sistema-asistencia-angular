@@ -3,17 +3,15 @@ import { CsvReaderService } from '../../services/csv-reader.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { StudentService } from '../../services/student.service';
 import { StudentPost } from '../../interfaces/student-post.interface';
-import { DragAndDropDirective } from '../../directives/drag-and-drop.directive';
 import { NgClass } from '@angular/common';
-import { MatIcon } from '@angular/material/icon';
-import { MatIconButton, MatButton } from '@angular/material/button';
-import { MatTooltip } from '@angular/material/tooltip';
+import { MaterialModule } from '../../../material/material.module';
+import { DragAndDropDirective } from '../../directives/drag-and-drop.directive';
 
 @Component({
     selector: 'upload-csv-file',
     templateUrl: './upload-file.component.html',
     styles: [],
-    imports: [DragAndDropDirective, NgClass, MatIcon, MatIconButton, MatTooltip, MatButton]
+    imports: [NgClass, DragAndDropDirective,MaterialModule]
 })
 export class UploadFileComponent {
   acceptedFileType: string = '.csv';

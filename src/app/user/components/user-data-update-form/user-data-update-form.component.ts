@@ -2,20 +2,15 @@ import { Component, OnInit, output } from '@angular/core';
 import { FormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { UpdateUserRequest } from '../../interfaces/update-user-request.interface';
-import { AuthenticationService } from 'src/app/auth/services/auth.service';
-import { SnackbarService } from 'src/app/shared/services/snackbar.service';
-import { MatFormField, MatLabel, MatHint, MatError } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-
-import { MatButton } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
-import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { AuthenticationService } from '../../../auth/services/auth.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { MaterialModule } from '../../../material/material.module';
 
 @Component({
     selector: 'user-data-update-form',
     templateUrl: './user-data-update-form.component.html',
     styles: [],
-    imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatHint, MatError, MatButton, MatIcon, MatProgressSpinner]
+    imports: [ReactiveFormsModule, MaterialModule]
 })
 export class UserDataUpdateFormComponent implements OnInit {
   userData = this.formBuilder.group({

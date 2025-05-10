@@ -5,15 +5,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { filter, switchMap } from 'rxjs';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
-import { MatList, MatListItem, MatDivider } from '@angular/material/list';
-import { MatButton } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
+import { MaterialModule } from '../../../material/material.module';
 
 @Component({
     selector: 'danger-zone-options',
     templateUrl: './danger-zone-options.component.html',
     styles: [],
-    imports: [MatList, MatListItem, MatButton, MatIcon, MatDivider]
+    imports: [MaterialModule]
 })
 export class DangerZoneOptionsComponent {
   readonly courseId = input.required<string>();

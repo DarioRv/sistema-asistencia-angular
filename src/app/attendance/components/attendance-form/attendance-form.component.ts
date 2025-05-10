@@ -4,15 +4,14 @@ import { RegisterAttendance } from '../../interfaces/register-attendance.interfa
 import { AttendanceService } from '../../services/attendance.service';
 import { Attendance } from '../../interfaces/register-attendance-response.interface';
 import { PlainAttendance } from '../../interfaces/plain-attendance.interface';
-import { SnackbarService } from 'src/app/shared/services/snackbar.service';
-import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { MaterialModule } from '../../../material/material.module';
 
 @Component({
     selector: 'attendance-form',
     templateUrl: './attendance-form.component.html',
     styleUrls: ['./attendance-form.component.css'],
-    imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatError]
+    imports: [ReactiveFormsModule, MaterialModule]
 })
 export class AttendanceFormComponent {
   readonly attendanceCode = input.required<string>();

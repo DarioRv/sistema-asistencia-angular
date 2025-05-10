@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from '../../interfaces/menu-item.interface';
 
-import { MatAnchor } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
-import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 import { ThemeToggleButtonComponent } from '../theme-toggle-button/theme-toggle-button.component';
+import { MaterialModule } from '../../../material/material.module';
 
 @Component({
     selector: 'shared-menubar',
     templateUrl: './menubar.component.html',
     styles: [],
-    imports: [MatAnchor, RouterLink, MatMenuTrigger, MatMenu, MatMenuItem, ThemeToggleButtonComponent]
+    imports: [MaterialModule, RouterLink, ThemeToggleButtonComponent]
 })
 export class MenubarComponent implements OnInit {
   public items?: MenuItem[];

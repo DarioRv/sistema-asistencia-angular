@@ -7,25 +7,21 @@ import {
   input,
   viewChild
 } from '@angular/core';
-import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatNoDataRow } from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { Student } from '../../interfaces/student.interface';
 import { StudentService } from '../../services/student.service';
 import { RequestStatus } from 'src/app/shared/types/request-status.type';
 import { Subscription } from 'rxjs';
-import { NgSwitch, NgSwitchCase, NgIf } from '@angular/common';
-import { MatButton } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
-import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
+import { NgSwitch, NgIf } from '@angular/common';
+import { MaterialModule } from '../../../material/material.module';
 
 @Component({
     selector: 'course-student-list',
     templateUrl: './student-list.component.html',
     styles: [],
-    imports: [NgSwitch, MatButton, MatIcon, NgSwitchCase, MatProgressSpinner, MatFormField, MatLabel, MatInput, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatNoDataRow, NgIf, MatPaginator]
+    imports: [NgSwitch, NgIf, MaterialModule]
 })
 export class StudentListComponent
   implements AfterViewInit, OnInit, OnChanges, OnDestroy

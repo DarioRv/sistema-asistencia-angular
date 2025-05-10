@@ -6,16 +6,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { filter, switchMap } from 'rxjs';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
-import { MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardContent, MatCardActions } from '@angular/material/card';
-import { MatButton } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
-import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MaterialModule } from '../../../material/material.module';
 
 @Component({
     selector: 'dashboard-course-card',
     templateUrl: './course-card.component.html',
     styles: [],
-    imports: [MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardContent, MatCardActions, MatButton, RouterLink, MatIcon, MatMenuTrigger, MatMenu, MatMenuItem]
+    imports: [RouterLink, MaterialModule]
 })
 export class CourseCardComponent {
 

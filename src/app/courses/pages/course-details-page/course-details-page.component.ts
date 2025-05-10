@@ -13,10 +13,18 @@ import { CourseSettingsComponent } from '../../components/course-settings/course
 import { AttendanceHistoryComponent } from '../../components/attendance-history/attendance-history.component';
 
 @Component({
-    selector: 'app-course-details-page',
-    templateUrl: './course-details-page.component.html',
-    styles: [],
-    imports: [TabGroupPlaceholderComponent, MatTabGroup, MatTab, StudentListComponent, CourseAssistanceViewComponent, CourseSettingsComponent, AttendanceHistoryComponent]
+  selector: 'app-course-details-page',
+  templateUrl: './course-details-page.component.html',
+  styles: [],
+  imports: [
+    TabGroupPlaceholderComponent,
+    MatTabGroup,
+    MatTab,
+    StudentListComponent,
+    CourseAssistanceViewComponent,
+    CourseSettingsComponent,
+    AttendanceHistoryComponent,
+  ],
 })
 export class CourseDetailsPageComponent implements OnInit, OnDestroy {
   public course!: Course;
@@ -42,14 +50,16 @@ export class CourseDetailsPageComponent implements OnInit, OnDestroy {
    * @param id course id
    */
   getCourse(id: string) {
-    this.coursesDataService.findCourseById(id).subscribe((course) => {
-      if (!course) {
-        this.snackbarService.showSnackbar('El curso no existe.');
-        this.redirectToCourseListPage();
-        return;
-      }
-      this.course = course;
-      this.isLoading = false;
+    this.coursesDataService.findCourseById(id).subscribe({
+      next: (course) => {
+        if (!course) {
+          this.snackbarService.showSnackbar('El curso no existe.');
+          this.redirectToCourseListPage();
+          return;
+        }
+        this.course = course;
+        this.isLoading = false;
+      },
     });
   }
 

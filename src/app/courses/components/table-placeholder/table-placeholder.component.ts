@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
-import { Skeleton } from 'primeng/skeleton';
 
 @Component({
-    selector: 'table-placeholder',
-    templateUrl: './table-placeholder.component.html',
-    styles: [],
-    imports: [Skeleton]
+  selector: 'table-placeholder',
+  templateUrl: './table-placeholder.component.html',
+  styles: [],
+  imports: [],
 })
-export class TablePlaceholderComponent {
-}
+export class TablePlaceholderComponent {}

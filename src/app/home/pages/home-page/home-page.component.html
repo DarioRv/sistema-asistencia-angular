@@ -1,83 +1,196 @@
-<section class="home container-limited">
-  <main>
-      <div class="flex flex-col items-center justify-center p-10 lg:p-24 bg-core-primary dark:bg-transparent dark:text-slate-400  text-white rounded-3xl">
-        <h1 class="text-4xl md:text-6xl lg:text-8xl font-semibold dark:text-core-primary-400">ASIST.IO</h1>
-        <p class="text-lg text-center text-balance xl:mx-96">Es la aplicación perfecta para profesores que quieren llevar un control de la asistencia de sus alumnos de una manera sencilla, rapida y eficiente.</p>
-        <a class="text-lg font-bold border-2 border-white p-3 rounded hover:bg-white hover:text-core-primary transition mt-1 dark:bg-slate-700 dark:text-white dark:border-0 dark:hover:bg-slate-600 dark:hover:text-white" routerLink="/auth/sign-up">Empezar a usar</a>
+<section class="home">
+  <main
+    class="grid grid-cols-1 md:grid-cols-2 justify-between items-center min-h-screen container-limited"
+  >
+    <div
+      class="space-y-6 flex flex-col items-center md:items-start text-center md:text-left"
+    >
+      <div
+        class="inline-block bg-core-primary/10 text-core-primary px-4 py-2 rounded-full text-sm font-medium"
+      >
+        Control de asistencia simplificado
       </div>
+      <h1 class="text-4xl md:text-6xl font-bold tracking-tight">
+        <span class="text-core-primary text-4xl md:text-6xl font-bold">
+          ASIST</span
+        >.IO
+      </h1>
+      <p class="text-xl text-muted-foreground max-w-md">
+        La aplicación perfecta para profesores que quieren llevar un control de
+        la asistencia de sus alumnos de una manera sencilla, rápida y eficiente.
+      </p>
+      <button
+        class="bg-core-primary hover:bg-core-primary-600 text-white py-3 px-6 rounded-md font-semibold text-lg"
+      >
+        Empezar a usar
+      </button>
+      <div class="flex flex-col md:flex-row gap-3 p-4 mb-4">
+        <div class="flex items-center gap-1">
+          <mat-icon class="text-core-primary">check_circle</mat-icon>
+          <span class="text-sm">Fácil de usar</span>
+        </div>
+        <div class="flex items-center gap-1">
+          <mat-icon class="text-core-primary">check_circle</mat-icon>
+          <span class="text-sm">Sin instalación</span>
+        </div>
+        <div class="flex items-center gap-1">
+          <mat-icon class="text-core-primary">check_circle</mat-icon>
+          <span class="text-sm">Accesible desde cualquier lugar</span>
+        </div>
+      </div>
+    </div>
+    <div class="relative">
+      <div
+        class="absolute -z-10 inset-0 bg-core-primary/10 rounded-3xl transform rotate-3"
+      ></div>
+      <div class="bg-core-primary rounded-3xl p-8 shadow-xl">
+        <div class="bg-white/10 p-6 rounded-2xl backdrop-blur-sm">
+          <div class="flex justify-between items-center gap-10 lg:gap-36 mb-6">
+            <h3 class="text-xl font-semibold text-white mb-0">
+              Clase: Matemáticas
+            </h3>
+            <span class="text-white/80 text-sm">Hoy, 10:30 AM</span>
+          </div>
+          <div class="space-y-4">
+            <div
+              class="flex items-center justify-between p-3 bg-white/5 rounded-lg"
+              *ngFor="let student of studentList"
+            >
+              <span class="text-white">{{ student.name }}</span>
+              <span
+                class="px-2 py-1 rounded-full text-xs"
+                [ngClass]="{
+                  'bg-green-500/20 text-green-200': student.present,
+                  'bg-red-500/20 text-red-200': !student.present
+                }"
+              >
+                {{ student.present ? "Presente" : "Ausente" }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
-  <article class="how-works min-h-screen">
-    <p class="text-core-secondary font-semibold text-center md:text-left">Asist.io llegó para facilitar tu clase a la hora de tomar asistencia.</p>
-    <h2 class="text-3xl md:text-5xl text-core-primary font-semibold mt-3 dark:text-core-primary-400 text-center md:text-left">¿Cómo funciona?</h2>
-    <p class="text-center xl:text-left xl:max-w-3xl dark:text-slate-400">
-      Creá tu curso, cargá la lista de estudiantes y generá el link de asistencia. Tus alumnos podrán registrar su asistencia introduciendo su libreta universitaria
-      en el formulario de asistencia. Al finalizar la clase podrás pedir el informe y descargarlo, el informe contiene la libreta universitaria, nombres y apellidos del alumno,
-      hora en la que se registró la asistencia y la fecha del informe.
-    </p>
-    <div class="fast-guide grid grid-cols-1 md:grid-cols-2 mx-auto mb-20 w-fit lg:grid-cols-4 gap-3">
-      <step-card class="max-w-xs mt-10 lg:max-w-full" [step]="step" *ngFor="let step of stepCardItems"></step-card>
-    </div>
-    <a class="bg-core-primary-100 hover:bg-core-primary-200 text-core-primary font-bold rounded-xl p-3 flex items-center w-fit mx-auto mb-8 lg:mx-0 lg:mb-0 dark:bg-slate-700 dark:text-white dark:hover:bg-slate-600" href="/app/manual">
-      Aprender más
-      <mat-icon>chevron_right</mat-icon>
-    </a>
-  </article>
-  <article class="benefits min-h-screen">
-    <p class="font-semibold text-core-primary text-center md:text-left">Lo mejor en un solo lugar.</p>
-    <h2 class="text-3xl md:text-5xl text-core-secondary font-semibold mt-3 dark:text-core-secondary-400 text-center md:text-left">Beneficios de usar ASIST.IO</h2>
-    <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-      <li class="bg-slate-100 flex items-center gap-2 dark:bg-slate-800" *ngFor="let benefit of benefitsItems">
-        <mat-icon class="text-green-500">{{ benefit.icon }}</mat-icon>
-        <span class="dark:text-white">{{ benefit.label }}</span>
-      </li>
-    </ul>
-    <div class="w-fit mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 lg:w-full gap-3 mt-8 pt-6">
-      <div class=" max-w-sm bg-slate-100 flex flex-col items-center rounded-3xl p-2 py-4 dark:bg-slate-800" *ngFor="let featBenefit of featureBenefits">
-        <mat-icon class="w-auto h-max text-5xl md:text-8xl text-core-primary">{{ featBenefit.icon }}</mat-icon>
-        <p class="text-xl md:text-2xl dark:text-white">{{ featBenefit.label }}</p>
+  <article class="py-20 bg-core-primary/5">
+    <div class="container-limited">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-core-primary text-3xl font-bold mb-4">
+          ¿Por qué elegir ASIST.IO?
+        </h2>
+        <p class="text-muted-foreground">
+          Diseñado específicamente para satisfacer las necesidades de los
+          educadores modernos
+        </p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div
+          class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700"
+          *ngFor="let feature of features"
+        >
+          <div
+            class="bg-core-primary/10 text-core-primary p-3 rounded-lg flex items-center justify-center w-fit mb-6"
+          >
+            <mat-icon class="text-5xl size-auto">
+              {{ feature.icon }}
+            </mat-icon>
+          </div>
+          <h3 class="text-xl text-black font-semibold mb-3">
+            {{ feature.title }}
+          </h3>
+          <p class="text-muted-foreground">{{ feature.description }}</p>
+        </div>
       </div>
     </div>
   </article>
-  <article class="get-started p-3 md:p-8 min-h-screen">
-    <div class="content">
-      <p class=" font-semibold text-core-secondary text-center md:text-left">Es simple.</p>
-      <h2 class="text-3xl md:text-5xl font-semibold text-core-primary mt-3 dark:text-core-primary-400 text-center md:text-left">¿Cómo empiezo?</h2>
-      <p>De manera rápida podes empezar siguiendo estos pasos:</p>
-      <div class="steper mt-8">
-        <div class="step flex flex-row gap-5">
-          <div class="icon flex flex-col items-center">
-            <div class="circle p-3 border-2 border-core-secondary size-8 rounded-full"></div>
-            <div class="line h-full w-[2px] bg-core-secondary"></div>
-          </div>
-          <div class="description">
-            <h3 class="text-base md:text-xl font-semibold dark:text-white">Crea tu cuenta</h3>
-            <p><a class="underline text-black dark:text-slate-300" routerLink="/auth/sign-up">Registrate</a> o <a class="underline text-black dark:text-slate-300" routerLink="/auth/sign-in">inicia sesión</a> para abrir el dashboard.</p>
+  <article class="py-20 container-limited">
+    <div class="container mx-auto px-4 md:px-6">
+      <div
+        class="bg-core-primary rounded-3xl p-8 md:p-12 text-center text-white"
+      >
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">
+          Comienza a usar ASIST.IO hoy mismo
+        </h2>
+        <p class="max-w-2xl mx-auto mb-8">
+          Únete a miles de educadores que ya están simplificando su gestión de
+          asistencia con nuestra plataforma
+        </p>
+        <a
+          class="bg-white text-core-primary px-4 py-3 rounded-md font-bold hover:bg-gray-100"
+          routerLink="/auth/sign-up"
+        >
+          Empezar gratis
+        </a>
+      </div>
+    </div>
+  </article>
+  <article class="py-20 bg-core-primary/5">
+    <div class="container mx-auto px-4 md:px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div class="order-2 md:order-1 relative">
+          <div
+            class="absolute -z-10 inset-0 bg-core-primary/10 rounded-3xl transform -rotate-3"
+          ></div>
+          <div class="bg-core-primary rounded-3xl p-8 shadow-xl">
+            <div class="bg-white/10 p-6 rounded-2xl backdrop-blur-sm">
+              <div
+                class="bg-white/15 text-white font-semibold text-xl p-3 rounded-full w-fit mb-20 mx-auto -rotate-45 origin-center mt-20"
+              >
+                Proximamente
+              </div>
+            </div>
           </div>
         </div>
-        <div class="step flex flex-row gap-5">
-          <div class="icon flex flex-col items-center">
-            <div class="circle p-3 border-2 border-core-secondary size-8 rounded-full"></div>
-            <div class="line h-full w-[2px] bg-core-secondary"></div>
+        <div class="order-1 md:order-2 space-y-6">
+          <div
+            class="bg-core-primary w-fit text-white rounded-full border px-2.5 py-0.5 text-xs font-semibold hover:bg-primary/80"
+          >
+            App Móvil
           </div>
-          <div class="description">
-            <h3 class="text-base md:text-xl font-semibold dark:text-white">Leé las guías</h3>
-            <p>Podrás encontrar diferentes guías para que te familiarices con el sistema.</p>
-          </div>
-        </div>
-        <div class="step flex flex-row gap-5">
-          <div class="icon flex flex-col items-center">
-            <div class="circle p-3 border-2 border-core-secondary size-8 rounded-full"></div>
-          </div>
-          <div class="description">
-            <h3 class="text-base md:text-xl font-semibold dark:text-white">Creá tu primer curso</h3>
-            <p>Y empezá a simplificar tus clases.</p>
+          <h2 class="text-3xl font-bold">
+            Lleva el control de asistencia en tu bolsillo
+          </h2>
+          <p class="text-muted-foreground">
+            Nuestra aplicación móvil te permite gestionar la asistencia desde
+            cualquier lugar, en cualquier momento. Disponible para iOS y
+            Android.
+          </p>
+          <ul class="space-y-4">
+            <li class="flex items-center gap-2">
+              <mat-icon class="text-core-primary">check_circle</mat-icon>
+              <span>Registro de asistencia con un toque</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <mat-icon class="text-core-primary">check_circle</mat-icon>
+              <span>Notificaciones en tiempo real</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <mat-icon class="text-core-primary">check_circle</mat-icon>
+              <span>Escaneo de códigos QR</span>
+            </li>
+          </ul>
+          <div class="flex flex-col sm:flex-row gap-4 pt-4">
+            <button
+              class="inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium px-4 py-2 bg-black hover:bg-gray-800 text-white"
+            >
+              <img
+                class="size-4"
+                src="assets/svg/google.svg"
+                alt="Google icon"
+              />
+              Google Play
+            </button>
+
+            <button
+              class="inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium px-4 py-2 bg-black hover:bg-gray-800 text-white"
+            >
+              <img class="size-4" src="assets/svg/apple.svg" alt="Apple icon" />
+              App Store
+            </button>
           </div>
         </div>
       </div>
-      <a class="bg-core-secondary-100 hover:bg-core-secondary-200 text-core-secondary font-bold rounded-xl p-3 flex items-center w-fit mx-auto lg:mx-0 dark:bg-slate-700 dark:text-white dark:hover:bg-slate-600" href="/auth/sign-up">
-        Empezar ahora
-        <mat-icon>chevron_right</mat-icon>
-      </a>
     </div>
   </article>
 </section>
+<shared-footer></shared-footer>

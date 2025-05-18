@@ -16,6 +16,7 @@ import { AlertSuccessTitleDirective } from './directives/alert-success-title.dir
 import { AlertWarningTitleDirective } from './directives/alert-warning-title.directive';
 import { AlertDescriptionDirective } from './directives/alert-description.directive';
 import { RouterModule } from '@angular/router';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { RouterModule } from '@angular/router';
     AlertSuccessTitleDirective,
     AlertWarningTitleDirective,
     AlertDescriptionDirective,
+    FooterComponent,
   ],
   imports: [CommonModule, PrimeNgModule, MaterialModule, RouterModule],
   exports: [
@@ -45,6 +47,7 @@ import { RouterModule } from '@angular/router';
     AlertSuccessTitleDirective,
     AlertWarningTitleDirective,
     AlertDescriptionDirective,
+    FooterComponent,
   ],
   providers: [SnackbarService],
 })
